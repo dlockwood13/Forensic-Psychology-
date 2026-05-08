@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forensic Psychology Practitioner Toolkit</title>
+<style>
+  :root {
+    --bg: #f5f4ef;
+    --surface: #ffffff;
+    --surface-2: #faf9f5;
+    --ink: #1a2332;
+    --ink-soft: #4a5568;
+    --muted: #8a93a3;
+    --line: #e3e0d6;
+    --accent: #2c5f7c;
+    --accent-soft: #d4e3eb;
+    --warn: #b85c38;
+    --good: #5a7a4d;
+    --danger: #a83232;
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(26, 35, 50, 0.06), 0 1px 2px rgba(26, 35, 50, 0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .app { display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .brand { padding: 0 20px 20px; border-bottom: 1px solid var(--line); }
+  .brand h1 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .nav { padding: 12px 0; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; cursor: pointer;
+    font-size: 14px; color: var(--ink-soft);
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  .nav-item:hover { background: var(--surface-2); color: var(--ink); }
+  .nav-item.active {
+    background: var(--accent-soft); color: var(--accent);
+    border-left-color: var(--accent); font-weight: 500;
+  }
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+  .sidebar-footer {
+    position: sticky; bottom: 0;
+    padding: 16px 20px; background: var(--surface);
+    border-top: 1px solid var(--line);
+    font-size: 11px; color: var(--muted);
+  }
+  .sidebar-footer .actions { display: flex; gap: 8px; margin-top: 8px; }
+  .sidebar-footer button {
+    flex: 1; font-size: 11px; padding: 6px 8px;
+    border: 1px solid var(--line); background: var(--surface-2);
+    border-radius: 4px; cursor: pointer; color: var(--ink-soft);
+  }
+  .sidebar-footer button:hover { background: var(--accent-soft); color: var(--accent); }
+  .sidebar-footer button.danger:hover { background: #fce8e8; color: var(--danger); border-color: var(--danger); }
+
+  /* Main */
+  .main { flex: 1; padding: 32px 40px; max-width: 1100px; }
+  .module { display: none; }
+  .module.active { display: block; }
+  .module-header { margin-bottom: 24px; }
+  .module-header h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .module-header p { color: var(--muted); margin-top: 4px; font-size: 14px; }
+
+  /* Cards / panels */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .card-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .card-title .count { font-size: 12px; color: var(--muted); font-weight: 400; }
+
+  /* Forms */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+  label { display: block; font-size: 12px; font-weight: 500; color: var(--ink-soft); margin-bottom: 4px; }
+  input, select, textarea {
+    width: 100%; padding: 8px 10px;
+    border: 1px solid var(--line); border-radius: 6px;
+    font-size: 14px; font-family: inherit; background: var(--surface);
+    color: var(--ink); transition: border 0.15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .btn {
+    padding: 8px 16px; border: none; border-radius: 6px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    background: var(--accent); color: white;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
+  .btn-secondary:hover { background: var(--accent-soft); color: var(--accent); }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--line); }
+  .btn-danger:hover { background: #fce8e8; border-color: var(--danger); }
+  .btn-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+  /* Entry list */
+  .entry { padding: 14px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 8px; background: var(--surface-2); }
+  .entry-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
+  .entry-meta { font-size: 12px; color: var(--muted); }
+  .entry-title { font-weight: 500; font-size: 14px; }
+  .entry-body { font-size: 13px; color: var(--ink-soft); white-space: pre-wrap; }
+  .entry-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); margin-right: 4px; }
+  .entry-actions { display: flex; gap: 6px; }
+  .entry-actions button { font-size: 11px; padding: 3px 8px; }
+  .empty { text-align: center; padding: 32px; color: var(--muted); font-size: 13px; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); padding: 14px; border-radius: 6px; }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 24px; font-weight: 600; margin-top: 4px; color: var(--accent); }
+
+  /* Reference */
+  .ref-search { margin-bottom: 16px; }
+  .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .ref-card { background: var(--surface); border: 1px solid var(--line); padding: 14px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+  .ref-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+  .ref-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .ref-card .ref-cat { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+  .ref-card p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(26, 35, 50, 0.5);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+  }
+  .modal-bg.show { display: flex; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius);
+    max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto;
+    padding: 24px;
+  }
+  .modal h3 { margin-bottom: 12px; }
+  .modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--muted); }
+
+  /* Risk formulation specific */
+  .formulation-section { margin-bottom: 14px; }
+  .formulation-section .desc { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-style: italic; }
+  .formulation-output { background: var(--surface-2); padding: 16px; border-radius: 6px; border: 1px solid var(--line); font-size: 13px; white-space: pre-wrap; line-height: 1.7; }
+
+  /* Mood selector */
+  .mood-row { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+  .mood-opt { padding: 6px 12px; border: 1px solid var(--line); border-radius: 16px; cursor: pointer; font-size: 13px; background: var(--surface); }
+  .mood-opt.selected { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Templates */
+  .template-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .template-tile { padding: 16px; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; background: var(--surface-2); }
+  .template-tile:hover { background: var(--accent-soft); }
+  .template-tile h4 { font-size: 14px; }
+  .template-tile p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .privacy-note {
+    background: #fff8e6; border: 1px solid #f0d878;
+    color: #6b5320; padding: 10px 14px; border-radius: 6px;
+    font-size: 12px; margin-bottom: 16px;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .app { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; }
+    .main { padding: 20px; }
+    .form-row, .form-row.three { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Forensic Psych Toolkit</h1>
+      <p>UK Practitioner</p>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active" data-module="cpd"><span class="nav-icon">📚</span> CPD Logger</div>
+      <div class="nav-item" data-module="supervision"><span class="nav-icon">💬</span> Supervision Log</div>
+      <div class="nav-item" data-module="formulation"><span class="nav-icon">🧩</span> Risk Formulation</div>
+      <div class="nav-item" data-module="reflection"><span class="nav-icon">📓</span> Daily Reflection</div>
+      <div class="nav-item" data-module="reports"><span class="nav-icon">📄</span> Report Templates</div>
+      <div class="nav-item" data-module="reference"><span class="nav-icon">🔍</span> Quick Reference</div>
+    </nav>
+    <div class="sidebar-footer">
+      Data stored in this browser only.
+      <div class="actions">
+        <button onclick="exportAll()">Export All</button>
+        <button class="danger" onclick="clearAll()">Clear All</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- CPD LOGGER -->
+    <section class="module active" id="m-cpd">
+      <div class="module-header">
+        <h2>CPD Logger</h2>
+        <p>Track continuing professional development for HCPC audit and your portfolio.</p>
+      </div>
+
+      <div class="stats" id="cpd-stats"></div>
+
+      <div class="card">
+        <div class="card-title">Add CPD Entry</div>
+        <div class="form-row">
+          <div><label>Date</label><input type="date" id="cpd-date"></div>
+          <div><label>Hours</label><input type="number" step="0.25" min="0" id="cpd-hours" placeholder="e.g. 1.5"></div>
+        </div>
+        <div class="form-row">
+          <div><label>Activity Type</label>
+            <select id="cpd-type">
+              <option>Course / Workshop</option>
+              <option>Reading / Research</option>
+              <option>Supervision</option>
+              <option>Reflective Practice</option>
+              <option>Conference</option>
+              <option>Teaching / Presenting</option>
+              <option>Peer Learning</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div><label>HCPC Standard (optional)</label>
+            <select id="cpd-standard">
+              <option value="">— Select —</option>
+              <option>1. Maintain a continuous, up-to-date record</option>
+              <option>2. Mix of learning activities</option>
+              <option>3. Demonstrate impact on practice</option>
+              <option>4. Demonstrate benefit to service users</option>
+              <option>5. Present evidence on request</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Title / Topic</label><input type="text" id="cpd-title" placeholder="e.g. HCR-20v3 risk assessment training"></div>
+        </div>
+        <div class="form-row full">
+          <div><label>Learning Outcomes & Impact on Practice</label>
+            <textarea id="cpd-outcomes" placeholder="What did you learn? How will it change your practice?"></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="addCPD()">Add Entry</button>
+          <button class="btn btn-secondary" onclick="exportCPD()">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">CPD History <span class="count" id="cpd-count">0 entries</span></div>
+        <div id="cpd-list"></div>
+      </div>
+    </section>
+
+    <!-- SUPERVISION -->
+    <section class="module" id="m-supervision">
+      <div class="module-header">
+        <h2>Supervision Log</h2>
+        <p>Record clinical, managerial, and peer supervision sessions.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">New Supervision Entry</div>
+        <div class="form-row three">
+          <div><label>Date</label><input type="date" id="sup-date"></div>
+          <div><label>Supervisor</label><input type="text" id="sup-supervisor" placeholder="Name"></div>
+          <div><label>Type</label>
+            <select id="sup-type">
+              <option>Clinical</option>
+              <option>Managerial</option>
+              <option>Peer</option>
+              <option>Group</option>
+              <option>External</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Discussion Points</label>
+            <textarea id="sup-discussion" placeholder="Cases, dilemmas, themes covered..."></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Actions Agreed</label>
+            <textarea id="sup-actions" placeholder="Next steps, reading, follow-ups..."></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Reflections</label>
+            <textarea id="sup-reflection" placeholder="Your own reflections on the session..."></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="addSupervision()">Save Entry</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Supervision History <span class="count" id="sup-count">0 entries</span></div>
+        <input type="text" id="sup-search" placeholder="Search supervision entries..." style="margin-bottom: 12px;" oninput="renderSupervision()">
+        <div id="sup-list"></div>
+      </div>
+    </section>
+
+    <!-- FORMULATION -->
+    <section class="module" id="m-formulation">
+      <div class="module-header">
+        <h2>Risk Formulation Builder</h2>
+        <p>Structured 5Ps formulation with risk-relevant prompts. Output is plain text — copy or save.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Case Identifier</div>
+        <div class="form-row">
+          <div><label>Reference / Initials</label><input type="text" id="form-ref" placeholder="e.g. JM-2026-04"></div>
+          <div><label>Date</label><input type="date" id="form-date"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">5Ps Formulation</div>
+
+        <div class="formulation-section">
+          <label>Presenting Issues</label>
+          <div class="desc">Current concerns, behaviours, symptoms, risk behaviours</div>
+          <textarea id="form-presenting"></textarea>
+        </div>
+
+        <div class="formulation-section">
+          <label>Predisposing Factors</label>
+          <div class="desc">Vulnerabilities — developmental, biological, historical (ACEs, trauma, attachment, prior offences)</div>
+          <textarea id="form-predisposing"></textarea>
+        </div>
+
+        <div class="formulation-section">
+          <label>Precipitating Factors</label>
+          <div class="desc">Triggers — recent events, losses, stressors, substance use, relational rupture</div>
+          <textarea id="form-precipitating"></textarea>
+        </div>
+
+        <div class="formulation-section">
+          <label>Perpetuating Factors</label>
+          <div class="desc">What maintains the problem — cognitions, schemas, environment, reinforcement, social network</div>
+          <textarea id="form-perpetuating"></textarea>
+        </div>
+
+        <div class="formulation-section">
+          <label>Protective Factors</label>
+          <div class="desc">Internal/external strengths — engagement, motivation, supports, skills, stable accommodation</div>
+          <textarea id="form-protective"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Risk-Relevant Detail</div>
+        <div class="form-row full">
+          <div><label>Static Risk Factors</label>
+            <textarea id="form-static" placeholder="Historical, unchanging factors (e.g. age at first offence, prior convictions)"></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Dynamic Risk Factors</label>
+            <textarea id="form-dynamic" placeholder="Current, changeable factors targeted by intervention"></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Risk Scenarios</label>
+            <textarea id="form-scenarios" placeholder="Plausible future risk scenarios — nature, severity, imminence, frequency"></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Risk Management Plan</label>
+            <textarea id="form-management" placeholder="Monitoring, treatment, supervision, victim safety planning"></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="generateFormulation()">Generate Formulation</button>
+          <button class="btn btn-secondary" onclick="saveFormulation()">Save</button>
+          <button class="btn btn-secondary" onclick="clearFormulation()">Clear Form</button>
+        </div>
+      </div>
+
+      <div class="card" id="formulation-output-card" style="display:none;">
+        <div class="card-title">Formulation Output
+          <span><button class="btn btn-secondary" onclick="copyFormulation()">Copy</button></span>
+        </div>
+        <div class="formulation-output" id="formulation-output"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Saved Formulations <span class="count" id="form-count">0 saved</span></div>
+        <div id="form-list"></div>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section class="module" id="m-reflection">
+      <div class="module-header">
+        <h2>Daily Reflection Journal</h2>
+        <p>Brief Gibbs-style reflective entries. Useful for CPD evidence and managing the emotional load of forensic work.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">New Reflection</div>
+        <div class="form-row">
+          <div><label>Date</label><input type="date" id="ref-date"></div>
+          <div><label>Mood</label>
+            <div class="mood-row" id="mood-row">
+              <span class="mood-opt" data-mood="1">😞</span>
+              <span class="mood-opt" data-mood="2">😕</span>
+              <span class="mood-opt" data-mood="3">😐</span>
+              <span class="mood-opt" data-mood="4">🙂</span>
+              <span class="mood-opt" data-mood="5">😊</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>What happened?</label>
+            <textarea id="ref-what" placeholder="A brief description of the event or experience"></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Feelings & Thoughts</label>
+            <textarea id="ref-feelings" placeholder="What were you thinking and feeling?"></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Evaluation & Analysis</label>
+            <textarea id="ref-eval" placeholder="What was good/bad? What sense can you make of it?"></textarea>
+          </div>
+        </div>
+        <div class="form-row full">
+          <div><label>Action Plan</label>
+            <textarea id="ref-action" placeholder="What will you do differently next time?"></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" onclick="addReflection()">Save Reflection</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Reflection History <span class="count" id="ref-count">0 entries</span></div>
+        <div id="ref-list"></div>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="module" id="m-reports">
+      <div class="module-header">
+        <h2>Report Templates</h2>
+        <p>Skeletons for common report types. Fill in, then copy out into your word processor for formatting.</p>
+      </div>
+
+      <div class="privacy-note">
+        ⚠️ Avoid entering identifiable client information. Use initials or case codes only. Browser data is private to this device, but reports should be drafted in your secure organisational system.
+      </div>
+
+      <div class="card">
+        <div class="card-title">Choose Template</div>
+        <div class="template-list">
+          <div class="template-tile" onclick="loadTemplate('court')">
+            <h4>Court Report</h4>
+            <p>Section 12 / psychological assessment for criminal proceedings</p>
+          </div>
+          <div class="template-tile" onclick="loadTemplate('risk')">
+            <h4>Risk Assessment Report</h4>
+            <p>Structured professional judgement format</p>
+          </div>
+          <div class="template-tile" onclick="loadTemplate('clinical')">
+            <h4>Clinical Letter</h4>
+            <p>Brief letter to GP / referrer / MDT</p>
+          </div>
+          <div class="template-tile" onclick="loadTemplate('parole')">
+            <h4>Parole Board Report</h4>
+            <p>Risk and progress assessment for parole consideration</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="report-editor" style="display:none;">
+        <div class="card-title">
+          <span id="report-title">Report</span>
+          <span class="btn-row">
+            <button class="btn btn-secondary" onclick="copyReport()">Copy</button>
+            <button class="btn btn-secondary" onclick="saveReport()">Save Draft</button>
+          </span>
+        </div>
+        <div id="report-fields"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Saved Drafts <span class="count" id="report-count">0 drafts</span></div>
+        <div id="report-list"></div>
+      </div>
+    </section>
+
+    <!-- REFERENCE -->
+    <section class="module" id="m-reference">
+      <div class="module-header">
+        <h2>Quick Reference</h2>
+        <p>Key frameworks, legislation, assessment tools, and acronyms — searchable.</p>
+      </div>
+
+      <input type="text" class="ref-search" id="ref-search-input" placeholder="Search frameworks, tools, legislation, acronyms..." oninput="renderReference()">
+
+      <div class="ref-grid" id="ref-grid"></div>
+    </section>
+  </main>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- Storage helpers (with safe fallback) ---------- */
+const store = {
+  _mem: {},
+  _hasLS: (() => { try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return true; } catch(e) { return false; } })(),
+  get(key, def) {
+    try {
+      const v = this._hasLS ? localStorage.getItem(key) : this._mem[key];
+      return v ? JSON.parse(v) : def;
+    } catch(e) { return def; }
+  },
+  set(key, val) {
+    try {
+      const s = JSON.stringify(val);
+      if (this._hasLS) localStorage.setItem(key, s); else this._mem[key] = s;
+    } catch(e) { console.error(e); }
+  },
+  remove(key) {
+    if (this._hasLS) localStorage.removeItem(key); else delete this._mem[key];
+  }
+};
+
+/* ---------- Navigation ---------- */
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('m-' + item.dataset.module).classList.add('active');
+  });
+});
+
+/* ---------- Date defaults ---------- */
+function todayStr() { return new Date().toISOString().slice(0,10); }
+['cpd-date','sup-date','form-date','ref-date'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.value = todayStr();
+});
+
+/* ---------- CPD ---------- */
+function loadCPD() { return store.get('cpd', []); }
+function saveCPDList(list) { store.set('cpd', list); }
+
+function addCPD() {
+  const e = {
+    id: Date.now(),
+    date: document.getElementById('cpd-date').value,
+    hours: parseFloat(document.getElementById('cpd-hours').value) || 0,
+    type: document.getElementById('cpd-type').value,
+    standard: document.getElementById('cpd-standard').value,
+    title: document.getElementById('cpd-title').value.trim(),
+    outcomes: document.getElementById('cpd-outcomes').value.trim()
+  };
+  if (!e.title) { alert('Please enter a title.'); return; }
+  const list = loadCPD();
+  list.unshift(e);
+  saveCPDList(list);
+  document.getElementById('cpd-title').value = '';
+  document.getElementById('cpd-outcomes').value = '';
+  document.getElementById('cpd-hours').value = '';
+  renderCPD();
+}
+
+function deleteCPD(id) {
+  if (!confirm('Delete this CPD entry?')) return;
+  saveCPDList(loadCPD().filter(e => e.id !== id));
+  renderCPD();
+}
+
+function renderCPD() {
+  const list = loadCPD();
+  const container = document.getElementById('cpd-list');
+  document.getElementById('cpd-count').textContent = `${list.length} entr${list.length===1?'y':'ies'}`;
+
+  // Stats
+  const now = new Date();
+  const yearAgo = new Date(now.getFullYear()-1, now.getMonth(), now.getDate());
+  const thisYear = list.filter(e => new Date(e.date) >= yearAgo);
+  const totalHours = list.reduce((s,e) => s + (e.hours||0), 0);
+  const yearHours = thisYear.reduce((s,e) => s + (e.hours||0), 0);
+  document.getElementById('cpd-stats').innerHTML = `
+    <div class="stat"><div class="stat-label">Last 12 months</div><div class="stat-value">${yearHours.toFixed(1)} hrs</div></div>
+    <div class="stat"><div class="stat-label">Total entries</div><div class="stat-value">${list.length}</div></div>
+    <div class="stat"><div class="stat-label">Total hours</div><div class="stat-value">${totalHours.toFixed(1)}</div></div>
+  `;
+
+  if (list.length === 0) { container.innerHTML = '<div class="empty">No CPD entries yet. Add your first above.</div>'; return; }
+  container.innerHTML = list.map(e => `
+    <div class="entry">
+      <div class="entry-head">
+        <div>
+          <div class="entry-title">${escapeHtml(e.title)}</div>
+          <div class="entry-meta">${e.date} · ${e.hours} hrs · <span class="entry-tag">${escapeHtml(e.type)}</span></div>
+        </div>
+        <div class="entry-actions">
+          <button class="btn btn-danger" onclick="deleteCPD(${e.id})">Delete</button>
+        </div>
+      </div>
+      ${e.standard ? `<div class="entry-meta" style="margin-top:6px;">HCPC: ${escapeHtml(e.standard)}</div>` : ''}
+      ${e.outcomes ? `<div class="entry-body" style="margin-top:6px;">${escapeHtml(e.outcomes)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function exportCPD() {
+  const list = loadCPD();
+  if (list.length === 0) { alert('No entries to export.'); return; }
+  const headers = ['Date','Hours','Type','HCPC Standard','Title','Outcomes'];
+  const rows = list.map(e => [e.date, e.hours, e.type, e.standard, e.title, e.outcomes]
+    .map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  downloadFile(csv, `cpd-log-${todayStr()}.csv`, 'text/csv');
+}
+
+/* ---------- Supervision ---------- */
+function loadSup() { return store.get('supervision', []); }
+function saveSup(list) { store.set('supervision', list); }
+
+function addSupervision() {
+  const e = {
+    id: Date.now(),
+    date: document.getElementById('sup-date').value,
+    supervisor: document.getElementById('sup-supervisor').value.trim(),
+    type: document.getElementById('sup-type').value,
+    discussion: document.getElementById('sup-discussion').value.trim(),
+    actions: document.getElementById('sup-actions').value.trim(),
+    reflection: document.getElementById('sup-reflection').value.trim()
+  };
+  if (!e.supervisor || !e.discussion) { alert('Please enter supervisor and discussion points.'); return; }
+  const list = loadSup();
+  list.unshift(e);
+  saveSup(list);
+  ['sup-supervisor','sup-discussion','sup-actions','sup-reflection'].forEach(id => document.getElementById(id).value = '');
+  renderSupervision();
+}
+
+function deleteSup(id) {
+  if (!confirm('Delete this supervision entry?')) return;
+  saveSup(loadSup().filter(e => e.id !== id));
+  renderSupervision();
+}
+
+function renderSupervision() {
+  const search = (document.getElementById('sup-search')?.value || '').toLowerCase();
+  let list = loadSup();
+  if (search) {
+    list = list.filter(e => Object.values(e).some(v => (v||'').toString().toLowerCase().includes(search)));
+  }
+  const container = document.getElementById('sup-list');
+  document.getElementById('sup-count').textContent = `${list.length} entr${list.length===1?'y':'ies'}`;
+  if (list.length === 0) { container.innerHTML = '<div class="empty">No supervision entries match.</div>'; return; }
+  container.innerHTML = list.map(e => `
+    <div class="entry">
+      <div class="entry-head">
+        <div>
+          <div class="entry-title">${escapeHtml(e.supervisor)} <span class="entry-tag">${escapeHtml(e.type)}</span></div>
+          <div class="entry-meta">${e.date}</div>
+        </div>
+        <div class="entry-actions"><button class="btn btn-danger" onclick="deleteSup(${e.id})">Delete</button></div>
+      </div>
+      <div class="entry-body" style="margin-top:8px;"><strong>Discussion:</strong> ${escapeHtml(e.discussion)}</div>
+      ${e.actions ? `<div class="entry-body" style="margin-top:6px;"><strong>Actions:</strong> ${escapeHtml(e.actions)}</div>` : ''}
+      ${e.reflection ? `<div class="entry-body" style="margin-top:6px;"><strong>Reflection:</strong> ${escapeHtml(e.reflection)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ---------- Formulation ---------- */
+const formFields = ['form-presenting','form-predisposing','form-precipitating','form-perpetuating','form-protective','form-static','form-dynamic','form-scenarios','form-management'];
+
+function generateFormulation() {
+  const ref = document.getElementById('form-ref').value.trim() || '[Case ref]';
+  const date = document.getElementById('form-date').value || todayStr();
+  const get = id => document.getElementById(id).value.trim() || '[Not entered]';
+
+  const out = `RISK FORMULATION
+Case: ${ref}
+Date: ${date}
+
+PRESENTING ISSUES
+${get('form-presenting')}
+
+5Ps FORMULATION
+
+Predisposing Factors
+${get('form-predisposing')}
+
+Precipitating Factors
+${get('form-precipitating')}
+
+Perpetuating Factors
+${get('form-perpetuating')}
+
+Protective Factors
+${get('form-protective')}
+
+RISK ANALYSIS
+
+Static Factors
+${get('form-static')}
+
+Dynamic Factors
+${get('form-dynamic')}
+
+Risk Scenarios
+${get('form-scenarios')}
+
+RISK MANAGEMENT PLAN
+${get('form-management')}
+`;
+  document.getElementById('formulation-output').textContent = out;
+  document.getElementById('formulation-output-card').style.display = 'block';
+  document.getElementById('formulation-output-card').scrollIntoView({behavior:'smooth'});
+}
+
+function copyFormulation() {
+  const text = document.getElementById('formulation-output').textContent;
+  navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard.'));
+}
+
+function saveFormulation() {
+  generateFormulation();
+  const f = {
+    id: Date.now(),
+    ref: document.getElementById('form-ref').value.trim() || 'Untitled',
+    date: document.getElementById('form-date').value,
+    text: document.getElementById('formulation-output').textContent
+  };
+  const list = store.get('formulations', []);
+  list.unshift(f);
+  store.set('formulations', list);
+  renderFormulations();
+  alert('Formulation saved.');
+}
+
+function clearFormulation() {
+  if (!confirm('Clear the formulation form?')) return;
+  document.getElementById('form-ref').value = '';
+  formFields.forEach(id => document.getElementById(id).value = '');
+  document.getElementById('formulation-output-card').style.display = 'none';
+}
+
+function renderFormulations() {
+  const list = store.get('formulations', []);
+  document.getElementById('form-count').textContent = `${list.length} saved`;
+  const c = document.getElementById('form-list');
+  if (list.length === 0) { c.innerHTML = '<div class="empty">No saved formulations.</div>'; return; }
+  c.innerHTML = list.map(f => `
+    <div class="entry">
+      <div class="entry-head">
+        <div>
+          <div class="entry-title">${escapeHtml(f.ref)}</div>
+          <div class="entry-meta">${f.date}</div>
+        </div>
+        <div class="entry-actions">
+          <button class="btn btn-secondary" onclick="viewFormulation(${f.id})">View</button>
+          <button class="btn btn-danger" onclick="deleteFormulation(${f.id})">Delete</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewFormulation(id) {
+  const f = store.get('formulations', []).find(x => x.id === id);
+  if (!f) return;
+  document.getElementById('modal-body').innerHTML = `<h3>${escapeHtml(f.ref)}</h3><pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;margin-top:12px;">${escapeHtml(f.text)}</pre>`;
+  document.getElementById('modal-bg').classList.add('show');
+}
+
+function deleteFormulation(id) {
+  if (!confirm('Delete this formulation?')) return;
+  store.set('formulations', store.get('formulations', []).filter(f => f.id !== id));
+  renderFormulations();
+}
+
+/* ---------- Reflection ---------- */
+let selectedMood = null;
+document.querySelectorAll('.mood-opt').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.mood-opt').forEach(x => x.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedMood = el.dataset.mood;
+  });
+});
+
+function addReflection() {
+  const e = {
+    id: Date.now(),
+    date: document.getElementById('ref-date').value,
+    mood: selectedMood,
+    what: document.getElementById('ref-what').value.trim(),
+    feelings: document.getElementById('ref-feelings').value.trim(),
+    evaluation: document.getElementById('ref-eval').value.trim(),
+    action: document.getElementById('ref-action').value.trim()
+  };
+  if (!e.what) { alert('Please describe what happened.'); return; }
+  const list = store.get('reflections', []);
+  list.unshift(e);
+  store.set('reflections', list);
+  ['ref-what','ref-feelings','ref-eval','ref-action'].forEach(id => document.getElementById(id).value = '');
+  document.querySelectorAll('.mood-opt').forEach(x => x.classList.remove('selected'));
+  selectedMood = null;
+  renderReflections();
+}
+
+function deleteReflection(id) {
+  if (!confirm('Delete this reflection?')) return;
+  store.set('reflections', store.get('reflections', []).filter(r => r.id !== id));
+  renderReflections();
+}
+
+function renderReflections() {
+  const list = store.get('reflections', []);
+  document.getElementById('ref-count').textContent = `${list.length} entr${list.length===1?'y':'ies'}`;
+  const c = document.getElementById('ref-list');
+  if (list.length === 0) { c.innerHTML = '<div class="empty">No reflections yet.</div>'; return; }
+  const moods = {'1':'😞','2':'😕','3':'😐','4':'🙂','5':'😊'};
+  c.innerHTML = list.map(e => `
+    <div class="entry">
+      <div class="entry-head">
+        <div>
+          <div class="entry-title">${e.date} ${e.mood ? moods[e.mood] : ''}</div>
+        </div>
+        <div class="entry-actions"><button class="btn btn-danger" onclick="deleteReflection(${e.id})">Delete</button></div>
+      </div>
+      <div class="entry-body" style="margin-top:6px;"><strong>What:</strong> ${escapeHtml(e.what)}</div>
+      ${e.feelings ? `<div class="entry-body" style="margin-top:4px;"><strong>Feelings:</strong> ${escapeHtml(e.feelings)}</div>` : ''}
+      ${e.evaluation ? `<div class="entry-body" style="margin-top:4px;"><strong>Evaluation:</strong> ${escapeHtml(e.evaluation)}</div>` : ''}
+      ${e.action ? `<div class="entry-body" style="margin-top:4px;"><strong>Action:</strong> ${escapeHtml(e.action)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ---------- Report Templates ---------- */
+const templates = {
+  court: {
+    title: 'Court Report',
+    fields: [
+      ['header','Header (case ref, court, date of report, instructing party)','textarea'],
+      ['instructions','1. Letter of Instruction','textarea'],
+      ['sources','2. Sources of Information (records reviewed, interviews, collateral)','textarea'],
+      ['background','3. Background and Personal History','textarea'],
+      ['offence','4. Index Offence(s) and Account','textarea'],
+      ['mse','5. Mental State Examination','textarea'],
+      ['psychometrics','6. Psychometric Assessment Findings','textarea'],
+      ['formulation','7. Psychological Formulation','textarea'],
+      ['risk','8. Risk Assessment','textarea'],
+      ['opinion','9. Opinion (addressing each instruction)','textarea'],
+      ['recommendations','10. Recommendations','textarea'],
+      ['declaration','11. Expert Declaration / Statement of Truth','textarea']
+    ]
+  },
+  risk: {
+    title: 'Risk Assessment Report',
+    fields: [
+      ['header','Header (case ref, date, author)','textarea'],
+      ['referral','Referral Question','textarea'],
+      ['method','Methodology (tools used, e.g. HCR-20v3, RSVP)','textarea'],
+      ['history','Relevant History','textarea'],
+      ['static','Static Risk Factors','textarea'],
+      ['dynamic','Dynamic Risk Factors','textarea'],
+      ['protective','Protective Factors','textarea'],
+      ['scenarios','Risk Scenarios','textarea'],
+      ['judgement','Summary Risk Judgement (nature, severity, imminence, likelihood)','textarea'],
+      ['management','Risk Management Recommendations','textarea']
+    ]
+  },
+  clinical: {
+    title: 'Clinical Letter',
+    fields: [
+      ['recipient','Recipient (name, role, address)','textarea'],
+      ['re','Re: (client identifier)','input'],
+      ['intro','Opening paragraph (purpose of letter)','textarea'],
+      ['summary','Clinical Summary','textarea'],
+      ['progress','Progress / Current Presentation','textarea'],
+      ['plan','Plan / Recommendations','textarea'],
+      ['closing','Closing','textarea']
+    ]
+  },
+  parole: {
+    title: 'Parole Board Report',
+    fields: [
+      ['header','Header (prisoner details, sentence, hearing date)','textarea'],
+      ['instructions','Instructions / Referral Question','textarea'],
+      ['sources','Sources of Information','textarea'],
+      ['offence','Index Offence and Offending History','textarea'],
+      ['custody','Behaviour and Engagement in Custody','textarea'],
+      ['interventions','Interventions Completed and Outcomes','textarea'],
+      ['risk','Current Risk Assessment','textarea'],
+      ['management','Risk Management Plan in the Community','textarea'],
+      ['opinion','Opinion on Suitability for Release / Progression','textarea']
+    ]
+  }
+};
+
+let currentTemplate = null;
+
+function loadTemplate(key) {
+  currentTemplate = key;
+  const t = templates[key];
+  document.getElementById('report-title').textContent = t.title;
+  const c = document.getElementById('report-fields');
+  c.innerHTML = t.fields.map(([id,label,type]) => `
+    <div style="margin-bottom:12px;">
+      <label>${label}</label>
+      ${type === 'input' ? `<input type="text" id="rt-${id}">` : `<textarea id="rt-${id}" style="min-height:80px;"></textarea>`}
+    </div>
+  `).join('');
+  document.getElementById('report-editor').style.display = 'block';
+  document.getElementById('report-editor').scrollIntoView({behavior:'smooth'});
+}
+
+function getReportText() {
+  if (!currentTemplate) return '';
+  const t = templates[currentTemplate];
+  return t.title.toUpperCase() + '\n\n' + t.fields.map(([id,label]) => {
+    const el = document.getElementById('rt-' + id);
+    const v = el ? el.value.trim() : '';
+    return label + '\n' + (v || '[Not entered]') + '\n';
+  }).join('\n');
+}
+
+function copyReport() {
+  navigator.clipboard.writeText(getReportText()).then(() => alert('Report copied to clipboard.'));
+}
+
+function saveReport() {
+  if (!currentTemplate) return;
+  const r = {
+    id: Date.now(),
+    type: templates[currentTemplate].title,
+    date: todayStr(),
+    text: getReportText()
+  };
+  const list = store.get('reports', []);
+  list.unshift(r);
+  store.set('reports', list);
+  renderReports();
+  alert('Draft saved.');
+}
+
+function renderReports() {
+  const list = store.get('reports', []);
+  document.getElementById('report-count').textContent = `${list.length} draft${list.length===1?'':'s'}`;
+  const c = document.getElementById('report-list');
+  if (list.length === 0) { c.innerHTML = '<div class="empty">No saved drafts.</div>'; return; }
+  c.innerHTML = list.map(r => `
+    <div class="entry">
+      <div class="entry-head">
+        <div>
+          <div class="entry-title">${escapeHtml(r.type)}</div>
+          <div class="entry-meta">${r.date}</div>
+        </div>
+        <div class="entry-actions">
+          <button class="btn btn-secondary" onclick="viewReport(${r.id})">View</button>
+          <button class="btn btn-danger" onclick="deleteReport(${r.id})">Delete</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewReport(id) {
+  const r = store.get('reports', []).find(x => x.id === id);
+  if (!r) return;
+  document.getElementById('modal-body').innerHTML = `<h3>${escapeHtml(r.type)}</h3><div class="entry-meta">${r.date}</div><pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;margin-top:12px;">${escapeHtml(r.text)}</pre>`;
+  document.getElementById('modal-bg').classList.add('show');
+}
+
+function deleteReport(id) {
+  if (!confirm('Delete this draft?')) return;
+  store.set('reports', store.get('reports', []).filter(r => r.id !== id));
+  renderReports();
+}
+
+/* ---------- Reference ---------- */
+const reference = [
+  {cat:'Risk Assessment', name:'HCR-20v3', desc:'Historical, Clinical, Risk Management 20 — structured professional judgement tool for violence risk. 20 items across Historical (10), Clinical (5), Risk Management (5).'},
+  {cat:'Risk Assessment', name:'RSVP', desc:'Risk for Sexual Violence Protocol — SPJ tool for sexual violence risk, 22 items across 5 domains.'},
+  {cat:'Risk Assessment', name:'SARA', desc:'Spousal Assault Risk Assessment — 20-item guide for intimate partner violence risk.'},
+  {cat:'Risk Assessment', name:'Static-99R / Static-2002R', desc:'Actuarial tools for sexual recidivism risk in adult males with a history of sexual offending.'},
+  {cat:'Risk Assessment', name:'OASys', desc:'Offender Assessment System — used by HMPPS across England and Wales for risk and need assessment.'},
+  {cat:'Personality', name:'PCL-R', desc:'Psychopathy Checklist-Revised (Hare) — 20-item clinician-rated measure of psychopathy. Requires training.'},
+  {cat:'Personality', name:'IPDE', desc:'International Personality Disorder Examination — semi-structured interview for ICD/DSM personality disorders.'},
+  {cat:'Cognitive', name:'WAIS-IV / WAIS-V', desc:'Wechsler Adult Intelligence Scale — comprehensive cognitive assessment.'},
+  {cat:'Cognitive', name:'TOMM', desc:'Test of Memory Malingering — screen for effort/feigning in memory presentation.'},
+  {cat:'Framework', name:'5Ps Formulation', desc:'Presenting, Predisposing, Precipitating, Perpetuating, Protective factors. Standard formulation framework in UK clinical/forensic settings.'},
+  {cat:'Framework', name:'Good Lives Model (GLM)', desc:'Strengths-based rehabilitation framework (Ward) — primary goods, secondary goods, internal/external capacities.'},
+  {cat:'Framework', name:'RNR Model', desc:'Risk-Need-Responsivity (Andrews & Bonta) — three principles for effective offender rehabilitation.'},
+  {cat:'Framework', name:'Gibbs Reflective Cycle', desc:'Description → Feelings → Evaluation → Analysis → Conclusion → Action Plan.'},
+  {cat:'Legislation', name:'Mental Health Act 1983 (amended 2007)', desc:'Primary legislation for compulsory admission and treatment in England & Wales. Key sections: 2 (assessment, 28 days), 3 (treatment, 6 months), 37 (hospital order), 41 (restriction order), 47/49 (transferred prisoners).'},
+  {cat:'Legislation', name:'Mental Capacity Act 2005', desc:'Framework for decision-making for those lacking capacity. Two-stage test: diagnostic + functional.'},
+  {cat:'Legislation', name:'Criminal Justice Act 2003', desc:'Includes IPP sentences (abolished for new sentences 2012), extended sentences, public protection provisions.'},
+  {cat:'Legislation', name:'Criminal Procedure (Insanity) Act 1964', desc:'Fitness to plead and insanity defence. Updated by Domestic Violence, Crime and Victims Act 2004.'},
+  {cat:'Legislation', name:'Police and Criminal Evidence Act 1984 (PACE)', desc:'Governs police powers, including appropriate adult provisions for vulnerable suspects.'},
+  {cat:'Legislation', name:'Equality Act 2010', desc:'Protected characteristics; reasonable adjustments duty applies in forensic settings.'},
+  {cat:'Legislation', name:'Data Protection Act 2018 / UK GDPR', desc:'Lawful basis, special category data (health), data subject rights. Relevant to all clinical records.'},
+  {cat:'Bodies', name:'HCPC', desc:'Health and Care Professions Council — statutory regulator for practitioner psychologists in the UK. Sets standards, holds register, manages fitness to practise.'},
+  {cat:'Bodies', name:'BPS', desc:'British Psychological Society — professional membership body. Sets training standards (Stage 1 & 2). Not a regulator.'},
+  {cat:'Bodies', name:'DFP', desc:'Division of Forensic Psychology (within BPS) — special interest group for forensic practitioners.'},
+  {cat:'Bodies', name:'HMPPS', desc:'His Majesty\'s Prison and Probation Service — major employer of forensic psychologists in England and Wales.'},
+  {cat:'Acronym', name:'ACEs', desc:'Adverse Childhood Experiences — 10-item checklist; strong predictor of later mental health and offending outcomes.'},
+  {cat:'Acronym', name:'IPP', desc:'Imprisonment for Public Protection — indeterminate sentence abolished for new sentences in 2012; significant population still serving.'},
+  {cat:'Acronym', name:'MAPPA', desc:'Multi-Agency Public Protection Arrangements — three categories, three levels, manage risk of registered offenders.'},
+  {cat:'Acronym', name:'MDT', desc:'Multi-Disciplinary Team — typical configuration in inpatient/secure settings.'},
+  {cat:'Acronym', name:'CTL', desc:'Custody Time Limit — statutory time limits for remand in custody.'},
+  {cat:'Acronym', name:'SPJ', desc:'Structured Professional Judgement — risk assessment approach combining empirical anchors with clinical judgement (e.g. HCR-20v3).'},
+  {cat:'Settings', name:'Low / Medium / High Secure', desc:'Tiered NHS forensic mental health services. High secure: Broadmoor, Ashworth, Rampton. Medium secure: regional units. Low secure: step-down.'},
+  {cat:'Settings', name:'Cat A/B/C/D', desc:'Adult male prison categorisation. Cat A: highest security. Cat D: open conditions.'},
+  {cat:'Settings', name:'PIPE', desc:'Psychologically Informed Planned Environment — enhanced units within prisons/probation for personality-disordered offenders.'},
+  {cat:'Settings', name:'OPD Pathway', desc:'Offender Personality Disorder Pathway — joint NHS/HMPPS commissioned pathway across custody and community.'}
+];
+
+function renderReference() {
+  const q = (document.getElementById('ref-search-input').value || '').toLowerCase();
+  const grid = document.getElementById('ref-grid');
+  const filtered = reference.filter(r =>
+    !q || r.name.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) || r.cat.toLowerCase().includes(q)
+  );
+  if (filtered.length === 0) { grid.innerHTML = '<div class="empty">No matches.</div>'; return; }
+  grid.innerHTML = filtered.map(r => `
+    <div class="ref-card">
+      <div class="ref-cat">${escapeHtml(r.cat)}</div>
+      <h4>${escapeHtml(r.name)}</h4>
+      <p>${escapeHtml(r.desc)}</p>
+    </div>
+  `).join('');
+}
+
+/* ---------- Modal ---------- */
+function closeModal() { document.getElementById('modal-bg').classList.remove('show'); }
+
+/* ---------- Global ---------- */
+function exportAll() {
+  const data = {
+    exportedAt: new Date().toISOString(),
+    cpd: store.get('cpd', []),
+    supervision: store.get('supervision', []),
+    formulations: store.get('formulations', []),
+    reflections: store.get('reflections', []),
+    reports: store.get('reports', [])
+  };
+  downloadFile(JSON.stringify(data, null, 2), `forensic-toolkit-export-${todayStr()}.json`, 'application/json');
+}
+
+function clearAll() {
+  if (!confirm('This will permanently delete ALL data in this browser. Continue?')) return;
+  if (!confirm('Are you absolutely sure? This cannot be undone.')) return;
+  ['cpd','supervision','formulations','reflections','reports'].forEach(k => store.remove(k));
+  renderAll();
+  alert('All data cleared.');
+}
+
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function escapeHtml(s) {
+  return (s||'').toString()
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function renderAll() {
+  renderCPD();
+  renderSupervision();
+  renderFormulations();
+  renderReflections();
+  renderReports();
+  renderReference();
+}
+
+renderAll();
+</script>
+</body>
+</html>
