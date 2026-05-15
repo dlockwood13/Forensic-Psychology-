@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Forensic Psychology Practitioner Handbook (UK)</title>
+<meta name="description" content="A practitioner handbook and toolkit for UK forensic psychologists — qualification journey, professional bodies, assessment, report writing, CPD logging, and more.">
 <style>
   :root {
     --bg: #ffffff;
     --surface: #ffffff;
     --surface-2: #f7f6f3;
+    --surface-3: #f0eee8;
     --ink: #37352f;
     --ink-soft: #5a5a52;
     --muted: #9b9a93;
@@ -16,7 +18,10 @@
     --line-2: #e3e0d6;
     --accent: #2c5f7c;
     --accent-soft: #d4e3eb;
+    --accent-dark: #1e4459;
     --danger: #a83232;
+    --warn: #b85c38;
+    --warn-soft: #fbeee6;
 
     /* Notion-style chapter pastels */
     --c-purple: #f6f3f9;  --c-purple-ink: #6940a5;
@@ -27,9 +32,13 @@
     --c-pink:   #faf1f5;  --c-pink-ink:   #ad3d7b;
 
     --radius: 8px;
+    --radius-lg: 12px;
     --shadow: 0 1px 3px rgba(55, 53, 47, 0.08), 0 1px 2px rgba(55, 53, 47, 0.04);
+    --shadow-md: 0 4px 12px rgba(55, 53, 47, 0.08);
+    --sidebar-w: 248px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
     background: var(--bg);
@@ -38,181 +47,417 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
+  ::selection { background: var(--accent-soft); }
+
   .app { display: flex; min-height: 100vh; }
+
+  /* Mobile top bar */
+  .mobile-bar {
+    display: none;
+    position: sticky; top: 0; z-index: 50;
+    background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 10px 14px; align-items: center; gap: 12px;
+  }
+  .mobile-bar h1 { font-size: 14px; font-weight: 600; flex: 1; }
+  .hamburger {
+    background: none; border: none; cursor: pointer;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+  }
+  .hamburger:hover { background: var(--surface-2); }
+  .hamburger svg { width: 20px; height: 20px; }
 
   /* Sidebar */
   .sidebar {
-    width: 240px;
+    width: var(--sidebar-w);
     background: var(--surface-2);
     border-right: 1px solid var(--line);
-    padding: 16px 0;
+    padding: 16px 0 0;
     position: sticky; top: 0;
     height: 100vh; overflow-y: auto;
     flex-shrink: 0;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s ease;
   }
-  .brand { padding: 8px 16px 14px; }
-  .brand h1 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
-  .brand p { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .nav-section { padding: 8px 0; border-top: 1px solid var(--line); }
+  .brand { padding: 8px 16px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .brand-text h1 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand-text p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .close-sidebar { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--muted); }
+
+  .search-box { padding: 0 12px 12px; }
+  .search-input {
+    width: 100%; padding: 7px 10px 7px 30px;
+    border: 1px solid var(--line-2); border-radius: 6px;
+    font-size: 13px; background: var(--surface);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239b9a93' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.3-4.3'/></svg>");
+    background-repeat: no-repeat;
+    background-position: 9px center;
+  }
+  .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .search-hint { display: inline-block; font-size: 10px; padding: 1px 5px; background: var(--surface-3); border-radius: 3px; color: var(--muted); margin-left: 4px; font-family: ui-monospace, monospace; }
+
+  .nav-section { padding: 6px 0; border-top: 1px solid var(--line); }
   .nav-section:first-of-type { border-top: none; }
-  .nav-label { padding: 4px 16px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .nav-label {
+    padding: 6px 16px 4px; font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
   .nav-item {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 10px;
     padding: 5px 16px; cursor: pointer;
     font-size: 13px; color: var(--ink-soft);
-    transition: background 0.1s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: background 0.1s; user-select: none;
+    border-left: 2px solid transparent;
   }
   .nav-item:hover { background: var(--line); }
-  .nav-item.active { background: var(--line); color: var(--ink); font-weight: 500; }
-  .nav-icon { font-size: 14px; width: 16px; text-align: center; flex-shrink: 0; }
+  .nav-item.active { background: var(--surface-3); color: var(--ink); font-weight: 500; border-left-color: var(--accent); }
+  .nav-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
+  .nav-num { font-size: 11px; color: var(--muted); width: 18px; text-align: center; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .nav-item.active .nav-num { color: var(--accent); font-weight: 600; }
+  .nav-item .badge {
+    margin-left: auto; font-size: 10px; padding: 1px 6px;
+    background: var(--accent); color: white; border-radius: 8px; font-weight: 600;
+  }
 
+  .sidebar-spacer { flex: 1; }
   .sidebar-footer {
-    margin-top: auto;
-    padding: 12px 16px;
-    border-top: 1px solid var(--line);
-    font-size: 10px; color: var(--muted);
+    padding: 12px 16px; border-top: 1px solid var(--line);
+    font-size: 10px; color: var(--muted); background: var(--surface-2);
   }
   .sidebar-footer .actions { display: flex; gap: 6px; margin-top: 6px; }
   .sidebar-footer button {
     flex: 1; font-size: 10px; padding: 5px 6px;
     border: 1px solid var(--line-2); background: var(--surface);
     border-radius: 4px; cursor: pointer; color: var(--ink-soft);
+    transition: all 0.15s;
   }
   .sidebar-footer button:hover { background: var(--accent-soft); color: var(--accent); }
   .sidebar-footer button.danger:hover { background: #fce8e8; color: var(--danger); border-color: var(--danger); }
 
+  /* Backdrop for mobile */
+  .backdrop { display: none; position: fixed; inset: 0; background: rgba(55, 53, 47, 0.4); z-index: 40; }
+  .backdrop.show { display: block; }
+
   /* Main */
-  .main { flex: 1; min-width: 0; padding: 60px 80px; max-width: 1200px; margin: 0 auto; }
-  .page { display: none; }
+  .main-wrap { flex: 1; min-width: 0; }
+  .main { padding: 56px 64px; max-width: 1100px; margin: 0 auto; }
+  .page { display: none; animation: fadeIn 0.2s ease; }
   .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
   /* Home */
-  .home-hero h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
-  .home-hero h1 .emoji { margin-right: 4px; }
-  .home-hero p.lead { font-size: 16px; color: var(--ink-soft); max-width: 760px; margin-bottom: 24px; }
-  .home-hero .quote-link {
-    display: inline-block; margin-bottom: 32px;
-    color: var(--accent); text-decoration: underline; font-size: 13px;
+  .home-hero h1 {
+    font-size: 42px; font-weight: 700; letter-spacing: -0.025em;
+    margin-bottom: 14px; line-height: 1.15;
   }
+  .home-hero h1 .emoji { margin-right: 6px; }
+  .home-hero p.lead {
+    font-size: 16px; color: var(--ink-soft); max-width: 780px;
+    margin-bottom: 20px; line-height: 1.65;
+  }
+
+  .quick-actions {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 32px;
+  }
+  .quick-action {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    font-size: 13px; color: var(--ink-soft); cursor: pointer;
+    transition: all 0.15s; text-decoration: none;
+  }
+  .quick-action:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-soft); transform: translateY(-1px); }
 
   .callout {
     background: var(--surface-2);
     border-left: 3px solid var(--c-yellow-ink);
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-radius: 4px;
     margin: 24px 0;
     font-size: 13px;
     color: var(--ink-soft);
+    line-height: 1.6;
   }
   .callout strong { color: var(--ink); }
+  .callout.warn { border-left-color: var(--warn); background: var(--warn-soft); color: #6b3b1e; }
+  .callout.warn strong { color: #4a2814; }
 
   .how-to {
     background: var(--surface-2);
     padding: 20px 24px;
-    border-radius: var(--radius);
-    margin: 32px 0;
+    border-radius: var(--radius-lg);
+    margin: 24px 0;
   }
-  .how-to h3 { font-size: 16px; margin-bottom: 10px; }
-  .how-to ul { padding-left: 18px; font-size: 14px; color: var(--ink-soft); }
+  .how-to h3 { font-size: 15px; margin-bottom: 10px; font-weight: 600; }
+  .how-to ul { padding-left: 20px; font-size: 14px; color: var(--ink-soft); }
   .how-to li { margin-bottom: 4px; }
 
   /* Chapters grid */
-  .chapters-heading { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 40px 0 20px; }
+  .chapters-heading {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.01em;
+    margin: 48px 0 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .chapters-heading .ch-count { font-size: 13px; color: var(--muted); font-weight: 400; }
   .chapters-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 14px;
   }
   .chapter-card {
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 14px;
+    border-radius: var(--radius-lg);
+    padding: 12px;
     cursor: pointer;
-    transition: box-shadow 0.15s, transform 0.15s;
+    transition: box-shadow 0.18s, transform 0.18s, border-color 0.18s;
     background: var(--surface);
+    display: flex; flex-direction: column;
   }
-  .chapter-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+  .chapter-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: var(--line-2); }
   .chapter-card .ch-title-row {
     display: flex; align-items: center; gap: 6px;
-    font-size: 13px; font-weight: 500;
+    font-size: 12px; font-weight: 500;
     color: var(--accent);
     margin-bottom: 10px;
-    text-decoration: underline;
-    text-underline-offset: 2px;
+    padding: 0 4px;
   }
   .chapter-card .ch-icon { font-size: 13px; }
   .chapter-card .ch-inner {
-    border-radius: 6px;
-    padding: 12px 14px;
+    border-radius: 8px;
+    padding: 14px 16px;
+    flex: 1; display: flex; flex-direction: column;
   }
-  .chapter-card .ch-num { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-  .chapter-card .ch-desc { font-size: 13px; line-height: 1.5; margin-bottom: 10px; color: var(--ink-soft); }
-  .chapter-card .ch-cta { font-size: 12px; font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }
+  .chapter-card .ch-num { font-size: 12px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; }
+  .chapter-card .ch-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+  .chapter-card .ch-desc { font-size: 13px; line-height: 1.5; margin-bottom: 12px; opacity: 0.8; flex: 1; }
+  .chapter-card .ch-cta { font-size: 12px; font-weight: 600; }
 
-  /* Color variants */
   .ch-purple .ch-inner { background: var(--c-purple); color: var(--c-purple-ink); }
-  .ch-purple .ch-num, .ch-purple .ch-cta { color: var(--c-purple-ink); }
   .ch-blue .ch-inner { background: var(--c-blue); color: var(--c-blue-ink); }
-  .ch-blue .ch-num, .ch-blue .ch-cta { color: var(--c-blue-ink); }
   .ch-yellow .ch-inner { background: var(--c-yellow); color: var(--c-yellow-ink); }
-  .ch-yellow .ch-num, .ch-yellow .ch-cta { color: var(--c-yellow-ink); }
   .ch-green .ch-inner { background: var(--c-green); color: var(--c-green-ink); }
-  .ch-green .ch-num, .ch-green .ch-cta { color: var(--c-green-ink); }
   .ch-red .ch-inner { background: var(--c-red); color: var(--c-red-ink); }
-  .ch-red .ch-num, .ch-red .ch-cta { color: var(--c-red-ink); }
   .ch-pink .ch-inner { background: var(--c-pink); color: var(--c-pink-ink); }
-  .ch-pink .ch-num, .ch-pink .ch-cta { color: var(--c-pink-ink); }
 
-  .ch-desc { color: inherit; opacity: 0.85; }
+  /* Search results overlay */
+  .search-results {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .search-results.show { display: block; }
+  .search-results-header {
+    padding: 10px 16px; font-size: 12px; color: var(--muted);
+    background: var(--surface-2); border-bottom: 1px solid var(--line);
+    text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+  }
+  .search-result {
+    padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--line);
+    transition: background 0.1s;
+  }
+  .search-result:last-child { border-bottom: none; }
+  .search-result:hover { background: var(--surface-2); }
+  .search-result .sr-title { font-size: 14px; font-weight: 500; }
+  .search-result .sr-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .search-result .sr-snippet { font-size: 13px; color: var(--ink-soft); margin-top: 4px; line-height: 1.4; }
+  .search-result mark { background: #fff3a3; padding: 0 2px; border-radius: 2px; }
 
   /* Chapter pages */
-  .chapter-page { max-width: 820px; }
-  .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .chapter-page { max-width: 760px; }
+  .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
   .breadcrumb a { color: var(--accent); cursor: pointer; text-decoration: none; }
   .breadcrumb a:hover { text-decoration: underline; }
-  .chapter-page h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
-  .chapter-page .ch-tagline { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
-  .chapter-page h2 { font-size: 22px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; }
-  .chapter-page h3 { font-size: 17px; font-weight: 600; margin-top: 20px; margin-bottom: 8px; }
-  .chapter-page p { margin-bottom: 12px; font-size: 15px; color: var(--ink); }
-  .chapter-page ul, .chapter-page ol { padding-left: 22px; margin-bottom: 12px; font-size: 15px; }
-  .chapter-page li { margin-bottom: 4px; }
-  .chapter-page hr { border: none; border-top: 1px solid var(--line); margin: 32px 0; }
+  .chapter-page h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 6px; line-height: 1.15; }
+  .chapter-page .ch-tagline { color: var(--muted); font-size: 15px; margin-bottom: 36px; line-height: 1.5; }
+  .chapter-page h2 { font-size: 22px; font-weight: 600; margin-top: 36px; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .chapter-page h3 { font-size: 17px; font-weight: 600; margin-top: 24px; margin-bottom: 10px; }
+  .chapter-page p { margin-bottom: 14px; font-size: 15px; color: var(--ink); line-height: 1.7; }
+  .chapter-page ul, .chapter-page ol { padding-left: 24px; margin-bottom: 14px; font-size: 15px; }
+  .chapter-page li { margin-bottom: 6px; line-height: 1.65; }
+  .chapter-page hr { border: none; border-top: 1px solid var(--line); margin: 40px 0; }
 
   .tool-link {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 16px;
-    background: var(--accent);
-    color: white; text-decoration: none; cursor: pointer;
-    border-radius: 6px;
+    padding: 10px 18px;
+    background: var(--accent); color: white;
+    text-decoration: none; cursor: pointer;
+    border-radius: 8px;
     font-size: 14px; font-weight: 500;
-    margin: 8px 0;
+    margin: 8px 8px 8px 0;
     border: none;
+    transition: all 0.15s;
+    box-shadow: var(--shadow);
   }
-  .tool-link:hover { opacity: 0.9; }
+  .tool-link:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .chapter-nav {
+    display: flex; justify-content: space-between; gap: 12px;
+    margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .chapter-nav a {
+    flex: 1; padding: 14px 18px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    text-decoration: none; cursor: pointer;
+    display: flex; flex-direction: column; gap: 2px;
+    transition: all 0.15s;
+  }
+  .chapter-nav a:hover { border-color: var(--accent); background: var(--surface-2); }
+  .chapter-nav a.next { text-align: right; }
+  .chapter-nav .cn-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .chapter-nav .cn-title { font-size: 14px; font-weight: 500; color: var(--accent); }
+  .chapter-nav a.spacer { visibility: hidden; }
 
   .footer-version {
-    margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line);
+    margin-top: 60px; padding: 24px; border-top: 1px solid var(--line);
     font-size: 12px; color: var(--muted); text-align: center;
   }
 
+  /* ===== Qualification Journey Flowchart (Ch1) ===== */
+  .flowchart {
+    background: linear-gradient(180deg, var(--c-purple) 0%, var(--surface) 100%);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    margin: 32px 0;
+    border: 1px solid var(--line);
+  }
+  .flow-title {
+    text-align: center; font-size: 22px; font-weight: 700;
+    letter-spacing: -0.01em; margin-bottom: 6px;
+  }
+  .flow-subtitle {
+    text-align: center; color: var(--muted); font-size: 13px;
+    margin-bottom: 32px;
+  }
+  .flow-node {
+    background: var(--surface); border: 1px solid var(--line-2);
+    border-radius: var(--radius);
+    padding: 18px 22px; max-width: 480px; margin: 0 auto;
+    box-shadow: var(--shadow); text-align: center;
+  }
+  .flow-node h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .flow-node p { font-size: 13px; color: var(--ink-soft); margin: 0; }
+  .flow-badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    padding: 3px 10px; background: var(--accent-soft); color: var(--accent);
+    border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .flow-arrow {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); margin: 10px 0;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .flow-arrow::before, .flow-arrow::after {
+    content: ''; flex: 0 0 40px; height: 1px; background: var(--line-2); margin: 0 12px;
+  }
+  .flow-routes {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 20px 0;
+  }
+  .flow-route {
+    background: var(--surface); border-radius: var(--radius); padding: 20px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+  }
+  .flow-route.route-a { border-top: 4px solid var(--c-purple-ink); }
+  .flow-route.route-b { border-top: 4px solid var(--c-blue-ink); }
+  .flow-route .route-tag {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .route-a .route-tag { color: var(--c-purple-ink); }
+  .route-b .route-tag { color: var(--c-blue-ink); }
+  .flow-route h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+  .flow-route .route-desc { font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; flex: 1; }
+  .flow-route .route-meta { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .flow-route .route-time {
+    font-size: 12px; color: var(--ink-soft); margin-top: auto;
+    padding-top: 10px; border-top: 1px dashed var(--line);
+  }
+  .route-steps { list-style: none; padding: 0; margin: 0 0 12px; }
+  .route-steps li {
+    display: flex; gap: 10px; padding: 8px 0;
+    font-size: 13px; color: var(--ink-soft); line-height: 1.4;
+    border-bottom: 1px solid var(--line);
+  }
+  .route-steps li:last-child { border-bottom: none; }
+  .route-steps .step-num {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    background: var(--c-blue-ink); color: white;
+    border-radius: 50%; font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .flow-merge {
+    text-align: center; margin: 12px 0;
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .flow-hcpc {
+    background: linear-gradient(135deg, #f1f4ed 0%, #e8f0e3 100%);
+    border: 1px solid #c8d5ba;
+    border-radius: var(--radius);
+    padding: 22px 24px; text-align: center;
+    margin: 0 auto; max-width: 560px;
+  }
+  .flow-hcpc .check {
+    width: 36px; height: 36px; background: var(--c-green-ink); color: white;
+    border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 8px; box-shadow: 0 2px 6px rgba(79, 107, 65, 0.3);
+  }
+  .flow-hcpc h4 { font-size: 17px; font-weight: 600; color: var(--c-green-ink); margin-bottom: 6px; }
+  .flow-hcpc p { font-size: 13px; color: #3d5232; margin: 0; line-height: 1.5; }
+  .flow-hcpc strong { color: var(--c-green-ink); }
+
+  .flow-settings-heading {
+    text-align: center; font-size: 12px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+    margin: 24px 0 14px;
+  }
+  .flow-settings {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .flow-setting {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 14px; text-align: center;
+    transition: all 0.15s;
+  }
+  .flow-setting:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--accent-soft); }
+  .flow-setting .setting-icon { font-size: 22px; margin-bottom: 6px; display: block; }
+  .flow-setting h5 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .flow-setting p { font-size: 11px; color: var(--muted); margin: 0; line-height: 1.4; }
+
+  .flow-chartered {
+    text-align: center; margin: 20px 0 0;
+    padding: 16px;
+    background: var(--c-yellow); border-radius: var(--radius);
+    color: var(--c-yellow-ink);
+  }
+  .flow-chartered h5 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .flow-chartered p { font-size: 12px; margin: 0; }
+
   /* ===== Tool Modules ===== */
-  .tool-header { margin-bottom: 24px; }
+  .tool-header { margin-bottom: 28px; }
   .tool-header h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
-  .tool-header p { color: var(--muted); margin-top: 4px; font-size: 14px; }
+  .tool-header p { color: var(--muted); margin-top: 6px; font-size: 14px; }
 
   .card {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 20px;
+    border-radius: var(--radius-lg);
+    padding: 22px;
     margin-bottom: 16px;
     box-shadow: var(--shadow);
   }
-  .card-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .card-title {
+    font-size: 15px; font-weight: 600; margin-bottom: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 8px; flex-wrap: wrap;
+  }
   .card-title .count { font-size: 12px; color: var(--muted); font-weight: 400; }
 
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
@@ -220,132 +465,230 @@
   .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
   label { display: block; font-size: 12px; font-weight: 500; color: var(--ink-soft); margin-bottom: 4px; }
   input, select, textarea {
-    width: 100%; padding: 8px 10px;
+    width: 100%; padding: 9px 11px;
     border: 1px solid var(--line-2); border-radius: 6px;
     font-size: 14px; font-family: inherit; background: var(--surface);
-    color: var(--ink); transition: border 0.15s;
+    color: var(--ink); transition: border 0.15s, box-shadow 0.15s;
   }
   input:focus, select:focus, textarea:focus {
     outline: none; border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--accent-soft);
   }
-  textarea { resize: vertical; min-height: 70px; }
+  textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
 
   .btn {
-    padding: 8px 16px; border: none; border-radius: 6px;
+    padding: 9px 18px; border: none; border-radius: 6px;
     font-size: 14px; font-weight: 500; cursor: pointer;
     background: var(--accent); color: white;
-    transition: opacity 0.15s;
+    transition: all 0.15s;
   }
-  .btn:hover { opacity: 0.9; }
+  .btn:hover { background: var(--accent-dark); }
   .btn-secondary { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-2); }
-  .btn-secondary:hover { background: var(--accent-soft); color: var(--accent); }
+  .btn-secondary:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-soft); }
   .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--line-2); }
   .btn-danger:hover { background: #fce8e8; border-color: var(--danger); }
   .btn-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 
-  .entry { padding: 14px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 8px; background: var(--surface-2); }
+  .entry { padding: 14px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 8px; background: var(--surface-2); transition: border-color 0.15s; }
+  .entry:hover { border-color: var(--line-2); }
   .entry-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
   .entry-meta { font-size: 12px; color: var(--muted); }
   .entry-title { font-weight: 500; font-size: 14px; }
-  .entry-body { font-size: 13px; color: var(--ink-soft); white-space: pre-wrap; }
+  .entry-body { font-size: 13px; color: var(--ink-soft); white-space: pre-wrap; line-height: 1.55; }
   .entry-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); margin-right: 4px; }
   .entry-actions { display: flex; gap: 6px; flex-shrink: 0; }
-  .entry-actions button { font-size: 11px; padding: 4px 8px; }
-  .empty { text-align: center; padding: 32px; color: var(--muted); font-size: 13px; }
+  .entry-actions button { font-size: 11px; padding: 4px 10px; }
+  .empty {
+    text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px;
+    background: var(--surface-2); border-radius: var(--radius); border: 1px dashed var(--line-2);
+  }
+  .empty .empty-icon { font-size: 28px; display: block; margin-bottom: 8px; opacity: 0.5; }
 
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
-  .stat { background: var(--surface); border: 1px solid var(--line); padding: 14px; border-radius: 6px; }
-  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-  .stat-value { font-size: 24px; font-weight: 600; margin-top: 4px; color: var(--accent); }
+  .stat { background: var(--surface); border: 1px solid var(--line); padding: 16px; border-radius: var(--radius); }
+  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .stat-value { font-size: 28px; font-weight: 700; margin-top: 4px; color: var(--accent); letter-spacing: -0.02em; }
 
   .ref-search { margin-bottom: 16px; }
+  .ref-filters {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+  }
+  .ref-filter {
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    font-size: 12px; cursor: pointer; color: var(--ink-soft);
+    transition: all 0.15s;
+  }
+  .ref-filter:hover { background: var(--surface-3); }
+  .ref-filter.active { background: var(--accent); color: white; border-color: var(--accent); }
   .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-  .ref-card { background: var(--surface); border: 1px solid var(--line); padding: 14px; border-radius: 6px; transition: all 0.15s; }
-  .ref-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+  .ref-card {
+    background: var(--surface); border: 1px solid var(--line); padding: 16px;
+    border-radius: var(--radius); transition: all 0.15s;
+  }
+  .ref-card:hover { border-color: var(--accent-soft); box-shadow: var(--shadow); }
   .ref-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-  .ref-card .ref-cat { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
-  .ref-card p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+  .ref-card .ref-cat {
+    font-size: 10px; color: var(--accent); text-transform: uppercase;
+    letter-spacing: 0.06em; font-weight: 600;
+  }
+  .ref-card p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
 
-  .modal-bg { position: fixed; inset: 0; background: rgba(55, 53, 47, 0.5); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(55, 53, 47, 0.5);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+    animation: fadeBg 0.15s ease;
+  }
+  @keyframes fadeBg { from { opacity: 0; } to { opacity: 1; } }
   .modal-bg.show { display: flex; }
-  .modal { background: var(--surface); border-radius: var(--radius); max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 24px; }
-  .modal h3 { margin-bottom: 12px; }
-  .modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--muted); }
+  .modal {
+    background: var(--surface); border-radius: var(--radius-lg);
+    max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto;
+    padding: 28px;
+    animation: slideIn 0.2s ease;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .modal h3 { margin-bottom: 12px; font-size: 18px; }
+  .modal-close { float: right; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--muted); line-height: 1; padding: 0; }
+  .modal-close:hover { color: var(--ink); }
 
-  .formulation-section { margin-bottom: 14px; }
-  .formulation-section .desc { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-style: italic; }
-  .formulation-output { background: var(--surface-2); padding: 16px; border-radius: 6px; border: 1px solid var(--line); font-size: 13px; white-space: pre-wrap; line-height: 1.7; font-family: inherit; }
+  .formulation-section { margin-bottom: 16px; }
+  .formulation-section .desc { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-style: italic; line-height: 1.4; }
+  .formulation-output {
+    background: var(--surface-2); padding: 18px; border-radius: 6px;
+    border: 1px solid var(--line); font-size: 13px;
+    white-space: pre-wrap; line-height: 1.7;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
 
-  .mood-row { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
-  .mood-opt { padding: 6px 12px; border: 1px solid var(--line-2); border-radius: 16px; cursor: pointer; font-size: 13px; background: var(--surface); user-select: none; }
-  .mood-opt.selected { background: var(--accent); color: white; border-color: var(--accent); }
+  .mood-row { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+  .mood-opt {
+    padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 999px;
+    cursor: pointer; font-size: 16px; background: var(--surface); user-select: none;
+    transition: all 0.15s;
+  }
+  .mood-opt:hover { background: var(--surface-2); }
+  .mood-opt.selected { background: var(--accent); color: white; border-color: var(--accent); transform: scale(1.08); }
 
   .template-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-  .template-tile { padding: 16px; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; background: var(--surface-2); }
-  .template-tile:hover { background: var(--accent-soft); }
-  .template-tile h4 { font-size: 14px; }
-  .template-tile p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .template-tile {
+    padding: 16px; border: 1px solid var(--line); border-radius: var(--radius);
+    cursor: pointer; background: var(--surface-2); transition: all 0.15s;
+  }
+  .template-tile:hover { background: var(--accent-soft); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .template-tile h4 { font-size: 14px; margin-bottom: 4px; }
+  .template-tile p { font-size: 12px; color: var(--muted); }
 
   .privacy-note {
-    background: #fff8e6; border: 1px solid #f0d878;
-    color: #6b5320; padding: 10px 14px; border-radius: 6px;
-    font-size: 12px; margin-bottom: 16px;
+    background: var(--warn-soft); border: 1px solid #f0d878;
+    color: #6b5320; padding: 12px 16px; border-radius: var(--radius);
+    font-size: 12px; margin-bottom: 16px; line-height: 1.5;
   }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: white;
+    padding: 12px 20px; border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    z-index: 200; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); pointer-events: auto; }
 
   /* Mobile */
   @media (max-width: 900px) {
     .chapters-grid { grid-template-columns: repeat(2, 1fr); }
-    .main { padding: 32px 24px; }
+    .main { padding: 28px 28px; }
+    .flow-routes { grid-template-columns: 1fr; }
+    .flow-settings { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 700px) {
-    .app { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; }
-    .main { padding: 24px 16px; }
+    .mobile-bar { display: flex; }
+    .sidebar {
+      position: fixed; left: 0; top: 0; z-index: 60;
+      transform: translateX(-100%);
+      box-shadow: var(--shadow-md);
+      height: 100vh;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .close-sidebar { display: block; }
+    .main { padding: 20px 18px; }
     .chapters-grid { grid-template-columns: 1fr; }
     .form-row, .form-row.three { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: 1fr; }
-    .home-hero h1 { font-size: 28px; }
-    .chapter-page h1 { font-size: 26px; }
+    .stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat { padding: 10px; }
+    .stat-value { font-size: 20px; }
+    .stat-label { font-size: 9px; }
+    .home-hero h1 { font-size: 30px; }
+    .chapter-page h1 { font-size: 28px; }
+    .chapter-page h2 { font-size: 19px; }
+    .tool-header h1 { font-size: 26px; }
+    .chapter-nav { flex-direction: column; }
+    .flowchart { padding: 24px 16px; }
+  }
+
+  /* Print styles */
+  @media print {
+    .sidebar, .mobile-bar, .quick-actions, .tool-link, .chapter-nav, .sidebar-footer { display: none !important; }
+    .main { max-width: 100%; padding: 0; }
+    .page { display: block !important; page-break-after: always; }
+    body { background: white; }
+    .callout, .card, .flowchart { break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
+  <div class="backdrop" id="backdrop" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
-      <h1>🧠 Forensic Psych</h1>
-      <p>UK Practitioner Handbook</p>
+      <div class="brand-text">
+        <h1>🧠 Forensic Psych</h1>
+        <p>UK Practitioner Handbook</p>
+      </div>
+      <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
+
+    <div class="search-box">
+      <input type="text" id="global-search" class="search-input" placeholder="Search..." aria-label="Search handbook">
+    </div>
+
     <div class="nav-section">
       <div class="nav-item active" data-page="home"><span class="nav-icon">🏠</span> Home</div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Chapters</div>
-      <div class="nav-item" data-page="ch1"><span class="nav-icon">1</span> Qualification Journey</div>
-      <div class="nav-item" data-page="ch2"><span class="nav-icon">2</span> Professional Bodies</div>
-      <div class="nav-item" data-page="ch3"><span class="nav-icon">3</span> Legal &amp; Policy</div>
-      <div class="nav-item" data-page="ch4"><span class="nav-icon">4</span> Assessment Toolkit</div>
-      <div class="nav-item" data-page="ch5"><span class="nav-icon">5</span> Where You'll Work</div>
-      <div class="nav-item" data-page="ch6"><span class="nav-icon">6</span> Interventions</div>
-      <div class="nav-item" data-page="ch7"><span class="nav-icon">7</span> Report Writing</div>
-      <div class="nav-item" data-page="ch8"><span class="nav-icon">8</span> Ethics &amp; Safety</div>
-      <div class="nav-item" data-page="ch9"><span class="nav-icon">9</span> CPD</div>
-      <div class="nav-item" data-page="ch10"><span class="nav-icon">10</span> Career Practicalities</div>
-      <div class="nav-item" data-page="ch11"><span class="nav-icon">11</span> Quick Reference</div>
-      <div class="nav-item" data-page="ch12"><span class="nav-icon">12</span> Templates</div>
-      <div class="nav-item" data-page="ch13"><span class="nav-icon">13</span> Growing Into the Role</div>
-      <div class="nav-item" data-page="ch14"><span class="nav-icon">14</span> Cheat Sheets</div>
+      <div class="nav-item" data-page="ch1"><span class="nav-num">1</span> Qualification Journey</div>
+      <div class="nav-item" data-page="ch2"><span class="nav-num">2</span> Professional Bodies</div>
+      <div class="nav-item" data-page="ch3"><span class="nav-num">3</span> Legal &amp; Policy</div>
+      <div class="nav-item" data-page="ch4"><span class="nav-num">4</span> Assessment Toolkit</div>
+      <div class="nav-item" data-page="ch5"><span class="nav-num">5</span> Where You'll Work</div>
+      <div class="nav-item" data-page="ch6"><span class="nav-num">6</span> Interventions</div>
+      <div class="nav-item" data-page="ch7"><span class="nav-num">7</span> Report Writing</div>
+      <div class="nav-item" data-page="ch8"><span class="nav-num">8</span> Ethics &amp; Safety</div>
+      <div class="nav-item" data-page="ch9"><span class="nav-num">9</span> CPD</div>
+      <div class="nav-item" data-page="ch10"><span class="nav-num">10</span> Career Practicalities</div>
+      <div class="nav-item" data-page="ch11"><span class="nav-num">11</span> Quick Reference</div>
+      <div class="nav-item" data-page="ch12"><span class="nav-num">12</span> Templates</div>
+      <div class="nav-item" data-page="ch13"><span class="nav-num">13</span> Growing Into the Role</div>
+      <div class="nav-item" data-page="ch14"><span class="nav-num">14</span> Cheat Sheets</div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Tools</div>
-      <div class="nav-item" data-page="tool-cpd"><span class="nav-icon">📚</span> CPD Logger</div>
-      <div class="nav-item" data-page="tool-supervision"><span class="nav-icon">💬</span> Supervision Log</div>
-      <div class="nav-item" data-page="tool-formulation"><span class="nav-icon">🧩</span> Risk Formulation</div>
-      <div class="nav-item" data-page="tool-reflection"><span class="nav-icon">📓</span> Reflection Journal</div>
-      <div class="nav-item" data-page="tool-reports"><span class="nav-icon">📄</span> Report Templates</div>
+      <div class="nav-item" data-page="tool-cpd"><span class="nav-icon">📚</span> CPD Logger<span class="badge" id="badge-cpd" style="display:none">0</span></div>
+      <div class="nav-item" data-page="tool-supervision"><span class="nav-icon">💬</span> Supervision Log<span class="badge" id="badge-sup" style="display:none">0</span></div>
+      <div class="nav-item" data-page="tool-formulation"><span class="nav-icon">🧩</span> Risk Formulation<span class="badge" id="badge-form" style="display:none">0</span></div>
+      <div class="nav-item" data-page="tool-reflection"><span class="nav-icon">📓</span> Reflection Journal<span class="badge" id="badge-ref" style="display:none">0</span></div>
+      <div class="nav-item" data-page="tool-reports"><span class="nav-icon">📄</span> Report Templates<span class="badge" id="badge-rep" style="display:none">0</span></div>
       <div class="nav-item" data-page="tool-reference"><span class="nav-icon">🔍</span> Reference Index</div>
     </div>
+    <div class="sidebar-spacer"></div>
     <div class="sidebar-footer">
       Data stored in this browser only.
       <div class="actions">
@@ -355,919 +698,938 @@
     </div>
   </aside>
 
-  <main class="main">
-    <!-- ============ HOME ============ -->
-    <section class="page active" id="p-home">
-      <div class="home-hero">
-        <h1><span class="emoji">🧠</span>The Forensic Psychology Practitioner Handbook (UK)</h1>
-        <p class="lead">You've done the MSc. You know the theory, you've read the literature, and you can cite Hare, Hart, and Heilbrun in your sleep. What nobody told you is what comes next — how qualification actually works, which professional bodies matter and why, what a prison psychologist does on a Tuesday morning, or how to write a court report that a judge will actually read. This handbook exists to fill that gap.</p>
-        <a class="quote-link" href="https://dlockwood13.github.io/quote-app/" target="_blank" rel="noopener">https://dlockwood13.github.io/quote-app/</a>
-      </div>
+  <div class="main-wrap">
+    <div class="mobile-bar">
+      <button class="hamburger" onclick="openSidebar()" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 id="mobile-title">🧠 Forensic Psych</h1>
+    </div>
 
-      <div class="how-to">
-        <h3>📍 How to Use This Page</h3>
-        <ul>
-          <li><strong>Top to bottom</strong> if you're fresh out of your MSc and need the full map.</li>
-          <li><strong>Jump to sections</strong> using the sidebar navigation.</li>
-          <li><strong>Use the Tools</strong> — CPD logger, supervision log, formulation builder, reflection journal, report templates, and quick reference — all in the sidebar.</li>
-        </ul>
-      </div>
+    <main class="main">
+      <!-- ============ HOME ============ -->
+      <section class="page active" id="p-home">
+        <div class="home-hero">
+          <h1><span class="emoji">🧠</span>The Forensic Psychology Practitioner Handbook</h1>
+          <p class="lead">You've done the MSc. You know the theory, you've read the literature, and you can cite Hare, Hart, and Heilbrun in your sleep. What nobody told you is what comes next — how qualification actually works, which professional bodies matter and why, what a prison psychologist does on a Tuesday morning, or how to write a court report that a judge will actually read. This handbook exists to fill that gap.</p>
+        </div>
 
-      <div class="callout">
-        ⚠️ <strong>Disclaimer:</strong> This is a reference guide, not legal or professional advice. Always verify current requirements with the HCPC, BPS, and your employer. Registration rules, pay bands, and guidelines change — re-check primary sources before making career decisions.
-      </div>
+        <div class="quick-actions">
+          <a class="quick-action" onclick="goTo('ch1')">🚀 Start the qualification journey</a>
+          <a class="quick-action" onclick="goTo('tool-cpd')">📚 Log a CPD entry</a>
+          <a class="quick-action" onclick="goTo('tool-formulation')">🧩 Build a formulation</a>
+          <a class="quick-action" onclick="goTo('tool-reference')">🔍 Quick reference</a>
+        </div>
 
-      <h2 class="chapters-heading">Chapters</h2>
+        <div class="search-results" id="home-search-results"></div>
 
-      <div class="chapters-grid">
-        <div class="chapter-card ch-purple" onclick="goTo('ch1')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>The Qualification Journey</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 1</div>
-            <div class="ch-desc">Route A vs Route B, BPS Stage 2 competencies, and the path from MSc to HCPC registration.</div>
-            <div class="ch-cta">→ Start here</div>
+        <div class="how-to">
+          <h3>📍 How to Use This Handbook</h3>
+          <ul>
+            <li><strong>Top to bottom</strong> if you're fresh out of your MSc and need the full map.</li>
+            <li><strong>Jump to chapters</strong> using the sidebar or cards below.</li>
+            <li><strong>Use the Tools</strong> — CPD logger, supervision log, formulation builder, reflection journal, report templates, and quick reference — all in the sidebar. Data stays in your browser.</li>
+            <li><strong>Press <span class="search-hint">/</span></strong> anywhere to focus the search bar.</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          ⚠️ <strong>Disclaimer:</strong> This is a reference guide, not legal or professional advice. Always verify current requirements with the HCPC, BPS, and your employer. Registration rules, pay bands, and guidelines change — re-check primary sources before making career decisions.
+        </div>
+
+        <h2 class="chapters-heading">Chapters <span class="ch-count">14 chapters</span></h2>
+
+        <div class="chapters-grid" id="chapters-grid"></div>
+
+        <div class="callout" style="margin-top: 40px;">
+          <em>This handbook will age — professional bodies update their guidance, pay scales shift, legislation changes, and evidence moves on. Treat it as a living document. Re-check the HCPC, BPS, and HMPPS/NHS sources at least annually, and update your own copy as you grow into the role.</em>
+        </div>
+
+        <div class="footer-version">
+          <strong>REMINDER:</strong> Trust the process and know that you're exactly where you're meant to be<br><br>
+          Version 1.1 — Updated May 2026<br>
+          © DanLockwood.co.uk | 2026 All Rights Reserved
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 1 — with Flowchart ============ -->
+      <section class="page chapter-page" id="p-ch1">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 1</div>
+        <h1>The Qualification Journey</h1>
+        <p class="ch-tagline">Route A vs Route B, BPS Stage 2 competencies, and the path from MSc to HCPC registration.</p>
+
+        <!-- Visual Flowchart -->
+        <div class="flowchart">
+          <div class="flow-title">Forensic Psychology Qualification Journey</div>
+          <div class="flow-subtitle">UK Pathway — MSc to HCPC Registration &amp; Independent Practice</div>
+
+          <div class="flow-node">
+            <span class="flow-badge">Starting Point</span>
+            <h4>BPS-Accredited MSc in Forensic Psychology</h4>
+            <p>Stage 1 equivalent · required entry point for both routes</p>
           </div>
-        </div>
 
-        <div class="chapter-card ch-blue" onclick="goTo('ch2')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Professional Bodies &amp; Registration</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 2</div>
-            <div class="ch-desc">HCPC, BPS, and DFP — what each body does, how to register, and how to stay registered.</div>
-            <div class="ch-cta">→ Know the rules</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-yellow" onclick="goTo('ch3')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>The UK Legal &amp; Policy Framework</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 3</div>
-            <div class="ch-desc">Mental Health Act, criminal justice system, and the laws every forensic practitioner must know.</div>
-            <div class="ch-cta">→ Legal foundations</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-green" onclick="goTo('ch4')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>The Assessment Toolkit</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 4</div>
-            <div class="ch-desc">Risk assessment instruments, psychometrics, formulation frameworks, and report writing guidance.</div>
-            <div class="ch-cta">→ Core practice</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-red" onclick="goTo('ch5')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Where You'll Work: Settings in Detail</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 5</div>
-            <div class="ch-desc">Prisons, secure hospitals, courts, and police — culture, roles, and what to expect.</div>
-            <div class="ch-cta">→ Real world</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-pink" onclick="goTo('ch6')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Evidence-Based Interventions</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 6</div>
-            <div class="ch-desc">Accredited programmes, therapeutic approaches, and how to deliver and evaluate interventions in forensic settings.</div>
-            <div class="ch-cta">→ Treatment toolkit</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-blue" onclick="goTo('ch7')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Report Writing</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 7</div>
-            <div class="ch-desc">How to structure court reports, risk assessments, and clinical letters that are defensible and professionally sound.</div>
-            <div class="ch-cta">→ Write with confidence</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-yellow" onclick="goTo('ch8')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Ethics, Boundaries &amp; Safety</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 8</div>
-            <div class="ch-desc">Professional conduct, safeguarding, dual-role conflicts, lone working, and keeping yourself safe in forensic environments.</div>
-            <div class="ch-cta">→ Non-negotiable</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-green" onclick="goTo('ch9')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Continuing Professional Development</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 9</div>
-            <div class="ch-desc">What counts as CPD, how to log and evidence it, supervision requirements, and building your portfolio over time.</div>
-            <div class="ch-cta">→ Stay registered</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-red" onclick="goTo('ch10')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Career Practicalities</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 10</div>
-            <div class="ch-desc">Pay bands, job hunting, NHS vs HMPPS vs independent sector, interviews, and navigating your first year in post.</div>
-            <div class="ch-cta">→ The real talk</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-pink" onclick="goTo('ch11')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Quick Reference Index</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 11</div>
-            <div class="ch-desc">Key terms, acronyms, legislation, assessment tools, and professional bodies — all in one searchable place.</div>
-            <div class="ch-cta">→ Fast lookup</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-blue" onclick="goTo('ch12')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Starter Templates &amp; Checklists</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 12</div>
-            <div class="ch-desc">Ready-to-use templates for supervision logs, CPD records, placement inductions, and risk formulation frameworks.</div>
-            <div class="ch-cta">→ Hit the ground running</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-yellow" onclick="goTo('ch13')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Growing Into the Role</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 13</div>
-            <div class="ch-desc">Reflective practice, managing vicarious trauma, building resilience, and developing your professional identity over time.</div>
-            <div class="ch-cta">→ Long game</div>
-          </div>
-        </div>
-
-        <div class="chapter-card ch-green" onclick="goTo('ch14')">
-          <div class="ch-title-row"><span class="ch-icon">📄</span>Psychology Cheat Sheets</div>
-          <div class="ch-inner">
-            <div class="ch-num">Chapter 14</div>
-            <div class="ch-desc">At-a-glance reference cards for key theories, models, and frameworks — ideal for placement prep and revision.</div>
-            <div class="ch-cta">→ Quick revision</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout" style="margin-top: 40px;">
-        <em>This handbook will age — professional bodies update their guidance, pay scales shift, legislation changes, and evidence moves on. Treat it as a living document. Re-check the HCPC, BPS, and HMPPS/NHS sources at least annually, and update your own copy as you grow into the role.</em>
-      </div>
-
-      <div class="footer-version">
-        <strong>REMINDER:</strong> Trust the process and know that you're exactly where you're meant to be<br><br>
-        Version 1.0 — Compiled April 2026<br>
-        © DanLockwood.co.uk | 2026 All Rights Reserved
-      </div>
-    </section>
-
-    <!-- ============ CHAPTER PAGES ============ -->
-
-    <!-- Chapter 1 -->
-    <section class="page chapter-page" id="p-ch1">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 1</div>
-      <h1>The Qualification Journey</h1>
-      <p class="ch-tagline">Route A vs Route B, BPS Stage 2 competencies, and the path from MSc to HCPC registration.</p>
-
-      <h2>Two Routes to Qualification</h2>
-      <p>To use the protected title <strong>Forensic Psychologist</strong> in the UK, you must be registered with the HCPC. After completing an accredited MSc in Forensic Psychology (Stage 1), there are two routes to Stage 2 qualification.</p>
-
-      <h3>Route A: BPS Qualification in Forensic Psychology (QFP)</h3>
-      <ul>
-        <li>Self-directed Stage 2 portfolio overseen by the BPS</li>
-        <li>Typically two years minimum, often longer in practice</li>
-        <li>Requires a coordinating supervisor (Chartered Forensic Psychologist)</li>
-        <li>Four core roles must be evidenced: research, consultancy, training, and applied practice</li>
-        <li>Funded by you or your employer; significant administrative responsibility on the trainee</li>
-      </ul>
-
-      <h3>Route B: BPS-Accredited Doctorate in Forensic Psychology (DForenPsy)</h3>
-      <ul>
-        <li>Structured three-year doctoral programme</li>
-        <li>Combines academic teaching, supervised placements, and a thesis</li>
-        <li>More structured, but limited number of programmes and places</li>
-        <li>Often funded through HMPPS / NHS trainee posts</li>
-      </ul>
-
-      <h2>Stage 2 Core Competencies</h2>
-      <p>Whichever route you take, the four core roles you must demonstrate are:</p>
-      <ol>
-        <li><strong>Conducting Psychological Applications and Interventions</strong> — assessments, formulations, treatment planning, individual and group work</li>
-        <li><strong>Research</strong> — designing and completing applied research relevant to forensic practice</li>
-        <li><strong>Communicating Psychological Knowledge and Advice</strong> — written reports, court testimony, professional consultation</li>
-        <li><strong>Training Other Professionals</strong> — designing, delivering, and evaluating training</li>
-      </ol>
-
-      <h2>Realistic Timelines</h2>
-      <p>From MSc completion to Chartered/HCPC registration is rarely under three years. Most candidates take four to six. Don't measure yourself against a notional minimum — measure against the depth of your portfolio and the soundness of your practice.</p>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch2')" style="color: var(--accent); cursor:pointer;">Chapter 2 — Professional Bodies &amp; Registration →</a></p>
-    </section>
-
-    <!-- Chapter 2 -->
-    <section class="page chapter-page" id="p-ch2">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 2</div>
-      <h1>Professional Bodies &amp; Registration</h1>
-      <p class="ch-tagline">HCPC, BPS, and DFP — what each body does, how to register, and how to stay registered.</p>
-
-      <h2>HCPC — Health and Care Professions Council</h2>
-      <p>The statutory regulator for practitioner psychologists in the UK. Without HCPC registration, you cannot legally use the protected title <em>Forensic Psychologist</em>.</p>
-      <ul>
-        <li>Sets <strong>Standards of Proficiency</strong> for practitioner psychologists</li>
-        <li>Maintains the public register</li>
-        <li>Investigates fitness-to-practise concerns</li>
-        <li>Requires CPD audit on a rolling basis (random sample)</li>
-        <li>Annual renewal fee</li>
-      </ul>
-
-      <h2>BPS — British Psychological Society</h2>
-      <p>The professional membership body — <em>not</em> a regulator. Membership is voluntary but valued.</p>
-      <ul>
-        <li>Sets training standards (Stage 1 and Stage 2 accreditation)</li>
-        <li>Confers <strong>Chartered</strong> status (CPsychol)</li>
-        <li>Hosts divisions and special interest groups</li>
-        <li>Publishes ethics guidance and practice frameworks</li>
-      </ul>
-
-      <h2>DFP — Division of Forensic Psychology</h2>
-      <p>The forensic special interest group within the BPS. Worth joining for:</p>
-      <ul>
-        <li>The DFP annual conference</li>
-        <li><em>Forensic Update</em> and <em>Issues in Forensic Psychology</em> publications</li>
-        <li>Networking and CPD events</li>
-        <li>Sub-committee involvement (early career, EDI, etc.)</li>
-      </ul>
-
-      <h2>Staying Registered</h2>
-      <p>HCPC registration is renewed every two years. You must:</p>
-      <ul>
-        <li>Pay the renewal fee</li>
-        <li>Maintain a CPD record demonstrating the five HCPC CPD standards</li>
-        <li>Be ready to submit a portfolio if audited (around 2.5% are randomly selected each cycle)</li>
-        <li>Notify HCPC of any fitness-to-practise concerns or convictions</li>
-      </ul>
-
-      <button class="tool-link" onclick="goTo('tool-cpd')">📚 Open CPD Logger →</button>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch3')" style="color: var(--accent); cursor:pointer;">Chapter 3 — The UK Legal &amp; Policy Framework →</a></p>
-    </section>
-
-    <!-- Chapter 3 -->
-    <section class="page chapter-page" id="p-ch3">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 3</div>
-      <h1>The UK Legal &amp; Policy Framework</h1>
-      <p class="ch-tagline">Mental Health Act, criminal justice system, and the laws every forensic practitioner must know.</p>
-
-      <h2>Mental Health Act 1983 (as amended 2007)</h2>
-      <p>The primary legislation for compulsory admission and treatment in England and Wales. Key sections to know:</p>
-      <ul>
-        <li><strong>Section 2</strong> — Admission for assessment, up to 28 days</li>
-        <li><strong>Section 3</strong> — Admission for treatment, up to 6 months (renewable)</li>
-        <li><strong>Section 37</strong> — Hospital order made by court in lieu of sentence</li>
-        <li><strong>Section 41</strong> — Restriction order added to a Section 37 (Ministry of Justice oversight)</li>
-        <li><strong>Sections 47/49</strong> — Transfer of sentenced/remanded prisoners to hospital</li>
-        <li><strong>Section 117</strong> — Aftercare duty on discharge</li>
-        <li><strong>Section 136</strong> — Police power to remove from a public place to a place of safety</li>
-      </ul>
-
-      <h2>Mental Capacity Act 2005</h2>
-      <p>Framework for decision-making for those who lack capacity. Two-stage test: a diagnostic test (impairment of mind or brain) and a functional test (cannot understand, retain, weigh, or communicate). Best-interests decisions must be made by the least restrictive means.</p>
-
-      <h2>Criminal Justice Act 2003</h2>
-      <p>Brought in IPP sentences (abolished for new sentences in 2012, but a substantial population remains in custody), extended sentences, and public protection provisions.</p>
-
-      <h2>Other Key Legislation</h2>
-      <ul>
-        <li><strong>Criminal Procedure (Insanity) Act 1964</strong> — fitness to plead, insanity defence</li>
-        <li><strong>PACE 1984</strong> — police powers; appropriate adult provisions for vulnerable suspects</li>
-        <li><strong>Equality Act 2010</strong> — protected characteristics; reasonable adjustments duty</li>
-        <li><strong>Data Protection Act 2018 / UK GDPR</strong> — special category (health) data, lawful basis for processing</li>
-        <li><strong>Children Act 1989 / 2004</strong> — safeguarding duties</li>
-      </ul>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch4')" style="color: var(--accent); cursor:pointer;">Chapter 4 — The Assessment Toolkit →</a></p>
-    </section>
-
-    <!-- Chapter 4 -->
-    <section class="page chapter-page" id="p-ch4">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 4</div>
-      <h1>The Assessment Toolkit</h1>
-      <p class="ch-tagline">Risk assessment instruments, psychometrics, formulation frameworks, and report writing guidance.</p>
-
-      <h2>Approaches to Risk Assessment</h2>
-      <ul>
-        <li><strong>Unstructured Clinical Judgement</strong> — historical default; poor reliability and validity. Avoid.</li>
-        <li><strong>Actuarial</strong> — score-based, statistically derived (e.g. Static-99R). High reliability but limited individual context.</li>
-        <li><strong>Structured Professional Judgement (SPJ)</strong> — empirically anchored items combined with clinical reasoning (e.g. HCR-20v3, RSVP, SARA). Current best practice in most UK settings.</li>
-      </ul>
-
-      <h2>Common Tools</h2>
-      <ul>
-        <li><strong>HCR-20v3</strong> — violence risk; 20 items across Historical, Clinical, Risk Management</li>
-        <li><strong>RSVP</strong> — sexual violence risk</li>
-        <li><strong>SARA</strong> — intimate partner violence</li>
-        <li><strong>Static-99R / Static-2002R</strong> — actuarial sexual recidivism (adult males)</li>
-        <li><strong>OASys</strong> — HMPPS-wide need and risk assessment</li>
-        <li><strong>PCL-R</strong> — psychopathy (training and licensure required)</li>
-      </ul>
-
-      <h2>Formulation Frameworks</h2>
-      <p>The <strong>5Ps</strong> are the most common formulation framework in UK clinical and forensic settings: Predisposing, Precipitating, Perpetuating, Protective, and Presenting factors. The <strong>Good Lives Model</strong> and <strong>Risk-Need-Responsivity</strong> frame intervention planning.</p>
-
-      <button class="tool-link" onclick="goTo('tool-formulation')">🧩 Open Risk Formulation Builder →</button>
-
-      <h2>Important Caveat</h2>
-      <p>Each tool listed here requires the licensed manual and (for many) accredited training to use validly. This handbook describes them — it does not replace training. Don't score a tool you haven't been trained on.</p>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch5')" style="color: var(--accent); cursor:pointer;">Chapter 5 — Where You'll Work →</a></p>
-    </section>
-
-    <!-- Chapter 5 -->
-    <section class="page chapter-page" id="p-ch5">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 5</div>
-      <h1>Where You'll Work: Settings in Detail</h1>
-      <p class="ch-tagline">Prisons, secure hospitals, courts, and police — culture, roles, and what to expect.</p>
-
-      <h2>HMPPS — Prisons and Probation</h2>
-      <p>The largest single employer of forensic psychologists in England and Wales. Roles span:</p>
-      <ul>
-        <li>Trainee Forensic Psychologist posts (Band 7)</li>
-        <li>Registered Psychologists (Band 8a/b)</li>
-        <li>Programme delivery, risk assessment, parole reports</li>
-        <li>OPD Pathway, PIPE units, and Therapeutic Communities</li>
-      </ul>
-
-      <h2>NHS Forensic Mental Health</h2>
-      <p>Tiered secure services:</p>
-      <ul>
-        <li><strong>High secure</strong> — Broadmoor, Ashworth, Rampton</li>
-        <li><strong>Medium secure</strong> — regional units</li>
-        <li><strong>Low secure</strong> — step-down and longer-term rehabilitation</li>
-        <li><strong>Community forensic teams</strong> — outpatient and early-intervention</li>
-      </ul>
-
-      <h2>Courts and Independent Practice</h2>
-      <p>Expert witness work — court reports, fitness to plead, sentencing reports — is most often conducted as an independent practitioner, sometimes alongside an NHS or HMPPS post. Requires substantial post-qualification experience.</p>
-
-      <h2>Police</h2>
-      <p>A smaller but growing area: behavioural advisors, investigative interviewing consultancy, hostage negotiation support, vulnerability assessment.</p>
-
-      <h2>Cultural Differences</h2>
-      <p>Each setting has its own culture and pace. Prisons run on routine and security; secure hospitals on multi-disciplinary clinical decision-making; courts on adversarial scrutiny. The same practitioner skills look quite different across these contexts.</p>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch6')" style="color: var(--accent); cursor:pointer;">Chapter 6 — Evidence-Based Interventions →</a></p>
-    </section>
-
-    <!-- Chapter 6 -->
-    <section class="page chapter-page" id="p-ch6">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 6</div>
-      <h1>Evidence-Based Interventions</h1>
-      <p class="ch-tagline">Accredited programmes, therapeutic approaches, and how to deliver and evaluate interventions in forensic settings.</p>
-
-      <h2>HMPPS Accredited Programmes</h2>
-      <ul>
-        <li><strong>Kaizen</strong> — for high-risk men with sexual or violent offending</li>
-        <li><strong>Horizon</strong> — for medium-risk men with sexual offending</li>
-        <li><strong>Building Better Relationships (BBR)</strong> — domestic abuse, community</li>
-        <li><strong>Thinking Skills Programme (TSP)</strong> — general cognitive skills</li>
-        <li><strong>Resolve</strong> — medium-risk violent offenders</li>
-        <li><strong>Becoming New Me Plus / New Me Strengths</strong> — adapted for learning disability</li>
-      </ul>
-
-      <h2>Therapeutic Approaches</h2>
-      <ul>
-        <li><strong>CBT</strong> — backbone of most accredited programmes</li>
-        <li><strong>Schema Therapy</strong> — particularly for personality difficulties</li>
-        <li><strong>DBT</strong> — emotion dysregulation and self-harm</li>
-        <li><strong>Mentalisation-Based Therapy (MBT)</strong> — emerging evidence in forensic personality work</li>
-        <li><strong>Compassion-Focused Therapy</strong> — shame and self-criticism</li>
-        <li><strong>Trauma-focused approaches</strong> — TF-CBT, EMDR</li>
-      </ul>
-
-      <h2>Frameworks for Effective Practice</h2>
-      <ul>
-        <li><strong>RNR (Risk-Need-Responsivity)</strong> — match intervention intensity to risk; target criminogenic needs; tailor to individual responsivity</li>
-        <li><strong>Good Lives Model</strong> — strengths-based; pursue primary human goods through prosocial means</li>
-        <li><strong>Desistance frameworks</strong> — identity change, hope, and social capital</li>
-      </ul>
-
-      <h2>Evaluation</h2>
-      <p>Outcomes monitoring is now standard. Pre/post psychometrics, programme treatment reports, and longer-term reconviction data all feed into the evidence base. Don't skip the boring measurement work — it's how the field improves.</p>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch7')" style="color: var(--accent); cursor:pointer;">Chapter 7 — Report Writing →</a></p>
-    </section>
-
-    <!-- Chapter 7 -->
-    <section class="page chapter-page" id="p-ch7">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 7</div>
-      <h1>Report Writing</h1>
-      <p class="ch-tagline">How to structure court reports, risk assessments, and clinical letters that are defensible and professionally sound.</p>
-
-      <h2>Principles of a Good Report</h2>
-      <ul>
-        <li><strong>Answer the question.</strong> Read the letter of instruction twice. Address each instruction explicitly.</li>
-        <li><strong>Stay within your competence.</strong> Decline questions you cannot answer.</li>
-        <li><strong>Show your sources.</strong> What did you read, who did you interview, what did you observe?</li>
-        <li><strong>Distinguish fact from opinion.</strong> Reports are scrutinised line by line in court.</li>
-        <li><strong>Be transparent about limits.</strong> Tools, sample sizes, missing information.</li>
-        <li><strong>Plain English.</strong> Judges, juries, and lay readers must follow your reasoning.</li>
-      </ul>
-
-      <h2>Common Pitfalls</h2>
-      <ul>
-        <li>Importing diagnostic labels without operational definitions</li>
-        <li>Conflating risk factors with predictions</li>
-        <li>Failing to consider alternative formulations</li>
-        <li>Dual-role contamination (treating clinician acting as expert)</li>
-        <li>Recommendations that exceed what the evidence supports</li>
-      </ul>
-
-      <button class="tool-link" onclick="goTo('tool-reports')">📄 Open Report Templates →</button>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch8')" style="color: var(--accent); cursor:pointer;">Chapter 8 — Ethics, Boundaries &amp; Safety →</a></p>
-    </section>
-
-    <!-- Chapter 8 -->
-    <section class="page chapter-page" id="p-ch8">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 8</div>
-      <h1>Ethics, Boundaries &amp; Safety</h1>
-      <p class="ch-tagline">Professional conduct, safeguarding, dual-role conflicts, lone working, and keeping yourself safe in forensic environments.</p>
-
-      <h2>Core Ethical Frameworks</h2>
-      <ul>
-        <li><strong>HCPC Standards of Conduct, Performance and Ethics</strong> — the floor</li>
-        <li><strong>BPS Code of Ethics and Conduct</strong> — four principles: respect, competence, responsibility, integrity</li>
-        <li><strong>BPS Practice Guidelines</strong> — practical guidance on consent, confidentiality, record-keeping</li>
-      </ul>
-
-      <h2>Confidentiality &amp; Its Limits</h2>
-      <p>Always frame confidentiality at the start: it is bounded. Limits include risk to self or others, safeguarding (children and vulnerable adults), court orders, and serious crime. The frame must be set <em>before</em> disclosure, not after.</p>
-
-      <h2>Dual Roles</h2>
-      <p>Therapist and assessor of risk for the court are not the same role. Treating clinicians should not write expert reports on their own clients. Where overlap is unavoidable, declare it explicitly.</p>
-
-      <h2>Lone Working &amp; Personal Safety</h2>
-      <ul>
-        <li>Know your service's lone-working policy. If there isn't one, ask why.</li>
-        <li>Pre-meeting risk assessment for community visits</li>
-        <li>Personal alarms, check-in protocols, room layout (sit nearer the door)</li>
-        <li>De-escalation training is worth its weight</li>
-      </ul>
-
-      <h2>Vicarious Trauma</h2>
-      <p>Forensic work exposes you to harrowing material. Reading hundreds of pages of abuse history, sitting across from someone who has done terrible things — this leaves a residue. Supervision is not optional. Reflective practice is not optional. Wellbeing is not optional.</p>
-
-      <button class="tool-link" onclick="goTo('tool-reflection')">📓 Open Reflection Journal →</button>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch9')" style="color: var(--accent); cursor:pointer;">Chapter 9 — CPD →</a></p>
-    </section>
-
-    <!-- Chapter 9 -->
-    <section class="page chapter-page" id="p-ch9">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 9</div>
-      <h1>Continuing Professional Development</h1>
-      <p class="ch-tagline">What counts as CPD, how to log and evidence it, supervision requirements, and building your portfolio over time.</p>
-
-      <h2>The Five HCPC CPD Standards</h2>
-      <ol>
-        <li>Maintain a continuous, up-to-date and accurate record of your CPD activities</li>
-        <li>Demonstrate that your CPD activities are a mixture of learning activities relevant to current or future practice</li>
-        <li>Seek to ensure that your CPD has contributed to the quality of your practice and service delivery</li>
-        <li>Seek to ensure that your CPD benefits the service user</li>
-        <li>Present a written profile (with supporting evidence) on request explaining how you have met the standards</li>
-      </ol>
-
-      <h2>What Counts</h2>
-      <ul>
-        <li>Courses, workshops, conferences</li>
-        <li>Reading journals, books, NICE guidance, case law</li>
-        <li>Supervision (clinical and managerial)</li>
-        <li>Reflective practice and journaling</li>
-        <li>Teaching and presenting</li>
-        <li>Peer learning and case discussions</li>
-        <li>Service development, audit, and research</li>
-      </ul>
-
-      <h2>Building the Habit</h2>
-      <p>Log CPD as it happens, not in a panic two years later. Five minutes after the event, while it's fresh — a few sentences on what you learned and how it changes your practice. The CPD logger below is built for exactly this.</p>
-
-      <button class="tool-link" onclick="goTo('tool-cpd')">📚 Open CPD Logger →</button>
-      <button class="tool-link" onclick="goTo('tool-supervision')">💬 Open Supervision Log →</button>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch10')" style="color: var(--accent); cursor:pointer;">Chapter 10 — Career Practicalities →</a></p>
-    </section>
-
-    <!-- Chapter 10 -->
-    <section class="page chapter-page" id="p-ch10">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 10</div>
-      <h1>Career Practicalities</h1>
-      <p class="ch-tagline">Pay bands, job hunting, NHS vs HMPPS vs independent sector, interviews, and navigating your first year in post.</p>
-
-      <h2>Pay Bands (Approximate, England)</h2>
-      <ul>
-        <li><strong>Assistant Psychologist</strong> — NHS Band 4–5</li>
-        <li><strong>Trainee Forensic Psychologist (HMPPS)</strong> — Band 7</li>
-        <li><strong>Registered Forensic Psychologist</strong> — NHS Band 8a / HMPPS Band 8a</li>
-        <li><strong>Senior / Consultant</strong> — Band 8b–8c</li>
-        <li><strong>Head of Service / Lead Psychologist</strong> — Band 8c–9</li>
-      </ul>
-      <p>Independent practice rates vary widely. Court reports are typically billed by the hour or fixed-fee. Cross-check current pay scales annually — they shift.</p>
-
-      <h2>Where to Look for Jobs</h2>
-      <ul>
-        <li>NHS Jobs (jobs.nhs.uk)</li>
-        <li>Civil Service Jobs (HMPPS posts)</li>
-        <li>BPS appointments memorandum</li>
-        <li>LinkedIn — increasingly used by independent providers and private secure</li>
-        <li>Word of mouth — placement supervisors, conferences, DFP events</li>
-      </ul>
-
-      <h2>Interview Preparation</h2>
-      <ul>
-        <li>Have a worked example of a formulation ready</li>
-        <li>Know the trust/service's strategic priorities</li>
-        <li>Be honest about what you don't know yet — interviewers respect calibrated humility</li>
-        <li>Prepare questions about supervision arrangements and CPD support</li>
-      </ul>
-
-      <h2>The First Year</h2>
-      <p>The first year in any new forensic post is a steep curve. Take fewer cases than you think you can handle. Use supervision generously. Find one or two trusted peers. The work compounds slowly — that's how it should feel.</p>
-
-      <hr>
-      <p><strong>Next:</strong> <a onclick="goTo('ch11')" style="color: var(--accent); cursor:pointer;">Chapter 11 — Quick Reference Index →</a></p>
-    </section>
-
-    <!-- Chapter 11 -->
-    <section class="page chapter-page" id="p-ch11">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 11</div>
-      <h1>Quick Reference Index</h1>
-      <p class="ch-tagline">Key terms, acronyms, legislation, assessment tools, and professional bodies — all in one searchable place.</p>
-
-      <p>The full searchable reference is available below.</p>
-
-      <button class="tool-link" onclick="goTo('tool-reference')">🔍 Open Quick Reference →</button>
-    </section>
-
-    <!-- Chapter 12 -->
-    <section class="page chapter-page" id="p-ch12">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 12</div>
-      <h1>Starter Templates &amp; Checklists</h1>
-      <p class="ch-tagline">Ready-to-use templates for supervision logs, CPD records, placement inductions, and risk formulation frameworks.</p>
-
-      <p>All templates are integrated into live tools — fill them in directly, save drafts, and export when needed.</p>
-
-      <button class="tool-link" onclick="goTo('tool-cpd')">📚 CPD Record →</button>
-      <button class="tool-link" onclick="goTo('tool-supervision')">💬 Supervision Log →</button>
-      <button class="tool-link" onclick="goTo('tool-formulation')">🧩 Risk Formulation Framework →</button>
-      <button class="tool-link" onclick="goTo('tool-reports')">📄 Report Templates →</button>
-
-      <h2>Placement Induction Checklist</h2>
-      <ul>
-        <li>Service overview, governance, and reporting structure understood</li>
-        <li>Lone working policy read and signed</li>
-        <li>Safeguarding lead identified</li>
-        <li>Supervision arrangements agreed in writing</li>
-        <li>IT access, building access, ID badge</li>
-        <li>Mandatory training completed (PMVA / GSA / fire / data)</li>
-        <li>Clinical record system training completed</li>
-        <li>Caseload allocation and review schedule agreed</li>
-        <li>Placement learning objectives drafted</li>
-      </ul>
-    </section>
-
-    <!-- Chapter 13 -->
-    <section class="page chapter-page" id="p-ch13">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 13</div>
-      <h1>Growing Into the Role</h1>
-      <p class="ch-tagline">Reflective practice, managing vicarious trauma, building resilience, and developing your professional identity over time.</p>
-
-      <h2>Reflective Practice</h2>
-      <p>Not optional, not paperwork. Reflection is how clinical reasoning becomes durable. Use a structured model — Gibbs, Kolb, Driscoll — and write briefly but consistently. The discipline matters more than the depth of any one entry.</p>
-
-      <button class="tool-link" onclick="goTo('tool-reflection')">📓 Open Reflection Journal →</button>
-
-      <h2>Managing Vicarious Trauma</h2>
-      <ul>
-        <li>Notice the early signs: sleep disturbance, irritability, intrusive thoughts about cases, numbness</li>
-        <li>Vary your caseload where you can</li>
-        <li>Take leave properly — don't carry casework on holiday</li>
-        <li>Talk to peers; isolation amplifies everything</li>
-        <li>Personal therapy is not a sign of weakness — it's a sign of seriousness about the work</li>
-      </ul>
-
-      <h2>Professional Identity Over Time</h2>
-      <p>The first few years are about competence — knowing you can do the work safely. The middle years are about voice — developing your own way of formulating, intervening, and explaining. The later years are about contribution — supervising, writing, shaping the next cohort. Don't rush the stages.</p>
-
-      <h2>Sustaining Yourself</h2>
-      <p>This is hard work. The people you assess and treat have often done very harmful things, and have often had very harmful things done to them. Holding both of those truths over a career takes care, support, and a life outside the role. Build that life deliberately.</p>
-    </section>
-
-    <!-- Chapter 14 -->
-    <section class="page chapter-page" id="p-ch14">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 14</div>
-      <h1>Psychology Cheat Sheets</h1>
-      <p class="ch-tagline">At-a-glance reference cards for key theories, models, and frameworks — ideal for placement prep and revision.</p>
-
-      <h2>Formulation: 5Ps</h2>
-      <ul>
-        <li><strong>Presenting</strong> — current concerns and behaviours</li>
-        <li><strong>Predisposing</strong> — vulnerabilities (developmental, biological, historical)</li>
-        <li><strong>Precipitating</strong> — triggers (recent events, losses, stressors)</li>
-        <li><strong>Perpetuating</strong> — maintaining factors (cognitions, environment, reinforcement)</li>
-        <li><strong>Protective</strong> — strengths and supports</li>
-      </ul>
-
-      <h2>Risk-Need-Responsivity (RNR)</h2>
-      <ul>
-        <li><strong>Risk</strong> — match intervention intensity to risk level</li>
-        <li><strong>Need</strong> — target criminogenic (changeable, risk-relevant) needs</li>
-        <li><strong>Responsivity</strong> — tailor delivery to learning style, motivation, ability</li>
-      </ul>
-
-      <h2>Good Lives Model (GLM)</h2>
-      <p>Eleven primary human goods (life, knowledge, excellence in play and work, agency, inner peace, friendship, community, spirituality, happiness, creativity). Offending is conceptualised as a maladaptive route to these goods. Treatment helps the person achieve them prosocially.</p>
-
-      <h2>Gibbs Reflective Cycle</h2>
-      <ol>
-        <li>Description — what happened?</li>
-        <li>Feelings — what were you thinking and feeling?</li>
-        <li>Evaluation — what was good and bad?</li>
-        <li>Analysis — what sense can you make of it?</li>
-        <li>Conclusion — what else could you have done?</li>
-        <li>Action plan — what would you do next time?</li>
-      </ol>
-
-      <h2>Stages of Change (Prochaska &amp; DiClemente)</h2>
-      <p>Pre-contemplation → Contemplation → Preparation → Action → Maintenance → (Relapse). Useful for matching intervention to readiness.</p>
-
-      <h2>HCR-20v3 Domains</h2>
-      <ul>
-        <li><strong>Historical (10 items)</strong> — violence, antisocial behaviour, relationships, employment, substance use, mental disorder, personality disorder, traumatic experiences, violent attitudes, treatment/supervision response</li>
-        <li><strong>Clinical (5 items)</strong> — insight, violent ideation, symptoms of major mental disorder, instability, treatment/supervision response (current)</li>
-        <li><strong>Risk Management (5 items)</strong> — professional services, living situation, personal support, treatment/supervision compliance, stress/coping</li>
-      </ul>
-
-      <button class="tool-link" onclick="goTo('tool-reference')">🔍 Browse Full Reference Index →</button>
-    </section>
-
-    <!-- ============ TOOLS ============ -->
-
-    <!-- CPD -->
-    <section class="page" id="p-tool-cpd">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / CPD Logger</div>
-      <div class="tool-header">
-        <h1>📚 CPD Logger</h1>
-        <p>Track continuing professional development for HCPC audit and your portfolio.</p>
-      </div>
-
-      <div class="stats" id="cpd-stats"></div>
-
-      <div class="card">
-        <div class="card-title">Add CPD Entry</div>
-        <div class="form-row">
-          <div><label>Date</label><input type="date" id="cpd-date"></div>
-          <div><label>Hours</label><input type="number" step="0.25" min="0" id="cpd-hours" placeholder="e.g. 1.5"></div>
-        </div>
-        <div class="form-row">
-          <div><label>Activity Type</label>
-            <select id="cpd-type">
-              <option>Course / Workshop</option>
-              <option>Reading / Research</option>
-              <option>Supervision</option>
-              <option>Reflective Practice</option>
-              <option>Conference</option>
-              <option>Teaching / Presenting</option>
-              <option>Peer Learning</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div><label>HCPC Standard (optional)</label>
-            <select id="cpd-standard">
-              <option value="">— Select —</option>
-              <option>1. Maintain a continuous, up-to-date record</option>
-              <option>2. Mix of learning activities</option>
-              <option>3. Demonstrate impact on practice</option>
-              <option>4. Demonstrate benefit to service users</option>
-              <option>5. Present evidence on request</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row full">
-          <div><label>Title / Topic</label><input type="text" id="cpd-title" placeholder="e.g. HCR-20v3 risk assessment training"></div>
-        </div>
-        <div class="form-row full">
-          <div><label>Learning Outcomes &amp; Impact on Practice</label>
-            <textarea id="cpd-outcomes" placeholder="What did you learn? How will it change your practice?"></textarea>
-          </div>
-        </div>
-        <div class="btn-row">
-          <button class="btn" onclick="addCPD()">Add Entry</button>
-          <button class="btn btn-secondary" onclick="exportCPD()">Export CSV</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">CPD History <span class="count" id="cpd-count">0 entries</span></div>
-        <div id="cpd-list"></div>
-      </div>
-    </section>
-
-    <!-- Supervision -->
-    <section class="page" id="p-tool-supervision">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Supervision Log</div>
-      <div class="tool-header">
-        <h1>💬 Supervision Log</h1>
-        <p>Record clinical, managerial, and peer supervision sessions.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">New Supervision Entry</div>
-        <div class="form-row three">
-          <div><label>Date</label><input type="date" id="sup-date"></div>
-          <div><label>Supervisor</label><input type="text" id="sup-supervisor" placeholder="Name"></div>
-          <div><label>Type</label>
-            <select id="sup-type">
-              <option>Clinical</option>
-              <option>Managerial</option>
-              <option>Peer</option>
-              <option>Group</option>
-              <option>External</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row full">
-          <div><label>Discussion Points</label><textarea id="sup-discussion" placeholder="Cases, dilemmas, themes covered..."></textarea></div>
-        </div>
-        <div class="form-row full">
-          <div><label>Actions Agreed</label><textarea id="sup-actions" placeholder="Next steps, reading, follow-ups..."></textarea></div>
-        </div>
-        <div class="form-row full">
-          <div><label>Reflections</label><textarea id="sup-reflection" placeholder="Your own reflections on the session..."></textarea></div>
-        </div>
-        <div class="btn-row">
-          <button class="btn" onclick="addSupervision()">Save Entry</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Supervision History <span class="count" id="sup-count">0 entries</span></div>
-        <input type="text" id="sup-search" placeholder="Search supervision entries..." style="margin-bottom: 12px;" oninput="renderSupervision()">
-        <div id="sup-list"></div>
-      </div>
-    </section>
-
-    <!-- Formulation -->
-    <section class="page" id="p-tool-formulation">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Risk Formulation</div>
-      <div class="tool-header">
-        <h1>🧩 Risk Formulation Builder</h1>
-        <p>Structured 5Ps formulation with risk-relevant prompts. Output is plain text — copy or save.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Case Identifier</div>
-        <div class="form-row">
-          <div><label>Reference / Initials</label><input type="text" id="form-ref" placeholder="e.g. JM-2026-04"></div>
-          <div><label>Date</label><input type="date" id="form-date"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">5Ps Formulation</div>
-        <div class="formulation-section"><label>Presenting Issues</label><div class="desc">Current concerns, behaviours, symptoms, risk behaviours</div><textarea id="form-presenting"></textarea></div>
-        <div class="formulation-section"><label>Predisposing Factors</label><div class="desc">Vulnerabilities — developmental, biological, historical (ACEs, trauma, attachment, prior offences)</div><textarea id="form-predisposing"></textarea></div>
-        <div class="formulation-section"><label>Precipitating Factors</label><div class="desc">Triggers — recent events, losses, stressors, substance use, relational rupture</div><textarea id="form-precipitating"></textarea></div>
-        <div class="formulation-section"><label>Perpetuating Factors</label><div class="desc">What maintains the problem — cognitions, schemas, environment, reinforcement, social network</div><textarea id="form-perpetuating"></textarea></div>
-        <div class="formulation-section"><label>Protective Factors</label><div class="desc">Internal/external strengths — engagement, motivation, supports, skills, stable accommodation</div><textarea id="form-protective"></textarea></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Risk-Relevant Detail</div>
-        <div class="form-row full"><div><label>Static Risk Factors</label><textarea id="form-static" placeholder="Historical, unchanging factors (e.g. age at first offence, prior convictions)"></textarea></div></div>
-        <div class="form-row full"><div><label>Dynamic Risk Factors</label><textarea id="form-dynamic" placeholder="Current, changeable factors targeted by intervention"></textarea></div></div>
-        <div class="form-row full"><div><label>Risk Scenarios</label><textarea id="form-scenarios" placeholder="Plausible future risk scenarios — nature, severity, imminence, frequency"></textarea></div></div>
-        <div class="form-row full"><div><label>Risk Management Plan</label><textarea id="form-management" placeholder="Monitoring, treatment, supervision, victim safety planning"></textarea></div></div>
-        <div class="btn-row">
-          <button class="btn" onclick="generateFormulation()">Generate Formulation</button>
-          <button class="btn btn-secondary" onclick="saveFormulation()">Save</button>
-          <button class="btn btn-secondary" onclick="clearFormulation()">Clear Form</button>
-        </div>
-      </div>
-
-      <div class="card" id="formulation-output-card" style="display:none;">
-        <div class="card-title">Formulation Output <span><button class="btn btn-secondary" onclick="copyFormulation()">Copy</button></span></div>
-        <div class="formulation-output" id="formulation-output"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Saved Formulations <span class="count" id="form-count">0 saved</span></div>
-        <div id="form-list"></div>
-      </div>
-    </section>
-
-    <!-- Reflection -->
-    <section class="page" id="p-tool-reflection">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Reflection Journal</div>
-      <div class="tool-header">
-        <h1>📓 Daily Reflection Journal</h1>
-        <p>Brief Gibbs-style reflective entries. Useful for CPD evidence and managing the emotional load of forensic work.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">New Reflection</div>
-        <div class="form-row">
-          <div><label>Date</label><input type="date" id="ref-date"></div>
-          <div><label>Mood</label>
-            <div class="mood-row" id="mood-row">
-              <span class="mood-opt" data-mood="1">😞</span>
-              <span class="mood-opt" data-mood="2">😕</span>
-              <span class="mood-opt" data-mood="3">😐</span>
-              <span class="mood-opt" data-mood="4">🙂</span>
-              <span class="mood-opt" data-mood="5">😊</span>
+          <div class="flow-arrow">choose your route</div>
+
+          <div class="flow-routes">
+            <div class="flow-route route-a">
+              <div class="route-tag">Route A</div>
+              <h4>University Doctorate</h4>
+              <div class="route-desc">DForenPsy or ForenPsyD — BPS-accredited and HCPC-approved doctoral programme. Combines Stage 1 + Stage 2 in one structured course.</div>
+              <div class="route-meta">Nottingham · Cardiff Met · Birmingham City · UWE</div>
+              <div class="route-time">⏱ 3 years full-time</div>
+            </div>
+
+            <div class="flow-route route-b">
+              <div class="route-tag">Route B</div>
+              <h4>BPS Stage 2 + Trainee Post</h4>
+              <ul class="route-steps">
+                <li><span class="step-num">1</span><div><strong>Secure a trainee post</strong><br>HMPPS, NHS secure services, or approved forensic setting</div></li>
+                <li><span class="step-num">2</span><div><strong>Enrol — BPS Stage 2</strong><br>2021 route only · 2–4 years supervised practice</div></li>
+                <li><span class="step-num">3</span><div><strong>4 Core Roles + Viva</strong><br>Assessment · Research · Communication · Training — portfolio evidence + oral exam</div></li>
+              </ul>
+              <div class="route-time">⏱ 2–4 years supervised practice</div>
             </div>
           </div>
+
+          <div class="flow-merge">both routes lead to</div>
+
+          <div class="flow-hcpc">
+            <div class="check">✓</div>
+            <h4>HCPC Registration + BPS Chartered Status</h4>
+            <p>You may now legally use the protected title <strong>Forensic Psychologist</strong>. Ongoing CPD required to maintain registration.</p>
+          </div>
+
+          <div class="flow-settings-heading">independent practice — where you'll work</div>
+
+          <div class="flow-settings">
+            <div class="flow-setting"><span class="setting-icon">🏛️</span><h5>Prisons</h5><p>HMPPS · offending behaviour · risk</p></div>
+            <div class="flow-setting"><span class="setting-icon">🏥</span><h5>Forensic MH</h5><p>Secure hospitals · NHS · community</p></div>
+            <div class="flow-setting"><span class="setting-icon">⚖️</span><h5>Courts</h5><p>Expert witness · court reports</p></div>
+            <div class="flow-setting"><span class="setting-icon">🚔</span><h5>Police</h5><p>Investigative support · profiling</p></div>
+          </div>
+
+          <div class="flow-chartered">
+            <h5>Chartered Forensic Psychologist (BPS)</h5>
+            <p>Independent practice · expert witness · academic · specialist clinical roles</p>
+          </div>
         </div>
-        <div class="form-row full"><div><label>What happened?</label><textarea id="ref-what" placeholder="A brief description of the event or experience"></textarea></div></div>
-        <div class="form-row full"><div><label>Feelings &amp; Thoughts</label><textarea id="ref-feelings" placeholder="What were you thinking and feeling?"></textarea></div></div>
-        <div class="form-row full"><div><label>Evaluation &amp; Analysis</label><textarea id="ref-eval" placeholder="What was good/bad? What sense can you make of it?"></textarea></div></div>
-        <div class="form-row full"><div><label>Action Plan</label><textarea id="ref-action" placeholder="What will you do differently next time?"></textarea></div></div>
-        <div class="btn-row"><button class="btn" onclick="addReflection()">Save Reflection</button></div>
-      </div>
 
-      <div class="card">
-        <div class="card-title">Reflection History <span class="count" id="ref-count">0 entries</span></div>
-        <div id="ref-list"></div>
-      </div>
-    </section>
-
-    <!-- Reports -->
-    <section class="page" id="p-tool-reports">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Report Templates</div>
-      <div class="tool-header">
-        <h1>📄 Report Templates</h1>
-        <p>Skeletons for common report types. Fill in, then copy out into your word processor for formatting.</p>
-      </div>
-
-      <div class="privacy-note">
-        ⚠️ Avoid entering identifiable client information. Use initials or case codes only. Browser data is private to this device, but reports should be drafted in your secure organisational system.
-      </div>
-
-      <div class="card">
-        <div class="card-title">Choose Template</div>
-        <div class="template-list">
-          <div class="template-tile" onclick="loadTemplate('court')"><h4>Court Report</h4><p>Section 12 / psychological assessment for criminal proceedings</p></div>
-          <div class="template-tile" onclick="loadTemplate('risk')"><h4>Risk Assessment Report</h4><p>Structured professional judgement format</p></div>
-          <div class="template-tile" onclick="loadTemplate('clinical')"><h4>Clinical Letter</h4><p>Brief letter to GP / referrer / MDT</p></div>
-          <div class="template-tile" onclick="loadTemplate('parole')"><h4>Parole Board Report</h4><p>Risk and progress assessment for parole consideration</p></div>
+        <div class="callout warn">
+          <strong>⚠ 2026 update:</strong> The original 2011 route to the BPS Stage 2 qualification has <strong>closed to new enrolments</strong>. The revised <strong>2021 route</strong> is now the only active pathway for Route B. Always verify current requirements with the BPS website before enrolling.
         </div>
-      </div>
 
-      <div class="card" id="report-editor" style="display:none;">
-        <div class="card-title">
-          <span id="report-title">Report</span>
-          <span class="btn-row">
-            <button class="btn btn-secondary" onclick="copyReport()">Copy</button>
-            <button class="btn btn-secondary" onclick="saveReport()">Save Draft</button>
-          </span>
+        <h2>Two Routes to Qualification</h2>
+        <p>To use the protected title <strong>Forensic Psychologist</strong> in the UK, you must be registered with the HCPC. After completing an accredited MSc in Forensic Psychology (Stage 1), there are two routes to Stage 2 qualification.</p>
+
+        <h3>Route A: University Doctorate (DForenPsy / ForenPsyD)</h3>
+        <ul>
+          <li>Structured three-year doctoral programme, BPS-accredited and HCPC-approved</li>
+          <li>Combines academic teaching, supervised placements, and a thesis</li>
+          <li>More structured, but limited number of programmes and places</li>
+          <li>Often funded through HMPPS / NHS trainee posts or self-funded</li>
+          <li>Providers include Nottingham, Cardiff Met, Birmingham City, UWE</li>
+        </ul>
+
+        <h3>Route B: BPS Stage 2 Qualification (2021 Route)</h3>
+        <ul>
+          <li>Self-directed Stage 2 portfolio overseen by the BPS</li>
+          <li>Typically two to four years of supervised practice</li>
+          <li>Requires a coordinating supervisor (Chartered Forensic Psychologist)</li>
+          <li>Four core roles must be evidenced: Assessment, Research, Communication, Training</li>
+          <li>Concludes with a viva (oral examination)</li>
+          <li>Funded by you or your employer; significant administrative responsibility</li>
+        </ul>
+
+        <h2>Stage 2 Core Competencies</h2>
+        <p>Whichever route you take, the four core roles you must demonstrate are:</p>
+        <ol>
+          <li><strong>Conducting Psychological Applications and Interventions</strong> — assessments, formulations, treatment planning, individual and group work</li>
+          <li><strong>Research</strong> — designing and completing applied research relevant to forensic practice</li>
+          <li><strong>Communicating Psychological Knowledge and Advice</strong> — written reports, court testimony, professional consultation</li>
+          <li><strong>Training Other Professionals</strong> — designing, delivering, and evaluating training</li>
+        </ol>
+
+        <h2>Realistic Timelines</h2>
+        <p>From MSc completion to Chartered/HCPC registration is rarely under three years. Most candidates take four to six. Don't measure yourself against a notional minimum — measure against the depth of your portfolio and the soundness of your practice.</p>
+
+        <div class="chapter-nav">
+          <a class="spacer"></a>
+          <a class="next" onclick="goTo('ch2')">
+            <span class="cn-label">Next →</span>
+            <span class="cn-title">Chapter 2 — Professional Bodies</span>
+          </a>
         </div>
-        <div id="report-fields"></div>
-      </div>
+      </section>
 
-      <div class="card">
-        <div class="card-title">Saved Drafts <span class="count" id="report-count">0 drafts</span></div>
-        <div id="report-list"></div>
-      </div>
-    </section>
+      <!-- ============ CHAPTER 2 ============ -->
+      <section class="page chapter-page" id="p-ch2">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 2</div>
+        <h1>Professional Bodies &amp; Registration</h1>
+        <p class="ch-tagline">HCPC, BPS, and DFP — what each body does, how to register, and how to stay registered.</p>
 
-    <!-- Reference -->
-    <section class="page" id="p-tool-reference">
-      <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Reference Index</div>
-      <div class="tool-header">
-        <h1>🔍 Quick Reference</h1>
-        <p>Key frameworks, legislation, assessment tools, and acronyms — searchable.</p>
-      </div>
+        <h2>HCPC — Health and Care Professions Council</h2>
+        <p>The statutory regulator for practitioner psychologists in the UK. Without HCPC registration, you cannot legally use the protected title <em>Forensic Psychologist</em>.</p>
+        <ul>
+          <li>Sets <strong>Standards of Proficiency</strong> for practitioner psychologists</li>
+          <li>Maintains the public register</li>
+          <li>Investigates fitness-to-practise concerns</li>
+          <li>Requires CPD audit on a rolling basis (random sample)</li>
+          <li>Annual renewal fee</li>
+        </ul>
 
-      <input type="text" class="ref-search" id="ref-search-input" placeholder="Search frameworks, tools, legislation, acronyms..." oninput="renderReference()">
-      <div class="ref-grid" id="ref-grid"></div>
-    </section>
-  </main>
+        <h2>BPS — British Psychological Society</h2>
+        <p>The professional membership body — <em>not</em> a regulator. Membership is voluntary but valued.</p>
+        <ul>
+          <li>Sets training standards (Stage 1 and Stage 2 accreditation)</li>
+          <li>Confers <strong>Chartered</strong> status (CPsychol)</li>
+          <li>Hosts divisions and special interest groups</li>
+          <li>Publishes ethics guidance and practice frameworks</li>
+        </ul>
+
+        <h2>DFP — Division of Forensic Psychology</h2>
+        <p>The forensic special interest group within the BPS. Worth joining for:</p>
+        <ul>
+          <li>The DFP annual conference</li>
+          <li><em>Forensic Update</em> and <em>Issues in Forensic Psychology</em> publications</li>
+          <li>Networking and CPD events</li>
+          <li>Sub-committee involvement (early career, EDI, etc.)</li>
+        </ul>
+
+        <h2>Staying Registered</h2>
+        <p>HCPC registration is renewed every two years. You must:</p>
+        <ul>
+          <li>Pay the renewal fee</li>
+          <li>Maintain a CPD record demonstrating the five HCPC CPD standards</li>
+          <li>Be ready to submit a portfolio if audited (around 2.5% are randomly selected each cycle)</li>
+          <li>Notify HCPC of any fitness-to-practise concerns or convictions</li>
+        </ul>
+
+        <button class="tool-link" onclick="goTo('tool-cpd')">📚 Open CPD Logger →</button>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch1')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 1 — Qualification Journey</span></a>
+          <a class="next" onclick="goTo('ch3')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 3 — Legal &amp; Policy</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 3 ============ -->
+      <section class="page chapter-page" id="p-ch3">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 3</div>
+        <h1>The UK Legal &amp; Policy Framework</h1>
+        <p class="ch-tagline">Mental Health Act, criminal justice system, and the laws every forensic practitioner must know.</p>
+
+        <h2>Mental Health Act 1983 (as amended 2007)</h2>
+        <p>The primary legislation for compulsory admission and treatment in England and Wales. Key sections to know:</p>
+        <ul>
+          <li><strong>Section 2</strong> — Admission for assessment, up to 28 days</li>
+          <li><strong>Section 3</strong> — Admission for treatment, up to 6 months (renewable)</li>
+          <li><strong>Section 37</strong> — Hospital order made by court in lieu of sentence</li>
+          <li><strong>Section 41</strong> — Restriction order added to a Section 37 (Ministry of Justice oversight)</li>
+          <li><strong>Sections 47/49</strong> — Transfer of sentenced/remanded prisoners to hospital</li>
+          <li><strong>Section 117</strong> — Aftercare duty on discharge</li>
+          <li><strong>Section 136</strong> — Police power to remove from a public place to a place of safety</li>
+        </ul>
+
+        <h2>Mental Capacity Act 2005</h2>
+        <p>Framework for decision-making for those who lack capacity. Two-stage test: a diagnostic test (impairment of mind or brain) and a functional test (cannot understand, retain, weigh, or communicate). Best-interests decisions must be made by the least restrictive means.</p>
+
+        <h2>Criminal Justice Act 2003</h2>
+        <p>Brought in IPP sentences (abolished for new sentences in 2012, but a substantial population remains in custody), extended sentences, and public protection provisions.</p>
+
+        <h2>Other Key Legislation</h2>
+        <ul>
+          <li><strong>Criminal Procedure (Insanity) Act 1964</strong> — fitness to plead, insanity defence</li>
+          <li><strong>PACE 1984</strong> — police powers; appropriate adult provisions for vulnerable suspects</li>
+          <li><strong>Equality Act 2010</strong> — protected characteristics; reasonable adjustments duty</li>
+          <li><strong>Data Protection Act 2018 / UK GDPR</strong> — special category (health) data, lawful basis for processing</li>
+          <li><strong>Children Act 1989 / 2004</strong> — safeguarding duties</li>
+        </ul>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch2')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 2 — Professional Bodies</span></a>
+          <a class="next" onclick="goTo('ch4')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 4 — Assessment Toolkit</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 4 ============ -->
+      <section class="page chapter-page" id="p-ch4">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 4</div>
+        <h1>The Assessment Toolkit</h1>
+        <p class="ch-tagline">Risk assessment instruments, psychometrics, formulation frameworks, and report writing guidance.</p>
+
+        <h2>Approaches to Risk Assessment</h2>
+        <ul>
+          <li><strong>Unstructured Clinical Judgement</strong> — historical default; poor reliability and validity. Avoid.</li>
+          <li><strong>Actuarial</strong> — score-based, statistically derived (e.g. Static-99R). High reliability but limited individual context.</li>
+          <li><strong>Structured Professional Judgement (SPJ)</strong> — empirically anchored items combined with clinical reasoning (e.g. HCR-20v3, RSVP, SARA). Current best practice in most UK settings.</li>
+        </ul>
+
+        <h2>Common Tools</h2>
+        <ul>
+          <li><strong>HCR-20v3</strong> — violence risk; 20 items across Historical, Clinical, Risk Management</li>
+          <li><strong>RSVP</strong> — sexual violence risk</li>
+          <li><strong>SARA</strong> — intimate partner violence</li>
+          <li><strong>Static-99R / Static-2002R</strong> — actuarial sexual recidivism (adult males)</li>
+          <li><strong>OASys</strong> — HMPPS-wide need and risk assessment</li>
+          <li><strong>PCL-R</strong> — psychopathy (training and licensure required)</li>
+        </ul>
+
+        <h2>Formulation Frameworks</h2>
+        <p>The <strong>5Ps</strong> are the most common formulation framework in UK clinical and forensic settings: Predisposing, Precipitating, Perpetuating, Protective, and Presenting factors. The <strong>Good Lives Model</strong> and <strong>Risk-Need-Responsivity</strong> frame intervention planning.</p>
+
+        <button class="tool-link" onclick="goTo('tool-formulation')">🧩 Open Risk Formulation Builder →</button>
+
+        <h2>Important Caveat</h2>
+        <p>Each tool listed here requires the licensed manual and (for many) accredited training to use validly. This handbook describes them — it does not replace training. Don't score a tool you haven't been trained on.</p>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch3')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 3 — Legal &amp; Policy</span></a>
+          <a class="next" onclick="goTo('ch5')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 5 — Where You'll Work</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 5 ============ -->
+      <section class="page chapter-page" id="p-ch5">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 5</div>
+        <h1>Where You'll Work: Settings in Detail</h1>
+        <p class="ch-tagline">Prisons, secure hospitals, courts, and police — culture, roles, and what to expect.</p>
+
+        <h2>HMPPS — Prisons and Probation</h2>
+        <p>The largest single employer of forensic psychologists in England and Wales. Roles span:</p>
+        <ul>
+          <li>Trainee Forensic Psychologist posts (Band 7)</li>
+          <li>Registered Psychologists (Band 8a/b)</li>
+          <li>Programme delivery, risk assessment, parole reports</li>
+          <li>OPD Pathway, PIPE units, and Therapeutic Communities</li>
+        </ul>
+
+        <h2>NHS Forensic Mental Health</h2>
+        <p>Tiered secure services:</p>
+        <ul>
+          <li><strong>High secure</strong> — Broadmoor, Ashworth, Rampton</li>
+          <li><strong>Medium secure</strong> — regional units</li>
+          <li><strong>Low secure</strong> — step-down and longer-term rehabilitation</li>
+          <li><strong>Community forensic teams</strong> — outpatient and early-intervention</li>
+        </ul>
+
+        <h2>Courts and Independent Practice</h2>
+        <p>Expert witness work — court reports, fitness to plead, sentencing reports — is most often conducted as an independent practitioner, sometimes alongside an NHS or HMPPS post. Requires substantial post-qualification experience.</p>
+
+        <h2>Police</h2>
+        <p>A smaller but growing area: behavioural advisors, investigative interviewing consultancy, hostage negotiation support, vulnerability assessment.</p>
+
+        <h2>Cultural Differences</h2>
+        <p>Each setting has its own culture and pace. Prisons run on routine and security; secure hospitals on multi-disciplinary clinical decision-making; courts on adversarial scrutiny. The same practitioner skills look quite different across these contexts.</p>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch4')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 4 — Assessment Toolkit</span></a>
+          <a class="next" onclick="goTo('ch6')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 6 — Interventions</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 6 ============ -->
+      <section class="page chapter-page" id="p-ch6">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 6</div>
+        <h1>Evidence-Based Interventions</h1>
+        <p class="ch-tagline">Accredited programmes, therapeutic approaches, and how to deliver and evaluate interventions in forensic settings.</p>
+
+        <h2>HMPPS Accredited Programmes</h2>
+        <ul>
+          <li><strong>Kaizen</strong> — for high-risk men with sexual or violent offending</li>
+          <li><strong>Horizon</strong> — for medium-risk men with sexual offending</li>
+          <li><strong>Building Better Relationships (BBR)</strong> — domestic abuse, community</li>
+          <li><strong>Thinking Skills Programme (TSP)</strong> — general cognitive skills</li>
+          <li><strong>Resolve</strong> — medium-risk violent offenders</li>
+          <li><strong>Becoming New Me Plus / New Me Strengths</strong> — adapted for learning disability</li>
+        </ul>
+
+        <h2>Therapeutic Approaches</h2>
+        <ul>
+          <li><strong>CBT</strong> — backbone of most accredited programmes</li>
+          <li><strong>Schema Therapy</strong> — particularly for personality difficulties</li>
+          <li><strong>DBT</strong> — emotion dysregulation and self-harm</li>
+          <li><strong>Mentalisation-Based Therapy (MBT)</strong> — emerging evidence in forensic personality work</li>
+          <li><strong>Compassion-Focused Therapy</strong> — shame and self-criticism</li>
+          <li><strong>Trauma-focused approaches</strong> — TF-CBT, EMDR</li>
+        </ul>
+
+        <h2>Frameworks for Effective Practice</h2>
+        <ul>
+          <li><strong>RNR (Risk-Need-Responsivity)</strong> — match intervention intensity to risk; target criminogenic needs; tailor to individual responsivity</li>
+          <li><strong>Good Lives Model</strong> — strengths-based; pursue primary human goods through prosocial means</li>
+          <li><strong>Desistance frameworks</strong> — identity change, hope, and social capital</li>
+        </ul>
+
+        <h2>Evaluation</h2>
+        <p>Outcomes monitoring is now standard. Pre/post psychometrics, programme treatment reports, and longer-term reconviction data all feed into the evidence base. Don't skip the boring measurement work — it's how the field improves.</p>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch5')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 5 — Where You'll Work</span></a>
+          <a class="next" onclick="goTo('ch7')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 7 — Report Writing</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 7 ============ -->
+      <section class="page chapter-page" id="p-ch7">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 7</div>
+        <h1>Report Writing</h1>
+        <p class="ch-tagline">How to structure court reports, risk assessments, and clinical letters that are defensible and professionally sound.</p>
+
+        <h2>Principles of a Good Report</h2>
+        <ul>
+          <li><strong>Answer the question.</strong> Read the letter of instruction twice. Address each instruction explicitly.</li>
+          <li><strong>Stay within your competence.</strong> Decline questions you cannot answer.</li>
+          <li><strong>Show your sources.</strong> What did you read, who did you interview, what did you observe?</li>
+          <li><strong>Distinguish fact from opinion.</strong> Reports are scrutinised line by line in court.</li>
+          <li><strong>Be transparent about limits.</strong> Tools, sample sizes, missing information.</li>
+          <li><strong>Plain English.</strong> Judges, juries, and lay readers must follow your reasoning.</li>
+        </ul>
+
+        <h2>Common Pitfalls</h2>
+        <ul>
+          <li>Importing diagnostic labels without operational definitions</li>
+          <li>Conflating risk factors with predictions</li>
+          <li>Failing to consider alternative formulations</li>
+          <li>Dual-role contamination (treating clinician acting as expert)</li>
+          <li>Recommendations that exceed what the evidence supports</li>
+        </ul>
+
+        <button class="tool-link" onclick="goTo('tool-reports')">📄 Open Report Templates →</button>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch6')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 6 — Interventions</span></a>
+          <a class="next" onclick="goTo('ch8')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 8 — Ethics &amp; Safety</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 8 ============ -->
+      <section class="page chapter-page" id="p-ch8">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 8</div>
+        <h1>Ethics, Boundaries &amp; Safety</h1>
+        <p class="ch-tagline">Professional conduct, safeguarding, dual-role conflicts, lone working, and keeping yourself safe in forensic environments.</p>
+
+        <h2>Core Ethical Frameworks</h2>
+        <ul>
+          <li><strong>HCPC Standards of Conduct, Performance and Ethics</strong> — the floor</li>
+          <li><strong>BPS Code of Ethics and Conduct</strong> — four principles: respect, competence, responsibility, integrity</li>
+          <li><strong>BPS Practice Guidelines</strong> — practical guidance on consent, confidentiality, record-keeping</li>
+        </ul>
+
+        <h2>Confidentiality &amp; Its Limits</h2>
+        <p>Always frame confidentiality at the start: it is bounded. Limits include risk to self or others, safeguarding (children and vulnerable adults), court orders, and serious crime. The frame must be set <em>before</em> disclosure, not after.</p>
+
+        <h2>Dual Roles</h2>
+        <p>Therapist and assessor of risk for the court are not the same role. Treating clinicians should not write expert reports on their own clients. Where overlap is unavoidable, declare it explicitly.</p>
+
+        <h2>Lone Working &amp; Personal Safety</h2>
+        <ul>
+          <li>Know your service's lone-working policy. If there isn't one, ask why.</li>
+          <li>Pre-meeting risk assessment for community visits</li>
+          <li>Personal alarms, check-in protocols, room layout (sit nearer the door)</li>
+          <li>De-escalation training is worth its weight</li>
+        </ul>
+
+        <h2>Vicarious Trauma</h2>
+        <p>Forensic work exposes you to harrowing material. Reading hundreds of pages of abuse history, sitting across from someone who has done terrible things — this leaves a residue. Supervision is not optional. Reflective practice is not optional. Wellbeing is not optional.</p>
+
+        <button class="tool-link" onclick="goTo('tool-reflection')">📓 Open Reflection Journal →</button>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch7')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 7 — Report Writing</span></a>
+          <a class="next" onclick="goTo('ch9')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 9 — CPD</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 9 ============ -->
+      <section class="page chapter-page" id="p-ch9">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 9</div>
+        <h1>Continuing Professional Development</h1>
+        <p class="ch-tagline">What counts as CPD, how to log and evidence it, supervision requirements, and building your portfolio over time.</p>
+
+        <h2>The Five HCPC CPD Standards</h2>
+        <ol>
+          <li>Maintain a continuous, up-to-date and accurate record of your CPD activities</li>
+          <li>Demonstrate that your CPD activities are a mixture of learning activities relevant to current or future practice</li>
+          <li>Seek to ensure that your CPD has contributed to the quality of your practice and service delivery</li>
+          <li>Seek to ensure that your CPD benefits the service user</li>
+          <li>Present a written profile (with supporting evidence) on request explaining how you have met the standards</li>
+        </ol>
+
+        <h2>What Counts</h2>
+        <ul>
+          <li>Courses, workshops, conferences</li>
+          <li>Reading journals, books, NICE guidance, case law</li>
+          <li>Supervision (clinical and managerial)</li>
+          <li>Reflective practice and journaling</li>
+          <li>Teaching and presenting</li>
+          <li>Peer learning and case discussions</li>
+          <li>Service development, audit, and research</li>
+        </ul>
+
+        <h2>Building the Habit</h2>
+        <p>Log CPD as it happens, not in a panic two years later. Five minutes after the event, while it's fresh — a few sentences on what you learned and how it changes your practice.</p>
+
+        <button class="tool-link" onclick="goTo('tool-cpd')">📚 Open CPD Logger →</button>
+        <button class="tool-link" onclick="goTo('tool-supervision')">💬 Open Supervision Log →</button>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch8')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 8 — Ethics &amp; Safety</span></a>
+          <a class="next" onclick="goTo('ch10')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 10 — Career Practicalities</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 10 ============ -->
+      <section class="page chapter-page" id="p-ch10">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 10</div>
+        <h1>Career Practicalities</h1>
+        <p class="ch-tagline">Pay bands, job hunting, NHS vs HMPPS vs independent sector, interviews, and navigating your first year in post.</p>
+
+        <h2>Pay Bands (Approximate, England)</h2>
+        <ul>
+          <li><strong>Assistant Psychologist</strong> — NHS Band 4–5</li>
+          <li><strong>Trainee Forensic Psychologist (HMPPS)</strong> — Band 7</li>
+          <li><strong>Registered Forensic Psychologist</strong> — NHS Band 8a / HMPPS Band 8a</li>
+          <li><strong>Senior / Consultant</strong> — Band 8b–8c</li>
+          <li><strong>Head of Service / Lead Psychologist</strong> — Band 8c–9</li>
+        </ul>
+        <p>Independent practice rates vary widely. Court reports are typically billed by the hour or fixed-fee. Cross-check current pay scales annually — they shift.</p>
+
+        <h2>Where to Look for Jobs</h2>
+        <ul>
+          <li>NHS Jobs (jobs.nhs.uk)</li>
+          <li>Civil Service Jobs (HMPPS posts)</li>
+          <li>BPS appointments memorandum</li>
+          <li>LinkedIn — increasingly used by independent providers and private secure</li>
+          <li>Word of mouth — placement supervisors, conferences, DFP events</li>
+        </ul>
+
+        <h2>Interview Preparation</h2>
+        <ul>
+          <li>Have a worked example of a formulation ready</li>
+          <li>Know the trust/service's strategic priorities</li>
+          <li>Be honest about what you don't know yet — interviewers respect calibrated humility</li>
+          <li>Prepare questions about supervision arrangements and CPD support</li>
+        </ul>
+
+        <h2>The First Year</h2>
+        <p>The first year in any new forensic post is a steep curve. Take fewer cases than you think you can handle. Use supervision generously. Find one or two trusted peers. The work compounds slowly — that's how it should feel.</p>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch9')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 9 — CPD</span></a>
+          <a class="next" onclick="goTo('ch11')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 11 — Quick Reference</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 11 ============ -->
+      <section class="page chapter-page" id="p-ch11">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 11</div>
+        <h1>Quick Reference Index</h1>
+        <p class="ch-tagline">Key terms, acronyms, legislation, assessment tools, and professional bodies — all in one searchable place.</p>
+
+        <p>The full searchable reference contains entries for assessment tools, frameworks, legislation, professional bodies, settings, and accredited programmes.</p>
+
+        <button class="tool-link" onclick="goTo('tool-reference')">🔍 Open Quick Reference →</button>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch10')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 10 — Career Practicalities</span></a>
+          <a class="next" onclick="goTo('ch12')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 12 — Templates</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 12 ============ -->
+      <section class="page chapter-page" id="p-ch12">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 12</div>
+        <h1>Starter Templates &amp; Checklists</h1>
+        <p class="ch-tagline">Ready-to-use templates for supervision logs, CPD records, placement inductions, and risk formulation frameworks.</p>
+
+        <p>All templates are integrated into live tools — fill them in directly, save drafts, and export when needed.</p>
+
+        <button class="tool-link" onclick="goTo('tool-cpd')">📚 CPD Record</button>
+        <button class="tool-link" onclick="goTo('tool-supervision')">💬 Supervision Log</button>
+        <button class="tool-link" onclick="goTo('tool-formulation')">🧩 Risk Formulation</button>
+        <button class="tool-link" onclick="goTo('tool-reports')">📄 Report Templates</button>
+
+        <h2>Placement Induction Checklist</h2>
+        <ul>
+          <li>Service overview, governance, and reporting structure understood</li>
+          <li>Lone working policy read and signed</li>
+          <li>Safeguarding lead identified</li>
+          <li>Supervision arrangements agreed in writing</li>
+          <li>IT access, building access, ID badge</li>
+          <li>Mandatory training completed (PMVA / GSA / fire / data)</li>
+          <li>Clinical record system training completed</li>
+          <li>Caseload allocation and review schedule agreed</li>
+          <li>Placement learning objectives drafted</li>
+        </ul>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch11')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 11 — Quick Reference</span></a>
+          <a class="next" onclick="goTo('ch13')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 13 — Growing Into the Role</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 13 ============ -->
+      <section class="page chapter-page" id="p-ch13">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 13</div>
+        <h1>Growing Into the Role</h1>
+        <p class="ch-tagline">Reflective practice, managing vicarious trauma, building resilience, and developing your professional identity over time.</p>
+
+        <h2>Reflective Practice</h2>
+        <p>Not optional, not paperwork. Reflection is how clinical reasoning becomes durable. Use a structured model — Gibbs, Kolb, Driscoll — and write briefly but consistently. The discipline matters more than the depth of any one entry.</p>
+
+        <button class="tool-link" onclick="goTo('tool-reflection')">📓 Open Reflection Journal →</button>
+
+        <h2>Managing Vicarious Trauma</h2>
+        <ul>
+          <li>Notice the early signs: sleep disturbance, irritability, intrusive thoughts about cases, numbness</li>
+          <li>Vary your caseload where you can</li>
+          <li>Take leave properly — don't carry casework on holiday</li>
+          <li>Talk to peers; isolation amplifies everything</li>
+          <li>Personal therapy is not a sign of weakness — it's a sign of seriousness about the work</li>
+        </ul>
+
+        <h2>Professional Identity Over Time</h2>
+        <p>The first few years are about competence — knowing you can do the work safely. The middle years are about voice — developing your own way of formulating, intervening, and explaining. The later years are about contribution — supervising, writing, shaping the next cohort. Don't rush the stages.</p>
+
+        <h2>Sustaining Yourself</h2>
+        <p>This is hard work. The people you assess and treat have often done very harmful things, and have often had very harmful things done to them. Holding both of those truths over a career takes care, support, and a life outside the role. Build that life deliberately.</p>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch12')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 12 — Templates</span></a>
+          <a class="next" onclick="goTo('ch14')"><span class="cn-label">Next →</span><span class="cn-title">Chapter 14 — Cheat Sheets</span></a>
+        </div>
+      </section>
+
+      <!-- ============ CHAPTER 14 ============ -->
+      <section class="page chapter-page" id="p-ch14">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Chapter 14</div>
+        <h1>Psychology Cheat Sheets</h1>
+        <p class="ch-tagline">At-a-glance reference cards for key theories, models, and frameworks — ideal for placement prep and revision.</p>
+
+        <h2>Formulation: 5Ps</h2>
+        <ul>
+          <li><strong>Presenting</strong> — current concerns and behaviours</li>
+          <li><strong>Predisposing</strong> — vulnerabilities (developmental, biological, historical)</li>
+          <li><strong>Precipitating</strong> — triggers (recent events, losses, stressors)</li>
+          <li><strong>Perpetuating</strong> — maintaining factors (cognitions, environment, reinforcement)</li>
+          <li><strong>Protective</strong> — strengths and supports</li>
+        </ul>
+
+        <h2>Risk-Need-Responsivity (RNR)</h2>
+        <ul>
+          <li><strong>Risk</strong> — match intervention intensity to risk level</li>
+          <li><strong>Need</strong> — target criminogenic (changeable, risk-relevant) needs</li>
+          <li><strong>Responsivity</strong> — tailor delivery to learning style, motivation, ability</li>
+        </ul>
+
+        <h2>Good Lives Model (GLM)</h2>
+        <p>Eleven primary human goods (life, knowledge, excellence in play and work, agency, inner peace, friendship, community, spirituality, happiness, creativity). Offending is conceptualised as a maladaptive route to these goods. Treatment helps the person achieve them prosocially.</p>
+
+        <h2>Gibbs Reflective Cycle</h2>
+        <ol>
+          <li>Description — what happened?</li>
+          <li>Feelings — what were you thinking and feeling?</li>
+          <li>Evaluation — what was good and bad?</li>
+          <li>Analysis — what sense can you make of it?</li>
+          <li>Conclusion — what else could you have done?</li>
+          <li>Action plan — what would you do next time?</li>
+        </ol>
+
+        <h2>Stages of Change (Prochaska &amp; DiClemente)</h2>
+        <p>Pre-contemplation → Contemplation → Preparation → Action → Maintenance → (Relapse). Useful for matching intervention to readiness.</p>
+
+        <h2>HCR-20v3 Domains</h2>
+        <ul>
+          <li><strong>Historical (10 items)</strong> — violence, antisocial behaviour, relationships, employment, substance use, mental disorder, personality disorder, traumatic experiences, violent attitudes, treatment/supervision response</li>
+          <li><strong>Clinical (5 items)</strong> — insight, violent ideation, symptoms of major mental disorder, instability, treatment/supervision response (current)</li>
+          <li><strong>Risk Management (5 items)</strong> — professional services, living situation, personal support, treatment/supervision compliance, stress/coping</li>
+        </ul>
+
+        <button class="tool-link" onclick="goTo('tool-reference')">🔍 Browse Full Reference Index →</button>
+
+        <div class="chapter-nav">
+          <a onclick="goTo('ch13')"><span class="cn-label">← Previous</span><span class="cn-title">Chapter 13 — Growing Into the Role</span></a>
+          <a class="spacer"></a>
+        </div>
+      </section>
+
+      <!-- ============ TOOLS ============ -->
+
+      <!-- CPD -->
+      <section class="page" id="p-tool-cpd">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / CPD Logger</div>
+        <div class="tool-header">
+          <h1>📚 CPD Logger</h1>
+          <p>Track continuing professional development for HCPC audit and your portfolio.</p>
+        </div>
+
+        <div class="stats" id="cpd-stats"></div>
+
+        <div class="card">
+          <div class="card-title">Add CPD Entry</div>
+          <div class="form-row">
+            <div><label>Date</label><input type="date" id="cpd-date"></div>
+            <div><label>Hours</label><input type="number" step="0.25" min="0" id="cpd-hours" placeholder="e.g. 1.5"></div>
+          </div>
+          <div class="form-row">
+            <div><label>Activity Type</label>
+              <select id="cpd-type">
+                <option>Course / Workshop</option>
+                <option>Reading / Research</option>
+                <option>Supervision</option>
+                <option>Reflective Practice</option>
+                <option>Conference</option>
+                <option>Teaching / Presenting</option>
+                <option>Peer Learning</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div><label>HCPC Standard (optional)</label>
+              <select id="cpd-standard">
+                <option value="">— Select —</option>
+                <option>1. Maintain a continuous, up-to-date record</option>
+                <option>2. Mix of learning activities</option>
+                <option>3. Demonstrate impact on practice</option>
+                <option>4. Demonstrate benefit to service users</option>
+                <option>5. Present evidence on request</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div><label>Title / Topic</label><input type="text" id="cpd-title" placeholder="e.g. HCR-20v3 risk assessment training"></div>
+          </div>
+          <div class="form-row full">
+            <div><label>Learning Outcomes &amp; Impact on Practice</label>
+              <textarea id="cpd-outcomes" placeholder="What did you learn? How will it change your practice?"></textarea>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn" onclick="addCPD()">Add Entry</button>
+            <button class="btn btn-secondary" onclick="exportCPD()">Export CSV</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">CPD History <span class="count" id="cpd-count">0 entries</span></div>
+          <div id="cpd-list"></div>
+        </div>
+      </section>
+
+      <!-- Supervision -->
+      <section class="page" id="p-tool-supervision">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Supervision Log</div>
+        <div class="tool-header">
+          <h1>💬 Supervision Log</h1>
+          <p>Record clinical, managerial, and peer supervision sessions.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">New Supervision Entry</div>
+          <div class="form-row three">
+            <div><label>Date</label><input type="date" id="sup-date"></div>
+            <div><label>Supervisor</label><input type="text" id="sup-supervisor" placeholder="Name"></div>
+            <div><label>Type</label>
+              <select id="sup-type">
+                <option>Clinical</option><option>Managerial</option><option>Peer</option><option>Group</option><option>External</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row full"><div><label>Discussion Points</label><textarea id="sup-discussion" placeholder="Cases, dilemmas, themes covered..."></textarea></div></div>
+          <div class="form-row full"><div><label>Actions Agreed</label><textarea id="sup-actions" placeholder="Next steps, reading, follow-ups..."></textarea></div></div>
+          <div class="form-row full"><div><label>Reflections</label><textarea id="sup-reflection" placeholder="Your own reflections on the session..."></textarea></div></div>
+          <div class="btn-row"><button class="btn" onclick="addSupervision()">Save Entry</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Supervision History <span class="count" id="sup-count">0 entries</span></div>
+          <input type="text" id="sup-search" placeholder="Search supervision entries..." style="margin-bottom: 12px;" oninput="renderSupervision()">
+          <div id="sup-list"></div>
+        </div>
+      </section>
+
+      <!-- Formulation -->
+      <section class="page" id="p-tool-formulation">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Risk Formulation</div>
+        <div class="tool-header">
+          <h1>🧩 Risk Formulation Builder</h1>
+          <p>Structured 5Ps formulation with risk-relevant prompts. Output is plain text — copy or save.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Case Identifier</div>
+          <div class="form-row">
+            <div><label>Reference / Initials</label><input type="text" id="form-ref" placeholder="e.g. JM-2026-04"></div>
+            <div><label>Date</label><input type="date" id="form-date"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">5Ps Formulation</div>
+          <div class="formulation-section"><label>Presenting Issues</label><div class="desc">Current concerns, behaviours, symptoms, risk behaviours</div><textarea id="form-presenting"></textarea></div>
+          <div class="formulation-section"><label>Predisposing Factors</label><div class="desc">Vulnerabilities — developmental, biological, historical (ACEs, trauma, attachment, prior offences)</div><textarea id="form-predisposing"></textarea></div>
+          <div class="formulation-section"><label>Precipitating Factors</label><div class="desc">Triggers — recent events, losses, stressors, substance use, relational rupture</div><textarea id="form-precipitating"></textarea></div>
+          <div class="formulation-section"><label>Perpetuating Factors</label><div class="desc">What maintains the problem — cognitions, schemas, environment, reinforcement, social network</div><textarea id="form-perpetuating"></textarea></div>
+          <div class="formulation-section"><label>Protective Factors</label><div class="desc">Internal/external strengths — engagement, motivation, supports, skills, stable accommodation</div><textarea id="form-protective"></textarea></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Risk-Relevant Detail</div>
+          <div class="form-row full"><div><label>Static Risk Factors</label><textarea id="form-static" placeholder="Historical, unchanging factors (e.g. age at first offence, prior convictions)"></textarea></div></div>
+          <div class="form-row full"><div><label>Dynamic Risk Factors</label><textarea id="form-dynamic" placeholder="Current, changeable factors targeted by intervention"></textarea></div></div>
+          <div class="form-row full"><div><label>Risk Scenarios</label><textarea id="form-scenarios" placeholder="Plausible future risk scenarios — nature, severity, imminence, frequency"></textarea></div></div>
+          <div class="form-row full"><div><label>Risk Management Plan</label><textarea id="form-management" placeholder="Monitoring, treatment, supervision, victim safety planning"></textarea></div></div>
+          <div class="btn-row">
+            <button class="btn" onclick="generateFormulation()">Generate Formulation</button>
+            <button class="btn btn-secondary" onclick="saveFormulation()">Save</button>
+            <button class="btn btn-secondary" onclick="clearFormulation()">Clear Form</button>
+          </div>
+        </div>
+
+        <div class="card" id="formulation-output-card" style="display:none;">
+          <div class="card-title">Formulation Output <button class="btn btn-secondary" onclick="copyFormulation()">Copy</button></div>
+          <div class="formulation-output" id="formulation-output"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Saved Formulations <span class="count" id="form-count">0 saved</span></div>
+          <div id="form-list"></div>
+        </div>
+      </section>
+
+      <!-- Reflection -->
+      <section class="page" id="p-tool-reflection">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Reflection Journal</div>
+        <div class="tool-header">
+          <h1>📓 Daily Reflection Journal</h1>
+          <p>Brief Gibbs-style reflective entries. Useful for CPD evidence and managing the emotional load of forensic work.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">New Reflection</div>
+          <div class="form-row">
+            <div><label>Date</label><input type="date" id="ref-date"></div>
+            <div><label>Mood</label>
+              <div class="mood-row" id="mood-row">
+                <span class="mood-opt" data-mood="1">😞</span>
+                <span class="mood-opt" data-mood="2">😕</span>
+                <span class="mood-opt" data-mood="3">😐</span>
+                <span class="mood-opt" data-mood="4">🙂</span>
+                <span class="mood-opt" data-mood="5">😊</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row full"><div><label>What happened?</label><textarea id="ref-what" placeholder="A brief description of the event or experience"></textarea></div></div>
+          <div class="form-row full"><div><label>Feelings &amp; Thoughts</label><textarea id="ref-feelings" placeholder="What were you thinking and feeling?"></textarea></div></div>
+          <div class="form-row full"><div><label>Evaluation &amp; Analysis</label><textarea id="ref-eval" placeholder="What was good/bad? What sense can you make of it?"></textarea></div></div>
+          <div class="form-row full"><div><label>Action Plan</label><textarea id="ref-action" placeholder="What will you do differently next time?"></textarea></div></div>
+          <div class="btn-row"><button class="btn" onclick="addReflection()">Save Reflection</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Reflection History <span class="count" id="ref-count">0 entries</span></div>
+          <div id="ref-list"></div>
+        </div>
+      </section>
+
+      <!-- Reports -->
+      <section class="page" id="p-tool-reports">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Report Templates</div>
+        <div class="tool-header">
+          <h1>📄 Report Templates</h1>
+          <p>Skeletons for common report types. Fill in, then copy out into your word processor for formatting.</p>
+        </div>
+
+        <div class="privacy-note">
+          ⚠️ Avoid entering identifiable client information. Use initials or case codes only. Browser data is private to this device, but reports should be drafted in your secure organisational system.
+        </div>
+
+        <div class="card">
+          <div class="card-title">Choose Template</div>
+          <div class="template-list">
+            <div class="template-tile" onclick="loadTemplate('court')"><h4>Court Report</h4><p>Section 12 / psychological assessment for criminal proceedings</p></div>
+            <div class="template-tile" onclick="loadTemplate('risk')"><h4>Risk Assessment Report</h4><p>Structured professional judgement format</p></div>
+            <div class="template-tile" onclick="loadTemplate('clinical')"><h4>Clinical Letter</h4><p>Brief letter to GP / referrer / MDT</p></div>
+            <div class="template-tile" onclick="loadTemplate('parole')"><h4>Parole Board Report</h4><p>Risk and progress assessment for parole consideration</p></div>
+          </div>
+        </div>
+
+        <div class="card" id="report-editor" style="display:none;">
+          <div class="card-title">
+            <span id="report-title">Report</span>
+            <span class="btn-row">
+              <button class="btn btn-secondary" onclick="copyReport()">Copy</button>
+              <button class="btn btn-secondary" onclick="saveReport()">Save Draft</button>
+            </span>
+          </div>
+          <div id="report-fields"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Saved Drafts <span class="count" id="report-count">0 drafts</span></div>
+          <div id="report-list"></div>
+        </div>
+      </section>
+
+      <!-- Reference -->
+      <section class="page" id="p-tool-reference">
+        <div class="breadcrumb"><a onclick="goTo('home')">Handbook</a> / Tools / Reference Index</div>
+        <div class="tool-header">
+          <h1>🔍 Quick Reference</h1>
+          <p>Key frameworks, legislation, assessment tools, and acronyms — searchable.</p>
+        </div>
+
+        <input type="text" class="ref-search" id="ref-search-input" placeholder="Search frameworks, tools, legislation, acronyms..." oninput="renderReference()">
+        <div class="ref-filters" id="ref-filters"></div>
+        <div class="ref-grid" id="ref-grid"></div>
+      </section>
+    </main>
+  </div>
 </div>
 
 <!-- Modal -->
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
     <div id="modal-body"></div>
   </div>
 </div>
 
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
+/* ---------- Chapter data (drives the home grid + search) ---------- */
+const chapters = [
+  {id:'ch1',  num:1,  color:'purple', title:'The Qualification Journey', desc:'Route A vs Route B, BPS Stage 2 competencies, and the path from MSc to HCPC registration.', cta:'Start here'},
+  {id:'ch2',  num:2,  color:'blue',   title:'Professional Bodies & Registration', desc:'HCPC, BPS, and DFP — what each body does, how to register, and how to stay registered.', cta:'Know the rules'},
+  {id:'ch3',  num:3,  color:'yellow', title:'The UK Legal & Policy Framework', desc:'Mental Health Act, criminal justice system, and the laws every forensic practitioner must know.', cta:'Legal foundations'},
+  {id:'ch4',  num:4,  color:'green',  title:'The Assessment Toolkit', desc:'Risk assessment instruments, psychometrics, formulation frameworks, and report writing guidance.', cta:'Core practice'},
+  {id:'ch5',  num:5,  color:'red',    title:"Where You'll Work: Settings in Detail", desc:'Prisons, secure hospitals, courts, and police — culture, roles, and what to expect.', cta:'Real world'},
+  {id:'ch6',  num:6,  color:'pink',   title:'Evidence-Based Interventions', desc:'Accredited programmes, therapeutic approaches, and how to deliver and evaluate interventions in forensic settings.', cta:'Treatment toolkit'},
+  {id:'ch7',  num:7,  color:'blue',   title:'Report Writing', desc:'How to structure court reports, risk assessments, and clinical letters that are defensible and professionally sound.', cta:'Write with confidence'},
+  {id:'ch8',  num:8,  color:'yellow', title:'Ethics, Boundaries & Safety', desc:'Professional conduct, safeguarding, dual-role conflicts, lone working, and keeping yourself safe in forensic environments.', cta:'Non-negotiable'},
+  {id:'ch9',  num:9,  color:'green',  title:'Continuing Professional Development', desc:'What counts as CPD, how to log and evidence it, supervision requirements, and building your portfolio over time.', cta:'Stay registered'},
+  {id:'ch10', num:10, color:'red',    title:'Career Practicalities', desc:'Pay bands, job hunting, NHS vs HMPPS vs independent sector, interviews, and navigating your first year in post.', cta:'The real talk'},
+  {id:'ch11', num:11, color:'pink',   title:'Quick Reference Index', desc:'Key terms, acronyms, legislation, assessment tools, and professional bodies — all in one searchable place.', cta:'Fast lookup'},
+  {id:'ch12', num:12, color:'blue',   title:'Starter Templates & Checklists', desc:'Ready-to-use templates for supervision logs, CPD records, placement inductions, and risk formulation frameworks.', cta:'Hit the ground running'},
+  {id:'ch13', num:13, color:'yellow', title:'Growing Into the Role', desc:'Reflective practice, managing vicarious trauma, building resilience, and developing your professional identity over time.', cta:'Long game'},
+  {id:'ch14', num:14, color:'green',  title:'Psychology Cheat Sheets', desc:'At-a-glance reference cards for key theories, models, and frameworks — ideal for placement prep and revision.', cta:'Quick revision'}
+];
+
+function renderChaptersGrid() {
+  document.getElementById('chapters-grid').innerHTML = chapters.map(c => `
+    <div class="chapter-card ch-${c.color}" onclick="goTo('${c.id}')">
+      <div class="ch-title-row"><span class="ch-icon">📄</span>${escapeHtml(c.title)}</div>
+      <div class="ch-inner">
+        <div class="ch-num">Chapter ${c.num}</div>
+        <div class="ch-name">${escapeHtml(c.title)}</div>
+        <div class="ch-desc">${escapeHtml(c.desc)}</div>
+        <div class="ch-cta">→ ${escapeHtml(c.cta)}</div>
+      </div>
+    </div>`).join('');
+}
+
 /* ---------- Storage ---------- */
 const store = {
   _mem: {},
@@ -1285,11 +1647,31 @@ function goTo(pageId) {
   if (page) page.classList.add('active');
   const nav = document.querySelector(`.nav-item[data-page="${pageId}"]`);
   if (nav) nav.classList.add('active');
+
+  // Update mobile title
+  const titleEl = document.getElementById('mobile-title');
+  if (nav) titleEl.textContent = nav.textContent.trim();
+  else if (pageId === 'home') titleEl.textContent = '🧠 Forensic Psych';
+
+  // Hash for shareable links
+  if (history.replaceState) history.replaceState(null, '', '#' + pageId);
+
   window.scrollTo({top: 0, behavior: 'smooth'});
+  closeSidebar();
 }
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => goTo(item.dataset.page));
 });
+
+/* ---------- Sidebar (mobile) ---------- */
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('show');
+}
 
 /* ---------- Date defaults ---------- */
 function todayStr() { return new Date().toISOString().slice(0,10); }
@@ -1298,9 +1680,19 @@ function todayStr() { return new Date().toISOString().slice(0,10); }
   if (el) el.value = todayStr();
 });
 
+/* ---------- Toast ---------- */
+let toastTimer = null;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
 /* ---------- CPD ---------- */
 function loadCPD() { return store.get('cpd', []); }
-function saveCPDList(list) { store.set('cpd', list); }
+function saveCPDList(list) { store.set('cpd', list); updateBadges(); }
 function addCPD() {
   const e = {
     id: Date.now(),
@@ -1311,14 +1703,14 @@ function addCPD() {
     title: document.getElementById('cpd-title').value.trim(),
     outcomes: document.getElementById('cpd-outcomes').value.trim()
   };
-  if (!e.title) { alert('Please enter a title.'); return; }
+  if (!e.title) { toast('Please enter a title.'); return; }
   const list = loadCPD(); list.unshift(e); saveCPDList(list);
   document.getElementById('cpd-title').value = '';
   document.getElementById('cpd-outcomes').value = '';
   document.getElementById('cpd-hours').value = '';
-  renderCPD();
+  renderCPD(); toast('CPD entry added.');
 }
-function deleteCPD(id) { if (!confirm('Delete this CPD entry?')) return; saveCPDList(loadCPD().filter(e => e.id !== id)); renderCPD(); }
+function deleteCPD(id) { if (!confirm('Delete this CPD entry?')) return; saveCPDList(loadCPD().filter(e => e.id !== id)); renderCPD(); toast('Entry deleted.'); }
 function renderCPD() {
   const list = loadCPD();
   const container = document.getElementById('cpd-list');
@@ -1328,10 +1720,13 @@ function renderCPD() {
   const totalHours = list.reduce((s,e) => s + (e.hours||0), 0);
   const yearHours = thisYear.reduce((s,e) => s + (e.hours||0), 0);
   document.getElementById('cpd-stats').innerHTML = `
-    <div class="stat"><div class="stat-label">Last 12 months</div><div class="stat-value">${yearHours.toFixed(1)} hrs</div></div>
+    <div class="stat"><div class="stat-label">Last 12 months</div><div class="stat-value">${yearHours.toFixed(1)}<span style="font-size:14px;color:var(--muted);font-weight:500;"> hrs</span></div></div>
     <div class="stat"><div class="stat-label">Total entries</div><div class="stat-value">${list.length}</div></div>
     <div class="stat"><div class="stat-label">Total hours</div><div class="stat-value">${totalHours.toFixed(1)}</div></div>`;
-  if (list.length === 0) { container.innerHTML = '<div class="empty">No CPD entries yet. Add your first above.</div>'; return; }
+  if (list.length === 0) {
+    container.innerHTML = `<div class="empty"><span class="empty-icon">📚</span>No CPD entries yet. Add your first above — even five minutes of supervised reading counts.</div>`;
+    return;
+  }
   container.innerHTML = list.map(e => `
     <div class="entry">
       <div class="entry-head">
@@ -1347,15 +1742,16 @@ function renderCPD() {
 }
 function exportCPD() {
   const list = loadCPD();
-  if (list.length === 0) { alert('No entries to export.'); return; }
+  if (list.length === 0) { toast('No entries to export.'); return; }
   const headers = ['Date','Hours','Type','HCPC Standard','Title','Outcomes'];
   const rows = list.map(e => [e.date, e.hours, e.type, e.standard, e.title, e.outcomes].map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
   downloadFile([headers.join(','), ...rows].join('\n'), `cpd-log-${todayStr()}.csv`, 'text/csv');
+  toast('CSV exported.');
 }
 
 /* ---------- Supervision ---------- */
 function loadSup() { return store.get('supervision', []); }
-function saveSup(list) { store.set('supervision', list); }
+function saveSup(list) { store.set('supervision', list); updateBadges(); }
 function addSupervision() {
   const e = {
     id: Date.now(),
@@ -1366,19 +1762,22 @@ function addSupervision() {
     actions: document.getElementById('sup-actions').value.trim(),
     reflection: document.getElementById('sup-reflection').value.trim()
   };
-  if (!e.supervisor || !e.discussion) { alert('Please enter supervisor and discussion points.'); return; }
+  if (!e.supervisor || !e.discussion) { toast('Please enter supervisor and discussion points.'); return; }
   const list = loadSup(); list.unshift(e); saveSup(list);
   ['sup-supervisor','sup-discussion','sup-actions','sup-reflection'].forEach(id => document.getElementById(id).value = '');
-  renderSupervision();
+  renderSupervision(); toast('Supervision entry saved.');
 }
-function deleteSup(id) { if (!confirm('Delete this supervision entry?')) return; saveSup(loadSup().filter(e => e.id !== id)); renderSupervision(); }
+function deleteSup(id) { if (!confirm('Delete this supervision entry?')) return; saveSup(loadSup().filter(e => e.id !== id)); renderSupervision(); toast('Entry deleted.'); }
 function renderSupervision() {
   const search = (document.getElementById('sup-search')?.value || '').toLowerCase();
   let list = loadSup();
   if (search) list = list.filter(e => Object.values(e).some(v => (v||'').toString().toLowerCase().includes(search)));
   const container = document.getElementById('sup-list');
   document.getElementById('sup-count').textContent = `${list.length} entr${list.length===1?'y':'ies'}`;
-  if (list.length === 0) { container.innerHTML = '<div class="empty">No supervision entries match.</div>'; return; }
+  if (list.length === 0) {
+    container.innerHTML = `<div class="empty"><span class="empty-icon">💬</span>No supervision entries match.</div>`;
+    return;
+  }
   container.innerHTML = list.map(e => `
     <div class="entry">
       <div class="entry-head">
@@ -1439,12 +1838,12 @@ ${get('form-management')}
   document.getElementById('formulation-output-card').style.display = 'block';
   document.getElementById('formulation-output-card').scrollIntoView({behavior:'smooth'});
 }
-function copyFormulation() { navigator.clipboard.writeText(document.getElementById('formulation-output').textContent).then(() => alert('Copied to clipboard.')); }
+function copyFormulation() { navigator.clipboard.writeText(document.getElementById('formulation-output').textContent).then(() => toast('Copied to clipboard.')); }
 function saveFormulation() {
   generateFormulation();
   const f = { id: Date.now(), ref: document.getElementById('form-ref').value.trim() || 'Untitled', date: document.getElementById('form-date').value, text: document.getElementById('formulation-output').textContent };
   const list = store.get('formulations', []); list.unshift(f); store.set('formulations', list);
-  renderFormulations(); alert('Formulation saved.');
+  updateBadges(); renderFormulations(); toast('Formulation saved.');
 }
 function clearFormulation() {
   if (!confirm('Clear the formulation form?')) return;
@@ -1456,7 +1855,7 @@ function renderFormulations() {
   const list = store.get('formulations', []);
   document.getElementById('form-count').textContent = `${list.length} saved`;
   const c = document.getElementById('form-list');
-  if (list.length === 0) { c.innerHTML = '<div class="empty">No saved formulations.</div>'; return; }
+  if (list.length === 0) { c.innerHTML = `<div class="empty"><span class="empty-icon">🧩</span>No saved formulations yet.</div>`; return; }
   c.innerHTML = list.map(f => `
     <div class="entry">
       <div class="entry-head">
@@ -1471,13 +1870,13 @@ function renderFormulations() {
 function viewFormulation(id) {
   const f = store.get('formulations', []).find(x => x.id === id);
   if (!f) return;
-  document.getElementById('modal-body').innerHTML = `<h3>${escapeHtml(f.ref)}</h3><pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;margin-top:12px;">${escapeHtml(f.text)}</pre>`;
+  document.getElementById('modal-body').innerHTML = `<h3>${escapeHtml(f.ref)}</h3><pre style="white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:13px;line-height:1.7;margin-top:12px;">${escapeHtml(f.text)}</pre>`;
   document.getElementById('modal-bg').classList.add('show');
 }
 function deleteFormulation(id) {
   if (!confirm('Delete this formulation?')) return;
   store.set('formulations', store.get('formulations', []).filter(f => f.id !== id));
-  renderFormulations();
+  updateBadges(); renderFormulations(); toast('Formulation deleted.');
 }
 
 /* ---------- Reflection ---------- */
@@ -1498,18 +1897,22 @@ function addReflection() {
     evaluation: document.getElementById('ref-eval').value.trim(),
     action: document.getElementById('ref-action').value.trim()
   };
-  if (!e.what) { alert('Please describe what happened.'); return; }
+  if (!e.what) { toast('Please describe what happened.'); return; }
   const list = store.get('reflections', []); list.unshift(e); store.set('reflections', list);
   ['ref-what','ref-feelings','ref-eval','ref-action'].forEach(id => document.getElementById(id).value = '');
   document.querySelectorAll('.mood-opt').forEach(x => x.classList.remove('selected'));
-  selectedMood = null; renderReflections();
+  selectedMood = null; updateBadges(); renderReflections(); toast('Reflection saved.');
 }
-function deleteReflection(id) { if (!confirm('Delete this reflection?')) return; store.set('reflections', store.get('reflections', []).filter(r => r.id !== id)); renderReflections(); }
+function deleteReflection(id) {
+  if (!confirm('Delete this reflection?')) return;
+  store.set('reflections', store.get('reflections', []).filter(r => r.id !== id));
+  updateBadges(); renderReflections(); toast('Reflection deleted.');
+}
 function renderReflections() {
   const list = store.get('reflections', []);
   document.getElementById('ref-count').textContent = `${list.length} entr${list.length===1?'y':'ies'}`;
   const c = document.getElementById('ref-list');
-  if (list.length === 0) { c.innerHTML = '<div class="empty">No reflections yet.</div>'; return; }
+  if (list.length === 0) { c.innerHTML = `<div class="empty"><span class="empty-icon">📓</span>No reflections yet. Even a few sentences after a tough day counts.</div>`; return; }
   const moods = {'1':'😞','2':'😕','3':'😐','4':'🙂','5':'😊'};
   c.innerHTML = list.map(e => `
     <div class="entry">
@@ -1594,18 +1997,18 @@ function getReportText() {
     return label + '\n' + ((el ? el.value.trim() : '') || '[Not entered]') + '\n';
   }).join('\n');
 }
-function copyReport() { navigator.clipboard.writeText(getReportText()).then(() => alert('Report copied to clipboard.')); }
+function copyReport() { navigator.clipboard.writeText(getReportText()).then(() => toast('Report copied to clipboard.')); }
 function saveReport() {
   if (!currentTemplate) return;
   const r = { id: Date.now(), type: templates[currentTemplate].title, date: todayStr(), text: getReportText() };
   const list = store.get('reports', []); list.unshift(r); store.set('reports', list);
-  renderReports(); alert('Draft saved.');
+  updateBadges(); renderReports(); toast('Draft saved.');
 }
 function renderReports() {
   const list = store.get('reports', []);
   document.getElementById('report-count').textContent = `${list.length} draft${list.length===1?'':'s'}`;
   const c = document.getElementById('report-list');
-  if (list.length === 0) { c.innerHTML = '<div class="empty">No saved drafts.</div>'; return; }
+  if (list.length === 0) { c.innerHTML = `<div class="empty"><span class="empty-icon">📄</span>No saved drafts.</div>`; return; }
   c.innerHTML = list.map(r => `
     <div class="entry">
       <div class="entry-head">
@@ -1620,13 +2023,13 @@ function renderReports() {
 function viewReport(id) {
   const r = store.get('reports', []).find(x => x.id === id);
   if (!r) return;
-  document.getElementById('modal-body').innerHTML = `<h3>${escapeHtml(r.type)}</h3><div class="entry-meta">${r.date}</div><pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;margin-top:12px;">${escapeHtml(r.text)}</pre>`;
+  document.getElementById('modal-body').innerHTML = `<h3>${escapeHtml(r.type)}</h3><div class="entry-meta">${r.date}</div><pre style="white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:13px;line-height:1.7;margin-top:12px;">${escapeHtml(r.text)}</pre>`;
   document.getElementById('modal-bg').classList.add('show');
 }
 function deleteReport(id) {
   if (!confirm('Delete this draft?')) return;
   store.set('reports', store.get('reports', []).filter(r => r.id !== id));
-  renderReports();
+  updateBadges(); renderReports(); toast('Draft deleted.');
 }
 
 /* ---------- Reference ---------- */
@@ -1670,17 +2073,102 @@ const reference = [
   {cat:'Programmes', name:'Building Better Relationships (BBR)', desc:'Community-based domestic abuse perpetrator programme.'},
   {cat:'Programmes', name:'Thinking Skills Programme (TSP)', desc:'General cognitive skills programme; widely delivered in HMPPS.'}
 ];
+let activeRefFilter = 'All';
+function renderRefFilters() {
+  const cats = ['All', ...Array.from(new Set(reference.map(r => r.cat)))];
+  document.getElementById('ref-filters').innerHTML = cats.map(c =>
+    `<div class="ref-filter ${c === activeRefFilter ? 'active' : ''}" onclick="setRefFilter('${c}')">${c}</div>`
+  ).join('');
+}
+function setRefFilter(cat) { activeRefFilter = cat; renderRefFilters(); renderReference(); }
 function renderReference() {
   const q = (document.getElementById('ref-search-input').value || '').toLowerCase();
   const grid = document.getElementById('ref-grid');
-  const filtered = reference.filter(r => !q || r.name.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) || r.cat.toLowerCase().includes(q));
-  if (filtered.length === 0) { grid.innerHTML = '<div class="empty">No matches.</div>'; return; }
+  const filtered = reference.filter(r => {
+    if (activeRefFilter !== 'All' && r.cat !== activeRefFilter) return false;
+    if (!q) return true;
+    return r.name.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) || r.cat.toLowerCase().includes(q);
+  });
+  if (filtered.length === 0) { grid.innerHTML = `<div class="empty"><span class="empty-icon">🔍</span>No matches.</div>`; return; }
   grid.innerHTML = filtered.map(r => `
     <div class="ref-card">
       <div class="ref-cat">${escapeHtml(r.cat)}</div>
       <h4>${escapeHtml(r.name)}</h4>
       <p>${escapeHtml(r.desc)}</p>
     </div>`).join('');
+}
+
+/* ---------- Global search ---------- */
+function buildSearchIndex() {
+  const idx = [];
+  chapters.forEach(c => idx.push({ type:'Chapter', title: `Chapter ${c.num} — ${c.title}`, snippet: c.desc, target: c.id }));
+  reference.forEach(r => idx.push({ type: r.cat, title: r.name, snippet: r.desc, target: 'tool-reference' }));
+  return idx;
+}
+const searchIndex = buildSearchIndex();
+function highlight(text, q) {
+  if (!q) return escapeHtml(text);
+  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return escapeHtml(text).replace(re, '<mark>$1</mark>');
+}
+function runGlobalSearch(q) {
+  const resultsEl = document.getElementById('home-search-results');
+  if (!q || q.length < 2) { resultsEl.classList.remove('show'); resultsEl.innerHTML = ''; return; }
+  const ql = q.toLowerCase();
+  const results = searchIndex.filter(item =>
+    item.title.toLowerCase().includes(ql) || item.snippet.toLowerCase().includes(ql)
+  ).slice(0, 12);
+  if (results.length === 0) {
+    resultsEl.innerHTML = `<div class="search-results-header">No matches</div>`;
+    resultsEl.classList.add('show'); return;
+  }
+  resultsEl.innerHTML =
+    `<div class="search-results-header">${results.length} result${results.length===1?'':'s'} for "${escapeHtml(q)}"</div>` +
+    results.map(r => `
+      <div class="search-result" onclick="goTo('${r.target}'); clearSearch();">
+        <div class="sr-title">${highlight(r.title, q)}</div>
+        <div class="sr-meta">${escapeHtml(r.type)}</div>
+        <div class="sr-snippet">${highlight(r.snippet, q)}</div>
+      </div>`).join('');
+  resultsEl.classList.add('show');
+}
+function clearSearch() {
+  document.getElementById('global-search').value = '';
+  document.getElementById('home-search-results').classList.remove('show');
+}
+document.getElementById('global-search').addEventListener('input', e => {
+  // If not on home, jump there to see results
+  if (!document.getElementById('p-home').classList.contains('active')) goTo('home');
+  runGlobalSearch(e.target.value);
+});
+
+/* Keyboard shortcuts */
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    document.getElementById('global-search').focus();
+  }
+  if (e.key === 'Escape') {
+    closeModal(); closeSidebar();
+    if (document.activeElement.id === 'global-search') document.activeElement.blur();
+  }
+});
+
+/* ---------- Badges ---------- */
+function updateBadges() {
+  const counts = {
+    'badge-cpd': store.get('cpd', []).length,
+    'badge-sup': store.get('supervision', []).length,
+    'badge-form': store.get('formulations', []).length,
+    'badge-ref': store.get('reflections', []).length,
+    'badge-rep': store.get('reports', []).length
+  };
+  Object.entries(counts).forEach(([id, count]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (count > 0) { el.textContent = count; el.style.display = 'inline-block'; }
+    else el.style.display = 'none';
+  });
 }
 
 /* ---------- Misc ---------- */
@@ -1695,12 +2183,13 @@ function exportAll() {
     reports: store.get('reports', [])
   };
   downloadFile(JSON.stringify(data, null, 2), `forensic-toolkit-export-${todayStr()}.json`, 'application/json');
+  toast('All data exported.');
 }
 function clearAll() {
   if (!confirm('This will permanently delete ALL data in this browser. Continue?')) return;
   if (!confirm('Are you absolutely sure? This cannot be undone.')) return;
   ['cpd','supervision','formulations','reflections','reports'].forEach(k => store.remove(k));
-  renderAll(); alert('All data cleared.');
+  updateBadges(); renderAll(); toast('All data cleared.');
 }
 function downloadFile(content, filename, type) {
   const blob = new Blob([content], {type}); const url = URL.createObjectURL(blob);
@@ -1709,7 +2198,19 @@ function downloadFile(content, filename, type) {
 function escapeHtml(s) {
   return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
-function renderAll() { renderCPD(); renderSupervision(); renderFormulations(); renderReflections(); renderReports(); renderReference(); }
+function renderAll() {
+  renderChaptersGrid();
+  renderCPD(); renderSupervision(); renderFormulations(); renderReflections(); renderReports();
+  renderRefFilters(); renderReference();
+  updateBadges();
+}
+
+/* Deep-link via hash */
+window.addEventListener('load', () => {
+  const hash = window.location.hash.slice(1);
+  if (hash && document.getElementById('p-' + hash)) goTo(hash);
+});
+
 renderAll();
 </script>
 </body>
