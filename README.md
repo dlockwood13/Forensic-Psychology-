@@ -1,5 +1,4 @@
-# Forensic-Psychology-
-# ⚓ Anchor — A Forensic Psychology Practitioner Companion (UK)
+⚓ Anchor — A Forensic Psychology Practitioner Companion (UK)
 
 > A pocket handbook and practitioner toolkit for UK forensic psychologists.
 > Mobile-first, offline-capable, privacy-respecting. Your data never leaves your device.
