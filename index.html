@@ -1,3 +1,5 @@
+html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -461,6 +463,37 @@
   .chapter-detail ul, .chapter-detail ol { padding-left: 22px; margin-bottom: 12px; }
   .chapter-detail li { font-size: 15px; line-height: 1.6; margin-bottom: 6px; }
 
+  /* Chapter detail: tables, vignette, theorist quips (on-brand additions) */
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 14px 0; border-radius: var(--radius); }
+  .chapter-detail table.ch-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    background: var(--surface); border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow-sm);
+  }
+  .ch-table thead th {
+    background: var(--primary-faint); color: var(--primary);
+    text-align: left; padding: 9px 12px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .ch-table td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.45; color: var(--ink-soft); }
+  .ch-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  @media (max-width: 420px) { .ch-table td:first-child { white-space: normal; } .ch-table { font-size: 12px; } }
+
+  .vignette {
+    background: var(--c-rose); color: var(--c-rose-ink);
+    border-left: 4px solid var(--c-rose-ink);
+    padding: 14px 16px; border-radius: var(--radius);
+    font-size: 13.5px; line-height: 1.6; font-style: italic;
+    margin: 14px 0;
+  }
+
+  .quip-note { font-size: 12px !important; color: var(--muted); font-style: italic; margin: -2px 0 8px !important; }
+  .quip-list { margin: 8px 0 18px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .quip { display: flex; gap: 12px; padding: 11px 16px; border-top: 1px solid var(--line); }
+  .quip:first-child { border-top: none; }
+  .quip .who { font-weight: 700; color: var(--primary); flex-shrink: 0; width: 100px; font-size: 12.5px; line-height: 1.4; }
+  .quip .what { color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
+
   .tool-link-card {
     background: var(--primary); color: white;
     padding: 14px 18px; border-radius: var(--radius);
@@ -468,6 +501,7 @@
     border: none; width: 100%; font-size: 14px; font-weight: 600;
     cursor: pointer;
     transition: transform 0.1s;
+    text-align: left;
   }
   .tool-link-card:active { transform: scale(0.98); }
   .tool-link-card .tlc-icon { font-size: 18px; }
@@ -834,14 +868,14 @@
       <div class="hero">
         <div class="eyebrow">Handbook</div>
         <h1>The Forensic Psychology Practitioner Handbook</h1>
-        <p class="sub">Fourteen chapters, written for the UK practitioner journey. Read top-to-bottom or jump in.</p>
+        <p class="sub">Seventeen chapters, written for the UK practitioner journey. Read top-to-bottom or jump in.</p>
       </div>
 
       <div class="callout">
         ⚠️ <strong>Disclaimer:</strong> Reference guide only, not legal or professional advice. Always verify current requirements with the HCPC, BPS, and your employer.
       </div>
 
-      <div class="section-label">All chapters <span class="count">14 chapters</span></div>
+      <div class="section-label">All chapters <span class="count" id="ch-count">—</span></div>
       <div class="ch-list" id="ch-list"></div>
     </section>
 
@@ -995,7 +1029,7 @@
           <div class="mi-icon">ℹ️</div>
           <div class="mi-text">
             <div class="mi-title">About Anchor</div>
-            <div class="mi-sub">Version 1.0 · Forensic psych companion</div>
+            <div class="mi-sub">Version 1.1 · Forensic psych companion</div>
           </div>
           <span class="mi-chev">›</span>
         </div>
@@ -1010,7 +1044,7 @@
       </div>
 
       <p style="text-align:center; color:var(--muted); font-size:11px; margin-top:24px;">
-        Version 1.0 · Compiled May 2026<br>© DanLockwood.co.uk
+        Version 1.1 · Compiled May 2026<br>© DanLockwood.co.uk
       </p>
     </section>
 
@@ -1101,18 +1135,114 @@ const chapters = [
     <h2>Other Key Legislation</h2>
     <ul><li><strong>Criminal Procedure (Insanity) Act 1964</strong> — fitness to plead</li><li><strong>PACE 1984</strong> — police powers, appropriate adults</li><li><strong>Equality Act 2010</strong> — reasonable adjustments</li><li><strong>Data Protection Act 2018 / UK GDPR</strong></li><li><strong>Children Act 1989 / 2004</strong> — safeguarding</li></ul>
   `},
-  {id:4, color:'c-moss', title:'The Assessment Toolkit', tag:'Risk assessment instruments, psychometrics, formulation frameworks.', html:`
-    <h2>Approaches to Risk Assessment</h2>
-    <ul><li><strong>Unstructured Clinical Judgement</strong> — poor reliability. Avoid.</li><li><strong>Actuarial</strong> — score-based (e.g. Static-99R). High reliability, limited context.</li><li><strong>Structured Professional Judgement (SPJ)</strong> — empirical + clinical (e.g. HCR-20v3). Best practice.</li></ul>
-    <h2>Common Tools</h2>
-    <ul><li><strong>HCR-20v3</strong> — violence risk (20 items)</li><li><strong>RSVP</strong> — sexual violence</li><li><strong>SARA</strong> — intimate partner violence</li><li><strong>Static-99R</strong> — actuarial sexual recidivism</li><li><strong>OASys</strong> — HMPPS risk/need</li><li><strong>PCL-R</strong> — psychopathy (training required)</li></ul>
-    <h2>Formulation Frameworks</h2>
-    <p>The <strong>5Ps</strong> remain standard: Predisposing, Precipitating, Perpetuating, Protective, Presenting. <strong>GLM</strong> and <strong>RNR</strong> frame intervention planning.</p>
-    <button class="tool-link-card" onclick="openTool('formulation')"><span class="tlc-icon">🧩</span> Open Formulation Builder <span class="tlc-arrow">→</span></button>
-    <h2>Important Caveat</h2>
-    <p>Each tool requires the licensed manual and (often) accredited training. This handbook describes them — it does not replace training. Don't score a tool you haven't been trained on.</p>
+  {id:4, color:'c-clay', title:'What the Work Actually Is', tag:'The three intertwined activities — assessment, formulation, and application — and where forensic psychology sits across courts, custody, and community.', html:`
+    <h2>Where the Discipline Sits</h2>
+    <p>Forensic psychology applies clinical, cognitive, and social psychology to the questions the legal and criminal justice systems actually need answered — usually some version of: <em>why did this person behave this way, how likely are they to do it again, and what would reduce that likelihood?</em></p>
+    <p>In the UK, practising forensic psychologists are registered with the HCPC and most belong to the BPS Division of Forensic Psychology. The day-to-day work is dominated by three intertwined activities: <strong>assessment</strong>, <strong>formulation</strong>, and the application of both to <strong>intervention and decision-making</strong>.</p>
+
+    <h2>1 · Assessment</h2>
+    <p>Forensic assessment is broader than a clinic appointment. It draws on a clinical interview but weights collateral information far more heavily — file review (offence records, pre-sentence reports, depositions, prison or hospital notes), behavioural observation, third-party accounts, and psychometrics. A defining feature is the tension between self-report and the documented record: discrepancies are themselves data.</p>
+    <h3>The risk-assessment centre of gravity</h3>
+    <p>The field has largely moved away from unstructured clinical judgement (poor reliability) and pure actuarial prediction (good at the group level, blunt at the individual) toward <strong>Structured Professional Judgement (SPJ)</strong> — defined, empirically supported risk factors rated by the clinician, then a formulation-based judgement rather than a mechanical score.</p>
+    <h3>Personality &amp; psychopathology</h3>
+    <p>Overlaps heavily with risk. The PCL-R is the single most weighty instrument — and precisely because it carries so much weight, its limitations (rater drift, adversarial allegiance, cultural bias) deserve attention.</p>
+    <h3>Validity &amp; malingering</h3>
+    <p>Distinctive to forensic work, because the stakes give people clear incentives to over- or under-report. The point is rarely catching liars; it is contextualising self-report.</p>
+    <div class="callout"><strong>The cardinal point: role clarity.</strong> The therapeutic role (helping the client) and the evaluative role (informing a court or parole board) carry different duties and very different confidentiality limits. The person must understand which role you occupy — and that an evaluative report may not serve their interests.</div>
+    <button class="tool-link-card" onclick="openChapter(5)"><span class="tlc-icon">🧰</span> Go deeper — the Assessment Toolkit <span class="tlc-arrow">→</span></button>
+
+    <h2>2 · Formulation</h2>
+    <p>If assessment gathers the data, formulation makes sense of it: a working, explicitly revisable hypothesis about how a person's difficulties and offending developed and what keeps them going. It is not a diagnosis — diagnosis classifies, formulation explains. In forensic settings it must do an extra job: articulate the psychological pathway <em>to the offending behaviour</em>, not just to distress.</p>
+    <button class="tool-link-card" onclick="openChapter(6)"><span class="tlc-icon">🧩</span> See a worked formulation + RNR vs GLM <span class="tlc-arrow">→</span></button>
+
+    <h2>3 · Applications</h2>
+    <ul>
+      <li><strong>Court &amp; expert testimony</strong> — fitness to plead, capacity, mitigation, sentencing, parole/release risk. The duty is to the court, not the instructing party.</li>
+      <li><strong>Treatment &amp; offending-behaviour programmes</strong> — accredited group and individual work targeting criminogenic needs (Kaizen, Horizon, Thinking Skills, CALM), plus CBT, schema, DBT and forensic psychotherapy.</li>
+      <li><strong>Secure &amp; custodial settings</strong> — high/medium/low secure hospitals, prisons, community forensic teams; advising MDTs on progression, transfer and discharge.</li>
+      <li><strong>Multi-agency risk management</strong> — formulation-driven plans coordinated through MAPPA across police, probation, health and social care.</li>
+      <li><strong>Police &amp; investigative psychology</strong> — investigative interviewing (the UK PEACE model), eyewitness memory, and offender profiling (treated with real caution — its evidence base is weaker than popular depictions suggest).</li>
+      <li><strong>Family &amp; civil contexts</strong> — parenting assessments, risk to children, capacity evaluations.</li>
+    </ul>
+
+    <h2>Cross-Cutting Themes</h2>
+    <p>The field is increasingly <strong>trauma-informed</strong>, <strong>strengths-aware</strong> rather than purely risk-focused, and attentive to the over-representation of neurodevelopmental conditions, learning disability and adverse childhood experiences in offending populations. The recurring tension — between care and control, between helping the individual and protecting the public — is not a problem to be solved but a constant feature of the work to be held thoughtfully.</p>
   `},
-  {id:5, color:'c-rose', title:"Where You'll Work", tag:'Prisons, secure hospitals, courts, and police — culture, roles, expectations.', html:`
+  {id:5, color:'c-moss', title:'The Assessment Toolkit', tag:'Risk assessment approaches, the tools mapped by domain, RNR, psychometrics, and validity testing.', html:`
+    <h2>Three Approaches to Risk</h2>
+    <ul>
+      <li><strong>Unstructured clinical judgement</strong> — poor reliability. Avoid.</li>
+      <li><strong>Actuarial</strong> — score-based (Static-99R, OGRS). High reliability, limited individual context.</li>
+      <li><strong>Structured Professional Judgement (SPJ)</strong> — empirical factors + clinical formulation (HCR-20 V3). Current best practice.</li>
+    </ul>
+    <div class="callout"><strong>Static vs dynamic.</strong> Static tools use historical facts that don't change — they anchor long-term baseline risk but can't show progress. Dynamic tools capture changeable factors — they're what you re-rate to demonstrate change and manage imminent risk (ACUTE and DASA work over days, STABLE over months).</div>
+
+    <h2>Tools by Domain</h2>
+    <p>The most common newcomer error is treating these as interchangeable. Each is validated for a particular behaviour, population, and time horizon.</p>
+    <div class="table-scroll">
+    <table class="ch-table">
+      <thead><tr><th>Domain / offence</th><th>Core tools</th></tr></thead>
+      <tbody>
+        <tr><td>General violence</td><td>HCR-20 V3 (SPJ); VRAG-R (actuarial)</td></tr>
+        <tr><td>Sexual offending</td><td>Static-99R (static), STABLE-2007 (stable dynamic), ACUTE-2007 (acute), RSVP, Risk Matrix 2000</td></tr>
+        <tr><td>Intimate partner violence</td><td>SARA; B-SAFER (brief)</td></tr>
+        <tr><td>Stalking</td><td>SAM</td></tr>
+        <tr><td>General recidivism</td><td>OGRS; OASys (HMPPS system)</td></tr>
+        <tr><td>Inpatient short-term</td><td>START; DASA (shift-by-shift)</td></tr>
+        <tr><td>Adolescent violence</td><td>SAVRY</td></tr>
+        <tr><td>Adolescent sexual</td><td>ERASOR</td></tr>
+        <tr><td>Psychopathy (informs the above)</td><td>PCL-R; PCL:SV (screening)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>Risk–Need–Responsivity</h2>
+    <p>Arguably the most influential framework in correctional practice (Andrews &amp; Bonta). Three principles:</p>
+    <ul>
+      <li><strong>Risk</strong> — match intervention intensity to risk level.</li>
+      <li><strong>Need</strong> — target criminogenic needs (dynamic risk factors causally linked to offending — the "central eight": antisocial cognition, antisocial associates, substance misuse, and so on).</li>
+      <li><strong>Responsivity</strong> — tailor delivery to the person's learning style, motivation, and ability.</li>
+    </ul>
+
+    <h2>Validity &amp; Effort</h2>
+    <p>Because the stakes create incentives to misrepresent, tools like the TOMM and SIRS — plus embedded validity indicators within other tests — gauge response style. This contextualises self-report rather than "catching" anyone.</p>
+
+    <button class="tool-link-card" onclick="openTool('formulation')"><span class="tlc-icon">🧩</span> Open Formulation Builder <span class="tlc-arrow">→</span></button>
+
+    <div class="callout warn"><strong>Caveat:</strong> Each tool requires the licensed manual and (often) accredited training. This handbook describes them — it does not replace training. Don't score a tool you haven't been trained on.</div>
+  `},
+  {id:6, color:'c-rose', title:'Formulation in Practice', tag:'A worked 5Ps formulation from a case vignette, and how RNR and GLM actually combine in a plan.', html:`
+    <h2>Building a Formulation From a Case</h2>
+    <p>A composite vignette — not a real person — to show the process rather than just describe it.</p>
+    <div class="vignette">Mr A, 34, is in a medium secure unit following a serious assault on a stranger in a pub. Long history of violence, mostly when intoxicated. Childhood: physical abuse by his father, periods in care, school exclusion. Diagnosed with emotionally unstable personality traits; history of alcohol and stimulant misuse. He describes feeling "disrespected" before the index offence, has limited employment history, one supportive sister, responds well to a particular nurse but reacts explosively to perceived unfairness.</div>
+    <p>The mistake to avoid is jumping straight to "he's violent because of his childhood." Formulation is disciplined sequencing.</p>
+    <h3>Step 1 — Organise, don't list</h3>
+    <p>Separate static facts (history, convictions) from dynamic factors (current beliefs, mood, substance use, relationships), and distinguish self-report from the file. Mr A minimising his role while the deposition describes a sustained assault is itself formulation material.</p>
+    <h3>Step 2 — Make the 5Ps causal, not descriptive</h3>
+    <ul>
+      <li><strong>Predisposing</strong> — early abuse and care experience disrupting attachment and emotion regulation; violence modelled as a response to threat; a likely internalised belief that the world is hostile and respect must be defended physically.</li>
+      <li><strong>Precipitating</strong> — acute intoxication lowering inhibition; a perceived slight ("disrespect") activating a threat appraisal.</li>
+      <li><strong>Perpetuating</strong> — a cognitive style that reads ambiguity as hostility; substances as both trigger and coping; no pro-social sources of status; short-term reinforcement (violence resolves the felt humiliation).</li>
+      <li><strong>Protective</strong> — his sister; capacity for a working alliance (the nurse); responsiveness to being treated fairly.</li>
+      <li><strong>Presenting</strong> — the index assault and recurrent reactive violence.</li>
+    </ul>
+    <h3>Step 3 — Articulate the offence pathway</h3>
+    <p>A serviceable hypothesis: a developmental history of abuse produced hypersensitivity to humiliation and a belief that respect is enforced through dominance; substances lower the threshold and self-medicate; in a disinhibited state an ambiguous cue is read as a threat to status, triggering a rapidly escalating, reactive response that is briefly reinforced. Note this is <strong>reactive / affective</strong> violence (threat-driven), not <strong>instrumental / predatory</strong> (planned) — a distinction that changes both risk profile and treatment target.</p>
+    <h3>Step 4 — Link the formulation to the tools</h3>
+    <p>The HCR-20 items don't sit beside the formulation — they <em>are</em> the formulation in structured form. Historical items explain the predisposing layer; Clinical items describe the current dynamic picture; Risk Management items point at what release would activate. The formulation answers the SPJ question: <em>under what circumstances does risk rise or fall?</em> Here, risk concentrates in unstructured, alcohol-involved social situations where he perceives disrespect — far more useful than a global "high risk" label.</p>
+    <h3>Step 5 — Translate into a plan</h3>
+    <p>Reduce access to the high-risk pathway (substance work, structured routine), build alternative routes to the same legitimate needs (status, belonging), target the threat-appraisal style directly (CBT, schema work), and use the working alliance as a protective lever.</p>
+
+    <h2>RNR and GLM in Practice</h2>
+    <p>The two organising frameworks for offender intervention. The modern position is that they complement rather than compete.</p>
+    <h3>Risk–Need–Responsivity</h3>
+    <p>A risk-reduction engineering model: identify dynamic risk factors causally tied to offending, concentrate resources on higher-risk individuals, target those needs, deliver in a matched style. Strongest evidence base for reducing reoffending. Weakness: a purely deficit-focused "here are your defects" stance can alienate and struggle with engagement.</p>
+    <h3>The Good Lives Model</h3>
+    <p>Starts elsewhere: people offend while pursuing legitimate human goods — relatedness, agency, mastery, status, inner peace — through harmful or ineffective means. Treatment builds a credible, personally meaningful "good life" plan that secures those goods legitimately, with risk reduction following as a by-product. More motivating and dignified, but on its own less precise about what most needs reducing.</p>
+    <div class="callout"><strong>Integrated in practice:</strong> RNR identifies <em>what must reduce</em>; GLM frames <em>what the person moves toward</em>; the formulation links the two. GLM "approach goals" (status through work and the sister relationship) pair with RNR "avoidance goals" (reduce alcohol use, manage threat appraisals). GLM is the motivational front end; RNR is the targeting and dosing logic.</div>
+    <button class="tool-link-card" onclick="openTool('formulation')"><span class="tlc-icon">🧩</span> Build your own in the Formulation tool <span class="tlc-arrow">→</span></button>
+  `},
+  {id:7, color:'c-teal', title:"Where You'll Work", tag:'Prisons, secure hospitals, courts, and police — culture, roles, and which tools map to which setting.', html:`
     <h2>HMPPS — Prisons & Probation</h2>
     <p>Largest single employer of UK forensic psychologists. Trainee posts (Band 7), Registered (Band 8a/b), programme delivery, parole reports, OPD Pathway, PIPE units.</p>
     <h2>NHS Forensic Mental Health</h2>
@@ -1123,8 +1253,24 @@ const chapters = [
     <p>Smaller but growing: behavioural advisors, investigative interviewing, hostage negotiation support, vulnerability assessment.</p>
     <h2>Cultural Differences</h2>
     <p>Prisons run on routine and security; secure hospitals on MDT clinical decision-making; courts on adversarial scrutiny. Same skills look different across settings.</p>
+
+    <h2>Which Tools, Which Setting</h2>
+    <p>Closer to how the work is actually organised:</p>
+    <div class="table-scroll">
+    <table class="ch-table">
+      <thead><tr><th>Setting</th><th>Typical focus &amp; tools</th></tr></thead>
+      <tbody>
+        <tr><td>Prison (HMPPS)</td><td>Sentence planning, programme allocation, parole — OASys, OGRS, HCR-20, Static-99R, PCL-R</td></tr>
+        <tr><td>Secure hospital</td><td>Admission, progression, discharge, ward safety — HCR-20, START, DASA, RSVP, PCL-R</td></tr>
+        <tr><td>Community / probation</td><td>Risk management, MAPPA, supervision — OASys, OGRS, SARA, dynamic sexual measures</td></tr>
+        <tr><td>Court / medico-legal</td><td>Risk for sentencing, parole, release — HCR-20, Static-99R, PCL-R, capacity/validity measures</td></tr>
+        <tr><td>Youth justice / CAMHS forensic</td><td>Risk &amp; need in under-18s — SAVRY, ERASOR</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout">As an Assistant Psychologist you'd rarely lead these assessments at first — but you'll likely score contributory measures, gather and collate the file and collateral they depend on, co-facilitate the groups that flow from RNR/GLM plans, and help draft formulations under supervision. Showing you understand <em>why</em> a tool fits a question — not just reciting acronyms — is what reads as genuine forensic literacy.</div>
   `},
-  {id:6, color:'c-clay', title:'Evidence-Based Interventions', tag:'Accredited programmes, therapeutic approaches, and how to evaluate them.', html:`
+  {id:8, color:'c-clay', title:'Evidence-Based Interventions', tag:'Accredited programmes, therapeutic approaches, and how to evaluate them.', html:`
     <h2>HMPPS Accredited Programmes</h2>
     <ul><li><strong>Kaizen</strong> — high-risk sexual/violent</li><li><strong>Horizon</strong> — medium-risk sexual</li><li><strong>Building Better Relationships</strong> — domestic abuse</li><li><strong>Thinking Skills Programme</strong> — cognitive skills</li><li><strong>Resolve</strong> — medium-risk violence</li><li><strong>New Me Strengths</strong> — adapted for LD</li></ul>
     <h2>Therapeutic Approaches</h2>
@@ -1134,14 +1280,14 @@ const chapters = [
     <h2>Evaluation</h2>
     <p>Pre/post psychometrics, programme treatment reports, longer-term reconviction data. Don't skip the boring measurement work.</p>
   `},
-  {id:7, color:'c-teal', title:'Report Writing', tag:'Court reports, risk assessments, and clinical letters that are defensible.', html:`
+  {id:9, color:'c-teal', title:'Report Writing', tag:'Court reports, risk assessments, and clinical letters that are defensible.', html:`
     <h2>Principles of a Good Report</h2>
     <ul><li><strong>Answer the question.</strong> Re-read the letter of instruction.</li><li><strong>Stay in your competence.</strong> Decline what you cannot answer.</li><li><strong>Show your sources.</strong></li><li><strong>Distinguish fact from opinion.</strong></li><li><strong>Be transparent about limits.</strong></li><li><strong>Plain English.</strong></li></ul>
     <h2>Common Pitfalls</h2>
     <ul><li>Diagnostic labels without operational definitions</li><li>Conflating risk factors with predictions</li><li>Skipping alternative formulations</li><li>Dual-role contamination</li><li>Recommendations beyond evidence</li></ul>
     <button class="tool-link-card" onclick="openTool('reports')"><span class="tlc-icon">📄</span> Open Report Templates <span class="tlc-arrow">→</span></button>
   `},
-  {id:8, color:'c-sand', title:'Ethics, Boundaries & Safety', tag:'Professional conduct, safeguarding, dual roles, lone working, and self-care.', html:`
+  {id:10, color:'c-sand', title:'Ethics, Boundaries & Safety', tag:'Professional conduct, safeguarding, dual roles, lone working, and self-care.', html:`
     <h2>Core Ethical Frameworks</h2>
     <ul><li><strong>HCPC Standards</strong> — the floor</li><li><strong>BPS Code of Ethics</strong> — respect, competence, responsibility, integrity</li><li><strong>BPS Practice Guidelines</strong></li></ul>
     <h2>Confidentiality & Its Limits</h2>
@@ -1154,7 +1300,7 @@ const chapters = [
     <p>Forensic work leaves a residue. Supervision is not optional. Reflective practice is not optional. Wellbeing is not optional.</p>
     <button class="tool-link-card" onclick="openTool('reflection')"><span class="tlc-icon">📓</span> Open Reflection Journal <span class="tlc-arrow">→</span></button>
   `},
-  {id:9, color:'c-moss', title:'Continuing Professional Development', tag:'What counts, how to log it, supervision requirements, and building your portfolio.', html:`
+  {id:11, color:'c-moss', title:'Continuing Professional Development', tag:'What counts, how to log it, supervision requirements, and building your portfolio.', html:`
     <h2>The Five HCPC CPD Standards</h2>
     <ol><li>Maintain a continuous, up-to-date and accurate record</li><li>Mix of learning activities relevant to practice</li><li>Demonstrate contribution to practice quality</li><li>Demonstrate benefit to service users</li><li>Present a written profile on request</li></ol>
     <h2>What Counts</h2>
@@ -1164,7 +1310,7 @@ const chapters = [
     <button class="tool-link-card" onclick="openTool('cpd')"><span class="tlc-icon">📚</span> CPD Logger <span class="tlc-arrow">→</span></button>
     <button class="tool-link-card" onclick="openTool('supervision')"><span class="tlc-icon">💬</span> Supervision Log <span class="tlc-arrow">→</span></button>
   `},
-  {id:10, color:'c-rose', title:'Career Practicalities', tag:'Pay bands, job hunting, NHS vs HMPPS vs independent, interviews.', html:`
+  {id:12, color:'c-rose', title:'Career Practicalities', tag:'Pay bands, job hunting, NHS vs HMPPS vs independent, interviews.', html:`
     <h2>Pay Bands (Approximate, England)</h2>
     <ul><li><strong>Assistant Psychologist</strong> — Band 4–5</li><li><strong>Trainee Forensic (HMPPS)</strong> — Band 7</li><li><strong>Registered Forensic</strong> — Band 8a</li><li><strong>Senior / Consultant</strong> — Band 8b–8c</li><li><strong>Head of Service</strong> — Band 8c–9</li></ul>
     <p>Independent rates vary widely. Cross-check current pay scales annually.</p>
@@ -1175,11 +1321,11 @@ const chapters = [
     <h2>The First Year</h2>
     <p>Take fewer cases than you think. Use supervision generously. Find trusted peers. The work compounds slowly — that's how it should feel.</p>
   `},
-  {id:11, color:'c-mauve', title:'Quick Reference Index', tag:'Searchable index of frameworks, tools, legislation, and acronyms.', html:`
+  {id:13, color:'c-mauve', title:'Quick Reference Index', tag:'Searchable index of frameworks, tools, legislation, and acronyms.', html:`
     <p>The full searchable index includes assessment tools, frameworks, legislation, bodies, settings, and accredited programmes.</p>
     <button class="tool-link-card" onclick="openTool('reference')"><span class="tlc-icon">🔍</span> Open Reference Index <span class="tlc-arrow">→</span></button>
   `},
-  {id:12, color:'c-teal', title:'Starter Templates & Checklists', tag:'Templates for supervision, CPD, placement induction, and risk formulation.', html:`
+  {id:14, color:'c-teal', title:'Starter Templates & Checklists', tag:'Templates for supervision, CPD, placement induction, and risk formulation.', html:`
     <p>Templates are integrated into the live tools — fill them in directly, save drafts, and export.</p>
     <button class="tool-link-card" onclick="openTool('cpd')"><span class="tlc-icon">📚</span> CPD Record <span class="tlc-arrow">→</span></button>
     <button class="tool-link-card" onclick="openTool('supervision')"><span class="tlc-icon">💬</span> Supervision Log <span class="tlc-arrow">→</span></button>
@@ -1188,7 +1334,7 @@ const chapters = [
     <h2>Placement Induction Checklist</h2>
     <ul><li>Governance & reporting structure understood</li><li>Lone-working policy read and signed</li><li>Safeguarding lead identified</li><li>Supervision arrangements agreed in writing</li><li>IT & building access, ID badge</li><li>Mandatory training done (PMVA / fire / data)</li><li>Clinical record system training</li><li>Caseload allocation & review schedule</li><li>Learning objectives drafted</li></ul>
   `},
-  {id:13, color:'c-sand', title:'Growing Into the Role', tag:'Reflective practice, managing vicarious trauma, building resilience.', html:`
+  {id:15, color:'c-sand', title:'Growing Into the Role', tag:'Reflective practice, managing vicarious trauma, building resilience.', html:`
     <h2>Reflective Practice</h2>
     <p>Not optional, not paperwork. Reflection is how clinical reasoning becomes durable. Use Gibbs, Kolb, or Driscoll — and write briefly but consistently.</p>
     <button class="tool-link-card" onclick="openTool('reflection')"><span class="tlc-icon">📓</span> Reflection Journal <span class="tlc-arrow">→</span></button>
@@ -1199,7 +1345,7 @@ const chapters = [
     <h2>Sustaining Yourself</h2>
     <p>This is hard work. Holding harm done and harm received over a career takes care, support, and a life outside the role. Build it deliberately.</p>
   `},
-  {id:14, color:'c-moss', title:'Psychology Cheat Sheets', tag:'At-a-glance reference cards for key theories, models, and frameworks.', html:`
+  {id:16, color:'c-moss', title:'Psychology Cheat Sheets', tag:'At-a-glance reference cards for key theories, models, and frameworks.', html:`
     <h2>5Ps Formulation</h2>
     <ul><li><strong>Presenting</strong> — current concerns</li><li><strong>Predisposing</strong> — vulnerabilities</li><li><strong>Precipitating</strong> — triggers</li><li><strong>Perpetuating</strong> — maintaining factors</li><li><strong>Protective</strong> — strengths</li></ul>
     <h2>RNR Model</h2>
@@ -1212,23 +1358,119 @@ const chapters = [
     <p>Pre-contemplation → Contemplation → Preparation → Action → Maintenance → (Relapse). Match intervention to readiness.</p>
     <h2>HCR-20v3 Domains</h2>
     <ul><li><strong>Historical (10)</strong> — violence history, antisocial behaviour, relationships, employment, substance use, mental disorder, personality, trauma, attitudes, treatment response</li><li><strong>Clinical (5)</strong> — insight, violent ideation, MMD symptoms, instability, treatment response (current)</li><li><strong>Risk Mgmt (5)</strong> — services, living situation, support, compliance, stress/coping</li></ul>
+    <h2>Reactive vs Instrumental Violence</h2>
+    <ul><li><strong>Reactive / affective</strong> — threat-driven, emotional, impulsive. Targets: arousal, threat appraisal.</li><li><strong>Instrumental / predatory</strong> — goal-driven, planned, low arousal. Targets: cognition, incentives, opportunity.</li></ul>
+    <h2>Static vs Dynamic Tools</h2>
+    <ul><li><strong>Static</strong> (Static-99R, OGRS) — fixed history, sets baseline, can't show change.</li><li><strong>Dynamic</strong> (STABLE, ACUTE, START, DASA) — changeable, re-rated to track progress and manage imminent risk.</li></ul>
+    <h2>RNR vs GLM in One Line</h2>
+    <p>RNR tells you <strong>what to reduce</strong>; GLM tells you <strong>what to build toward</strong>. Run them together.</p>
+  `},
+  {id:17, color:'c-mauve', title:'Theorists, Lightly', tag:'Affectionate one-liners — philosophy, psychology and forensic theory, caricatured for memory.', html:`
+    <h2>A Note Before You Smile</h2>
+    <p>These are affectionate caricatures, not summaries — the kind of thing that lodges a name in memory until the proper reading sticks. Use them as hooks, not citations.</p>
+
+    <h2>Philosophy, Explained</h2>
+    <p class="quip-note">Subject: the donut.</p>
+    <div class="quip-list">
+      <div class="quip"><span class="who">Heraclitus</span><span class="what">You can't eat the same donut twice.</span></div>
+      <div class="quip"><span class="who">Plato</span><span class="what">All donuts share in ideal "donut-ness."</span></div>
+      <div class="quip"><span class="who">Aristotle</span><span class="what">A donut contains its donut-ness.</span></div>
+      <div class="quip"><span class="who">Augustine</span><span class="what">Donuts need grace to be fully donut.</span></div>
+      <div class="quip"><span class="who">Descartes</span><span class="what">A donut's hole proves the existence of the donut.</span></div>
+      <div class="quip"><span class="who">Locke</span><span class="what">Donuts taste good to me.</span></div>
+      <div class="quip"><span class="who">Hume</span><span class="what">Donuts exist because I imagine donuts.</span></div>
+      <div class="quip"><span class="who">Kant</span><span class="what">A "donut" = my total experience of donut.</span></div>
+      <div class="quip"><span class="who">Wollstonecraft</span><span class="what">Women deserve donuts, too.</span></div>
+      <div class="quip"><span class="who">Mill</span><span class="what">Donuts are good if they make people happy.</span></div>
+      <div class="quip"><span class="who">Kierkegaard</span><span class="what">I have faith that donuts are delicious.</span></div>
+      <div class="quip"><span class="who">Marx</span><span class="what">Everybody deserves donuts.</span></div>
+      <div class="quip"><span class="who">Nietzsche</span><span class="what">Stop at nothing to get your donut.</span></div>
+      <div class="quip"><span class="who">Saussure</span><span class="what">Beignet / Krapfen / Ciambella / Buñuelo = "donut."</span></div>
+      <div class="quip"><span class="who">Wittgenstein</span><span class="what">Fried pastry, zero, parking lot spin, spare tire…</span></div>
+      <div class="quip"><span class="who">Beauvoir</span><span class="what">Patriarchy is responsible for the shape of the donut.</span></div>
+    </div>
+
+    <h2>Psychology, Explained</h2>
+    <p class="quip-note">The behaviour: someone ate the biscuit.</p>
+    <div class="quip-list">
+      <div class="quip"><span class="who">Wundt</span><span class="what">Let's measure how long it took them to notice the biscuit.</span></div>
+      <div class="quip"><span class="who">James</span><span class="what">Eating the biscuit is whatever eating-the-biscuit does for them.</span></div>
+      <div class="quip"><span class="who">Freud</span><span class="what">They ate it because of their mother.</span></div>
+      <div class="quip"><span class="who">Jung</span><span class="what">Biscuits are an archetype shared by all of humanity.</span></div>
+      <div class="quip"><span class="who">Pavlov</span><span class="what">Ring a bell, watch them salivate, hand over the biscuit.</span></div>
+      <div class="quip"><span class="who">Watson</span><span class="what">Give me a dozen healthy infants and I'll train them to eat any biscuit you like.</span></div>
+      <div class="quip"><span class="who">Skinner</span><span class="what">Reinforce biscuit-eating, get more biscuit-eating.</span></div>
+      <div class="quip"><span class="who">Maslow</span><span class="what">Biscuits are a deficiency need. Self-actualisation comes after.</span></div>
+      <div class="quip"><span class="who">Rogers</span><span class="what">Their relationship with biscuits is valid and should be unconditionally accepted.</span></div>
+      <div class="quip"><span class="who">Piaget</span><span class="what">A two-year-old and a ten-year-old eat the biscuit very differently.</span></div>
+      <div class="quip"><span class="who">Vygotsky</span><span class="what">With the right scaffolding, anyone can learn to eat a biscuit.</span></div>
+      <div class="quip"><span class="who">Harlow</span><span class="what">Take their mother away and they'll cling to the softest biscuit, not the one that feeds them.</span></div>
+      <div class="quip"><span class="who">Bowlby</span><span class="what">Securely attached infants share the biscuit. Avoidant ones hide it.</span></div>
+      <div class="quip"><span class="who">Asch</span><span class="what">Everyone else in the room ate one, so they did too.</span></div>
+      <div class="quip"><span class="who">Milgram</span><span class="what">A man in a lab coat told them to eat the biscuit, so they ate it.</span></div>
+      <div class="quip"><span class="who">Zimbardo</span><span class="what">Assign someone to be the biscuit guard and within six days it's a hostage situation.</span></div>
+      <div class="quip"><span class="who">Festinger</span><span class="what">They didn't want the biscuit but ate it, so now they love biscuits.</span></div>
+      <div class="quip"><span class="who">Beck</span><span class="what">"I must eat every biscuit or I am worthless." We're going to work on that.</span></div>
+      <div class="quip"><span class="who">Kahneman</span><span class="what">System 1 ate the biscuit. System 2 is now writing the apology.</span></div>
+      <div class="quip"><span class="who">Seligman</span><span class="what">They've learned that no matter what they do, biscuits happen.</span></div>
+    </div>
+
+    <h2>Forensic Psychology, Explained</h2>
+    <p class="quip-note">The crime: someone stole the biscuit from the staff room.</p>
+    <div class="quip-list">
+      <div class="quip"><span class="who">Lombroso</span><span class="what">You can tell who took it by the shape of their skull.</span></div>
+      <div class="quip"><span class="who">Freud</span><span class="what">The id wanted it. Mother is somehow involved.</span></div>
+      <div class="quip"><span class="who">Eysenck</span><span class="what">Extraverted neurotics with high P take more biscuits.</span></div>
+      <div class="quip"><span class="who">Bowlby</span><span class="what">Insecure attachment to the biscuit tin in early childhood.</span></div>
+      <div class="quip"><span class="who">Bandura</span><span class="what">They watched someone else take one and copied it.</span></div>
+      <div class="quip"><span class="who">Sutherland</span><span class="what">Biscuit theft is learned from your associates.</span></div>
+      <div class="quip"><span class="who">Merton</span><span class="what">Society demanded biscuits and provided none.</span></div>
+      <div class="quip"><span class="who">Hirschi</span><span class="what">Weak social bonds, weak commitment to the tin.</span></div>
+      <div class="quip"><span class="who">Cleckley</span><span class="what">Charming, articulate, felt absolutely nothing about it.</span></div>
+      <div class="quip"><span class="who">Hare</span><span class="what">Score them 30+ on the PCL-R and charge them.</span></div>
+      <div class="quip"><span class="who">Kohlberg</span><span class="what">Pre-conventional thieves only care about getting caught.</span></div>
+      <div class="quip"><span class="who">Loftus</span><span class="what">The witness will swear it was a bourbon. It was a custard cream.</span></div>
+      <div class="quip"><span class="who">Gudjonsson</span><span class="what">Interview them long enough and they'll confess to biscuits they've never seen.</span></div>
+      <div class="quip"><span class="who">Raine</span><span class="what">Reduced prefrontal grey matter made them do it.</span></div>
+      <div class="quip"><span class="who">Canter</span><span class="what">Map the thefts; the thief lives within walking distance of the tin.</span></div>
+      <div class="quip"><span class="who">Andrews &amp; Bonta</span><span class="what">Match the intervention to the risk, need and responsivity of the biscuit-thief.</span></div>
+      <div class="quip"><span class="who">Ward</span><span class="what">Help them build a good life that doesn't require stealing biscuits.</span></div>
+    </div>
   `}
 ];
 
 /* ===== Reference data ===== */
 const reference = [
   {cat:'Risk Assessment', name:'HCR-20v3', desc:'Historical, Clinical, Risk Management 20 — SPJ tool for violence risk. 20 items across H (10), C (5), R (5).'},
+  {cat:'Risk Assessment', name:'VRAG-R', desc:'Violence Risk Appraisal Guide–Revised — actuarial violence recidivism.'},
   {cat:'Risk Assessment', name:'RSVP', desc:'Risk for Sexual Violence Protocol — 22 items across 5 domains.'},
+  {cat:'Risk Assessment', name:'Static-99R', desc:'Actuarial sexual recidivism risk for adult males (fixed historical items).'},
+  {cat:'Risk Assessment', name:'STABLE-2007', desc:'Stable dynamic risk factors for sexual offending — months horizon.'},
+  {cat:'Risk Assessment', name:'ACUTE-2007', desc:'Acute dynamic risk factors for sexual offending — days horizon.'},
+  {cat:'Risk Assessment', name:'Risk Matrix 2000', desc:'UK actuarial sexual/violent recidivism risk.'},
   {cat:'Risk Assessment', name:'SARA', desc:'Spousal Assault Risk Assessment — 20 items for IPV risk.'},
-  {cat:'Risk Assessment', name:'Static-99R', desc:'Actuarial sexual recidivism risk for adult males.'},
+  {cat:'Risk Assessment', name:'B-SAFER', desc:'Brief Spousal Assault Form for the Evaluation of Risk — short SARA variant.'},
+  {cat:'Risk Assessment', name:'SAM', desc:'Stalking Assessment and Management — SPJ for stalking.'},
+  {cat:'Risk Assessment', name:'START', desc:'Short-Term Assessment of Risk and Treatability — inpatient; assesses strengths alongside vulnerabilities.'},
+  {cat:'Risk Assessment', name:'DASA', desc:'Dynamic Appraisal of Situational Aggression — very short-term (shift-by-shift) inpatient aggression.'},
+  {cat:'Risk Assessment', name:'SAVRY', desc:'Structured Assessment of Violence Risk in Youth — adolescent violence.'},
+  {cat:'Risk Assessment', name:'ERASOR', desc:'Estimate of Risk of Adolescent Sexual Offense Recidivism.'},
   {cat:'Risk Assessment', name:'OASys', desc:'Offender Assessment System — HMPPS-wide risk and need.'},
-  {cat:'Personality', name:'PCL-R', desc:'Psychopathy Checklist-Revised (Hare). 20 items. Training required.'},
+  {cat:'Risk Assessment', name:'OGRS', desc:'Offender Group Reconviction Scale — MoJ actuarial tool (age, sex, offending history).'},
+  {cat:'Personality', name:'PCL-R', desc:'Psychopathy Checklist-Revised (Hare). 20 items, interview + file. Training required.'},
+  {cat:'Personality', name:'PCL:SV', desc:'Psychopathy Checklist: Screening Version.'},
   {cat:'Personality', name:'IPDE', desc:'International Personality Disorder Examination.'},
   {cat:'Cognitive', name:'WAIS-IV / WAIS-V', desc:'Wechsler Adult Intelligence Scale.'},
-  {cat:'Cognitive', name:'TOMM', desc:'Test of Memory Malingering — effort/feigning screen.'},
+  {cat:'Validity', name:'TOMM', desc:'Test of Memory Malingering — effort/feigning screen.'},
+  {cat:'Validity', name:'SIRS', desc:'Structured Interview of Reported Symptoms — feigned psychopathology.'},
   {cat:'Framework', name:'5Ps Formulation', desc:'Presenting, Predisposing, Precipitating, Perpetuating, Protective.'},
   {cat:'Framework', name:'Good Lives Model', desc:'Strengths-based rehabilitation (Ward). Primary goods, secondary goods, capacities.'},
   {cat:'Framework', name:'RNR Model', desc:'Risk-Need-Responsivity (Andrews & Bonta).'},
+  {cat:'Framework', name:'RNR Central Eight', desc:'Major criminogenic needs: history, antisocial cognition, associates, personality pattern, family/marital, school/work, leisure, substance misuse.'},
+  {cat:'Framework', name:'Finkelhor Four Preconditions', desc:'Route to a sexual offence: motivation, internal inhibitions, external inhibitions, victim resistance.'},
+  {cat:'Framework', name:'Ward & Siegert Pathways', desc:'Pathways model mapping distinct routes to sexual offending.'},
+  {cat:'Framework', name:'Relapse Prevention', desc:'Offence-chain approach — breaks an offence into an interruptible decision sequence.'},
+  {cat:'Framework', name:'PEACE Model', desc:'UK ethical investigative interviewing — Planning, Engage, Account, Closure, Evaluate.'},
   {cat:'Framework', name:'Gibbs Cycle', desc:'Description → Feelings → Evaluation → Analysis → Conclusion → Action Plan.'},
   {cat:'Legislation', name:'MHA 1983 (2007)', desc:'Primary legislation for compulsory admission. Key sections: 2, 3, 37, 41, 47/49, 117, 136.'},
   {cat:'Legislation', name:'MCA 2005', desc:'Mental Capacity Act. Two-stage test: diagnostic + functional.'},
@@ -1245,6 +1487,7 @@ const reference = [
   {cat:'Acronym', name:'MAPPA', desc:'Multi-Agency Public Protection Arrangements.'},
   {cat:'Acronym', name:'SPJ', desc:'Structured Professional Judgement.'},
   {cat:'Acronym', name:'MDT', desc:'Multi-Disciplinary Team.'},
+  {cat:'Acronym', name:'Reactive vs Instrumental', desc:'Affective/threat-driven violence vs goal-driven/planned violence — changes risk profile and treatment target.'},
   {cat:'Settings', name:'High/Med/Low Secure', desc:'NHS forensic MH tiers. High: Broadmoor, Ashworth, Rampton.'},
   {cat:'Settings', name:'Cat A/B/C/D', desc:'Adult male prison categorisation. A=highest, D=open.'},
   {cat:'Settings', name:'PIPE', desc:'Psychologically Informed Planned Environment.'},
@@ -1331,7 +1574,7 @@ function openChapter(num) {
   const nextCh = chapters.find(c => c.id === num + 1);
   $('chapter-content').innerHTML = `
     <div class="hero">
-      <div class="eyebrow">Chapter ${ch.id} of 14</div>
+      <div class="eyebrow">Chapter ${ch.id} of ${chapters.length}</div>
       <h1>${escapeHtml(ch.title)}</h1>
       <p class="sub">${escapeHtml(ch.tag)}</p>
     </div>
@@ -1348,6 +1591,7 @@ function openChapter(num) {
 }
 
 function renderLearnList() {
+  const cc = $('ch-count'); if (cc) cc.textContent = chapters.length + ' chapters';
   $('ch-list').innerHTML = chapters.map(c => `
     <div class="ch-card ${c.color}" onclick="openChapter(${c.id})">
       <div class="ch-num-badge">${c.id}</div>
@@ -1500,7 +1744,7 @@ function openSheet(kind, ctx) {
       <p style="font-size:14px;line-height:1.6;color:var(--ink-soft);margin-bottom:16px;">
         All data is stored locally on this device. Nothing is sent to any server.
       </p>
-      <p style="font-size:12px;color:var(--muted);">Version 1.0 · May 2026 · © DanLockwood.co.uk</p>
+      <p style="font-size:12px;color:var(--muted);">Version 1.1 · May 2026 · © DanLockwood.co.uk</p>
     `;
   } else if (kind === 'privacy') {
     c.innerHTML = `
@@ -1823,7 +2067,6 @@ function renderCPDList() {
         ${e.outcomes ? `<div class="entry-body">${escapeHtml(e.outcomes)}</div>` : ''}
       </div>`).join('');
 }
-
 /* ===== Supervision ===== */
 function addSupervision() {
   const e = {
