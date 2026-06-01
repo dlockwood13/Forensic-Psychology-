@@ -1,5 +1,3 @@
-html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +11,6 @@ html
 <title>Anchor — Forensic Psych Companion</title>
 <style>
   :root {
-    /* Deep teal / slate palette — calm, grounded, professional */
     --bg: #f4f3ee;
     --surface: #ffffff;
     --surface-2: #ebe9e1;
@@ -29,7 +26,7 @@ html
     --primary-faint: #e8f0f3;
     --primary-dark: #143540;
 
-    --accent: #c97d4b;     /* warm terracotta accent for highlights */
+    --accent: #c97d4b;
     --accent-soft: #f4dccc;
 
     --good: #4a7355;
@@ -39,7 +36,6 @@ html
     --danger: #a8443a;
     --danger-soft: #f4d8d2;
 
-    /* Chapter pastels (calmer) */
     --c-teal:   #d9e7e9;  --c-teal-ink:   #1f4d5e;
     --c-sand:   #ebe1cc;  --c-sand-ink:   #856332;
     --c-rose:   #ecd9cd;  --c-rose-ink:   #8a4a32;
@@ -79,7 +75,6 @@ html
   button { font-family: inherit; cursor: pointer; }
   input, select, textarea { font-family: inherit; }
 
-  /* ===== App shell ===== */
   .app {
     max-width: 480px;
     margin: 0 auto;
@@ -92,7 +87,6 @@ html
     box-shadow: 0 0 40px rgba(0,0,0,0.05);
   }
 
-  /* Top bar */
   .topbar {
     height: calc(var(--top-h) + var(--safe-top));
     padding-top: var(--safe-top);
@@ -134,7 +128,6 @@ html
   }
   .topbar-action svg { width: 18px; height: 18px; }
 
-  /* Scroll container */
   .views {
     flex: 1;
     overflow-y: auto;
@@ -158,7 +151,6 @@ html
     to { opacity: 1; transform: translateX(0); }
   }
 
-  /* Hero header (used on Today, Learn, etc.) */
   .hero {
     padding: 4px 0 20px;
   }
@@ -173,7 +165,6 @@ html
   }
   .hero .sub { color: var(--ink-soft); font-size: 14px; margin-top: 6px; line-height: 1.5; }
 
-  /* Cards */
   .card {
     background: var(--surface);
     border-radius: var(--radius-lg);
@@ -192,7 +183,6 @@ html
   .card-title { font-size: 15px; font-weight: 600; }
   .card-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-  /* Section labels */
   .section-label {
     font-size: 12px; font-weight: 600; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.08em;
@@ -201,7 +191,6 @@ html
   }
   .section-label .count { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: none; letter-spacing: 0; }
 
-  /* Quick action chips */
   .chip-row {
     display: flex; gap: 8px; overflow-x: auto;
     margin: 0 -18px; padding: 4px 18px 6px;
@@ -223,7 +212,6 @@ html
   .chip:active { transform: scale(0.95); }
   .chip-icon { font-size: 14px; }
 
-  /* Stat strip */
   .stat-strip {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -240,7 +228,6 @@ html
   .stat-pill .v { font-size: 22px; font-weight: 700; color: var(--primary); letter-spacing: -0.02em; }
   .stat-pill .l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-top: 2px; }
 
-  /* "Continue" card */
   .continue-card {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
@@ -258,7 +245,6 @@ html
     font-size: 13px; font-weight: 600;
   }
 
-  /* Activity feed */
   .activity-item {
     display: flex; align-items: center; gap: 12px;
     padding: 12px 14px;
@@ -276,7 +262,6 @@ html
   .activity-title { font-size: 14px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .activity-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-  /* Chapter card list */
   .ch-list { margin-bottom: 18px; }
   .ch-card {
     background: var(--surface);
@@ -314,7 +299,6 @@ html
   .ch-card-desc { font-size: 12px; color: var(--muted); line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .ch-chevron { color: var(--muted); flex-shrink: 0; }
 
-  /* Tool grid */
   .tool-grid {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 10px; margin-bottom: 18px;
@@ -351,7 +335,6 @@ html
   }
   .tool-tile .t-count.show { display: inline-block; }
 
-  /* Bottom tab bar */
   .tabbar {
     position: absolute;
     bottom: 0; left: 0; right: 0;
@@ -379,7 +362,6 @@ html
   .tab.active { color: var(--primary); }
   .tab.active .tab-label { font-weight: 600; }
 
-  /* Forms */
   .field { margin-bottom: 14px; }
   .field label, label.lab { display: block; font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 6px; }
   input[type="text"], input[type="date"], input[type="number"], select, textarea {
@@ -421,7 +403,6 @@ html
     width: 100%;
   }
 
-  /* Entry items */
   .entry {
     background: var(--surface);
     border-radius: var(--radius);
@@ -451,7 +432,6 @@ html
   }
   .empty .ic { font-size: 32px; display: block; margin-bottom: 8px; opacity: 0.6; }
 
-  /* Chapter detail page */
   .chapter-detail h1 {
     font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
     line-height: 1.2; margin-bottom: 4px;
@@ -463,37 +443,6 @@ html
   .chapter-detail ul, .chapter-detail ol { padding-left: 22px; margin-bottom: 12px; }
   .chapter-detail li { font-size: 15px; line-height: 1.6; margin-bottom: 6px; }
 
-  /* Chapter detail: tables, vignette, theorist quips (on-brand additions) */
-  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 14px 0; border-radius: var(--radius); }
-  .chapter-detail table.ch-table {
-    width: 100%; border-collapse: collapse; font-size: 13px;
-    background: var(--surface); border-radius: var(--radius);
-    overflow: hidden; box-shadow: var(--shadow-sm);
-  }
-  .ch-table thead th {
-    background: var(--primary-faint); color: var(--primary);
-    text-align: left; padding: 9px 12px;
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-  }
-  .ch-table td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.45; color: var(--ink-soft); }
-  .ch-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
-  @media (max-width: 420px) { .ch-table td:first-child { white-space: normal; } .ch-table { font-size: 12px; } }
-
-  .vignette {
-    background: var(--c-rose); color: var(--c-rose-ink);
-    border-left: 4px solid var(--c-rose-ink);
-    padding: 14px 16px; border-radius: var(--radius);
-    font-size: 13.5px; line-height: 1.6; font-style: italic;
-    margin: 14px 0;
-  }
-
-  .quip-note { font-size: 12px !important; color: var(--muted); font-style: italic; margin: -2px 0 8px !important; }
-  .quip-list { margin: 8px 0 18px; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
-  .quip { display: flex; gap: 12px; padding: 11px 16px; border-top: 1px solid var(--line); }
-  .quip:first-child { border-top: none; }
-  .quip .who { font-weight: 700; color: var(--primary); flex-shrink: 0; width: 100px; font-size: 12.5px; line-height: 1.4; }
-  .quip .what { color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
-
   .tool-link-card {
     background: var(--primary); color: white;
     padding: 14px 18px; border-radius: var(--radius);
@@ -501,7 +450,6 @@ html
     border: none; width: 100%; font-size: 14px; font-weight: 600;
     cursor: pointer;
     transition: transform 0.1s;
-    text-align: left;
   }
   .tool-link-card:active { transform: scale(0.98); }
   .tool-link-card .tlc-icon { font-size: 18px; }
@@ -532,7 +480,6 @@ html
   .chapter-nav .cn-title { font-size: 13px; font-weight: 500; color: var(--primary); }
   .chapter-nav a.spacer { visibility: hidden; }
 
-  /* ===== Qualification Journey (Journey tab) ===== */
   .journey-wrap { padding: 0 0 12px; }
   .flow-node {
     background: var(--surface);
@@ -635,7 +582,6 @@ html
   .flow-setting h5 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
   .flow-setting p { font-size: 11px; color: var(--muted); margin: 0; line-height: 1.4; }
 
-  /* Mood */
   .mood-row { display: flex; gap: 8px; }
   .mood-opt {
     flex: 1;
@@ -647,7 +593,6 @@ html
   .mood-opt:active { transform: scale(0.96); }
   .mood-opt.selected { background: var(--primary); border-color: var(--primary); transform: scale(1.08); box-shadow: var(--shadow); }
 
-  /* Reference */
   .ref-search-wrap { position: relative; margin-bottom: 12px; }
   .ref-search-wrap input { padding-left: 38px; }
   .ref-search-wrap .ic {
@@ -673,7 +618,6 @@ html
   .ref-card-item h4 { font-size: 14px; font-weight: 600; margin: 2px 0 4px; }
   .ref-card-item p { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
 
-  /* Template tiles */
   .templ-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .templ-tile {
     background: var(--surface); border-radius: var(--radius);
@@ -686,7 +630,6 @@ html
   .templ-tile h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
   .templ-tile p { font-size: 11px; color: var(--muted); line-height: 1.4; }
 
-  /* Formulation output */
   .form-output {
     background: var(--surface-2); padding: 14px;
     border-radius: var(--radius);
@@ -695,7 +638,6 @@ html
     max-height: 360px; overflow-y: auto;
   }
 
-  /* Sheet modal */
   .sheet-bg {
     position: fixed; inset: 0; background: rgba(29, 42, 48, 0.5);
     display: none; align-items: flex-end; justify-content: center;
@@ -724,7 +666,6 @@ html
   @keyframes fadeBg { from { opacity: 0; } to { opacity: 1; } }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-  /* Toast */
   .toast {
     position: fixed; left: 50%; transform: translateX(-50%);
     bottom: calc(var(--tab-h) + var(--safe-bottom) + 20px);
@@ -737,7 +678,6 @@ html
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
 
-  /* Me / Profile */
   .profile-header {
     text-align: center; padding: 20px 0 28px;
   }
@@ -776,7 +716,6 @@ html
   .menu-item .mi-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
   .menu-item .mi-chev { color: var(--muted); }
 
-  /* Search results */
   .search-results { margin-bottom: 18px; }
   .search-result-item {
     background: var(--surface); border-radius: var(--radius);
@@ -790,7 +729,6 @@ html
   .search-result-item .sr-snippet { font-size: 12px; color: var(--muted); line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   mark { background: var(--accent-soft); color: var(--accent); padding: 0 2px; border-radius: 3px; }
 
-  /* Logo / brand on home */
   .brand-strip {
     display: flex; align-items: center; gap: 10px;
     margin-bottom: 4px;
@@ -806,17 +744,56 @@ html
   }
   .brand-text { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
 
-  /* Desktop hint */
   @media (min-width: 481px) {
     body { background: var(--surface-2); }
     .app { margin-top: 20px; margin-bottom: 20px; height: calc(100vh - 40px); height: calc(100dvh - 40px); border-radius: 32px; overflow: hidden; box-shadow: 0 20px 60px rgba(29, 42, 48, 0.15); }
   }
+  /* ===== Thinkers library ===== */
+  .thk-featured {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff; border-radius: var(--radius-lg); padding: 16px 16px 18px;
+    margin-bottom: 14px; box-shadow: var(--shadow-md); cursor: pointer;
+    transition: transform 0.12s ease;
+  }
+  .thk-featured:active { transform: scale(0.985); }
+  .thk-featured .thk-fe-eyebrow {
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    font-weight: 700; opacity: 0.85; display: flex; align-items: center; gap: 6px;
+  }
+  .thk-featured h3 { font-size: 19px; font-weight: 700; margin: 6px 0 2px; letter-spacing: -0.01em; }
+  .thk-featured .thk-fe-role { font-size: 12.5px; opacity: 0.9; margin-bottom: 10px; }
+  .thk-featured .thk-fe-nut {
+    font-size: 13.5px; line-height: 1.5; font-style: italic;
+    border-top: 1px solid rgba(255,255,255,0.22); padding-top: 10px;
+  }
+  .thk-featured .thk-fe-cta { font-size: 12px; font-weight: 600; opacity: 0.95; margin-top: 10px; display: flex; align-items: center; gap: 4px; }
+
+  .thk-card {
+    background: var(--surface); border-radius: var(--radius); padding: 13px 14px;
+    margin-bottom: 8px; box-shadow: var(--shadow-sm); cursor: pointer;
+    transition: transform 0.12s ease; display: flex; align-items: flex-start; gap: 12px;
+  }
+  .thk-card:active { transform: scale(0.985); }
+  .thk-card .thk-body { flex: 1; min-width: 0; }
+  .thk-card .thk-disc { font-size: 10px; color: var(--primary); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .thk-card h4 { font-size: 14.5px; font-weight: 600; margin: 2px 0 1px; }
+  .thk-card .thk-dates { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .thk-card .thk-role { font-size: 12.5px; color: var(--ink-soft); line-height: 1.45; margin-top: 3px; }
+  .thk-card .thk-chev { color: var(--muted); flex-shrink: 0; align-self: center; }
+
+  .thk-group-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); margin: 16px 0 8px; padding-top: 4px;
+  }
+  .thk-group-label:first-child { margin-top: 4px; }
+
+  #v-figure .callout { font-style: normal; }
+  #v-figure .ch-back { margin-top: 22px; }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- ============ TOP BAR ============ -->
   <header class="topbar">
     <button class="back-btn" id="back-btn" onclick="goBack()" aria-label="Back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -827,10 +804,8 @@ html
     </button>
   </header>
 
-  <!-- ============ VIEWS ============ -->
   <div class="views" id="views">
 
-    <!-- ============ TODAY ============ -->
     <section class="view active" id="v-today">
       <div class="hero">
         <div class="brand-strip">
@@ -863,23 +838,21 @@ html
       <div id="activity-feed"></div>
     </section>
 
-    <!-- ============ LEARN ============ -->
     <section class="view" id="v-learn">
       <div class="hero">
         <div class="eyebrow">Handbook</div>
         <h1>The Forensic Psychology Practitioner Handbook</h1>
-        <p class="sub">Seventeen chapters, written for the UK practitioner journey. Read top-to-bottom or jump in.</p>
+        <p class="sub">Fourteen chapters, written for the UK practitioner journey. Read top-to-bottom or jump in.</p>
       </div>
 
       <div class="callout">
         ⚠️ <strong>Disclaimer:</strong> Reference guide only, not legal or professional advice. Always verify current requirements with the HCPC, BPS, and your employer.
       </div>
 
-      <div class="section-label">All chapters <span class="count" id="ch-count">—</span></div>
+      <div class="section-label">All chapters <span class="count">14 chapters</span></div>
       <div class="ch-list" id="ch-list"></div>
     </section>
 
-    <!-- ============ TOOLS ============ -->
     <section class="view" id="v-tools">
       <div class="hero">
         <div class="eyebrow">Toolkit</div>
@@ -923,10 +896,14 @@ html
           <h4>Reference</h4>
           <p>Frameworks &amp; tools</p>
         </div>
+                <div class="tool-tile" onclick="openTool('thinkers')">
+          <div class="t-icon">🏛️</div>
+          <h4>Thinkers</h4>
+          <p>Philosophers &amp; psychologists</p>
+        </div>
       </div>
     </section>
 
-    <!-- ============ JOURNEY ============ -->
     <section class="view" id="v-journey">
       <div class="hero">
         <div class="eyebrow">Qualification</div>
@@ -984,7 +961,6 @@ html
       </div>
     </section>
 
-    <!-- ============ ME ============ -->
     <section class="view" id="v-me">
       <div class="profile-header">
         <div class="profile-avatar">⚓</div>
@@ -1029,7 +1005,7 @@ html
           <div class="mi-icon">ℹ️</div>
           <div class="mi-text">
             <div class="mi-title">About Anchor</div>
-            <div class="mi-sub">Version 1.1 · Forensic psych companion</div>
+            <div class="mi-sub">Version 1.0 · Forensic psych companion</div>
           </div>
           <span class="mi-chev">›</span>
         </div>
@@ -1044,22 +1020,23 @@ html
       </div>
 
       <p style="text-align:center; color:var(--muted); font-size:11px; margin-top:24px;">
-        Version 1.1 · Compiled May 2026<br>© DanLockwood.co.uk
+        Version 1.0 · Compiled May 2026<br>© DanLockwood.co.uk
       </p>
     </section>
 
-    <!-- ============ CHAPTER DETAIL (dynamic) ============ -->
     <section class="view chapter-detail" id="v-chapter">
       <div id="chapter-content"></div>
     </section>
 
-    <!-- ============ TOOL DETAIL (dynamic) ============ -->
     <section class="view" id="v-tool">
       <div id="tool-content"></div>
     </section>
+
+        <section class="view chapter-detail" id="v-figure">
+      <div id="figure-content"></div>
+    </section>
   </div>
 
-  <!-- ============ TAB BAR ============ -->
   <nav class="tabbar">
     <button class="tab active" data-tab="today" onclick="goTab('today')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 L12 4 L21 12"/><path d="M5 10v10h14V10"/></svg>
@@ -1084,7 +1061,6 @@ html
   </nav>
 </div>
 
-<!-- Sheet -->
 <div class="sheet-bg" id="sheet-bg" onclick="if(event.target===this)closeSheet()">
   <div class="sheet" id="sheet">
     <span class="sheet-handle"></span>
@@ -1092,7 +1068,6 @@ html
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1135,114 +1110,18 @@ const chapters = [
     <h2>Other Key Legislation</h2>
     <ul><li><strong>Criminal Procedure (Insanity) Act 1964</strong> — fitness to plead</li><li><strong>PACE 1984</strong> — police powers, appropriate adults</li><li><strong>Equality Act 2010</strong> — reasonable adjustments</li><li><strong>Data Protection Act 2018 / UK GDPR</strong></li><li><strong>Children Act 1989 / 2004</strong> — safeguarding</li></ul>
   `},
-  {id:4, color:'c-clay', title:'What the Work Actually Is', tag:'The three intertwined activities — assessment, formulation, and application — and where forensic psychology sits across courts, custody, and community.', html:`
-    <h2>Where the Discipline Sits</h2>
-    <p>Forensic psychology applies clinical, cognitive, and social psychology to the questions the legal and criminal justice systems actually need answered — usually some version of: <em>why did this person behave this way, how likely are they to do it again, and what would reduce that likelihood?</em></p>
-    <p>In the UK, practising forensic psychologists are registered with the HCPC and most belong to the BPS Division of Forensic Psychology. The day-to-day work is dominated by three intertwined activities: <strong>assessment</strong>, <strong>formulation</strong>, and the application of both to <strong>intervention and decision-making</strong>.</p>
-
-    <h2>1 · Assessment</h2>
-    <p>Forensic assessment is broader than a clinic appointment. It draws on a clinical interview but weights collateral information far more heavily — file review (offence records, pre-sentence reports, depositions, prison or hospital notes), behavioural observation, third-party accounts, and psychometrics. A defining feature is the tension between self-report and the documented record: discrepancies are themselves data.</p>
-    <h3>The risk-assessment centre of gravity</h3>
-    <p>The field has largely moved away from unstructured clinical judgement (poor reliability) and pure actuarial prediction (good at the group level, blunt at the individual) toward <strong>Structured Professional Judgement (SPJ)</strong> — defined, empirically supported risk factors rated by the clinician, then a formulation-based judgement rather than a mechanical score.</p>
-    <h3>Personality &amp; psychopathology</h3>
-    <p>Overlaps heavily with risk. The PCL-R is the single most weighty instrument — and precisely because it carries so much weight, its limitations (rater drift, adversarial allegiance, cultural bias) deserve attention.</p>
-    <h3>Validity &amp; malingering</h3>
-    <p>Distinctive to forensic work, because the stakes give people clear incentives to over- or under-report. The point is rarely catching liars; it is contextualising self-report.</p>
-    <div class="callout"><strong>The cardinal point: role clarity.</strong> The therapeutic role (helping the client) and the evaluative role (informing a court or parole board) carry different duties and very different confidentiality limits. The person must understand which role you occupy — and that an evaluative report may not serve their interests.</div>
-    <button class="tool-link-card" onclick="openChapter(5)"><span class="tlc-icon">🧰</span> Go deeper — the Assessment Toolkit <span class="tlc-arrow">→</span></button>
-
-    <h2>2 · Formulation</h2>
-    <p>If assessment gathers the data, formulation makes sense of it: a working, explicitly revisable hypothesis about how a person's difficulties and offending developed and what keeps them going. It is not a diagnosis — diagnosis classifies, formulation explains. In forensic settings it must do an extra job: articulate the psychological pathway <em>to the offending behaviour</em>, not just to distress.</p>
-    <button class="tool-link-card" onclick="openChapter(6)"><span class="tlc-icon">🧩</span> See a worked formulation + RNR vs GLM <span class="tlc-arrow">→</span></button>
-
-    <h2>3 · Applications</h2>
-    <ul>
-      <li><strong>Court &amp; expert testimony</strong> — fitness to plead, capacity, mitigation, sentencing, parole/release risk. The duty is to the court, not the instructing party.</li>
-      <li><strong>Treatment &amp; offending-behaviour programmes</strong> — accredited group and individual work targeting criminogenic needs (Kaizen, Horizon, Thinking Skills, CALM), plus CBT, schema, DBT and forensic psychotherapy.</li>
-      <li><strong>Secure &amp; custodial settings</strong> — high/medium/low secure hospitals, prisons, community forensic teams; advising MDTs on progression, transfer and discharge.</li>
-      <li><strong>Multi-agency risk management</strong> — formulation-driven plans coordinated through MAPPA across police, probation, health and social care.</li>
-      <li><strong>Police &amp; investigative psychology</strong> — investigative interviewing (the UK PEACE model), eyewitness memory, and offender profiling (treated with real caution — its evidence base is weaker than popular depictions suggest).</li>
-      <li><strong>Family &amp; civil contexts</strong> — parenting assessments, risk to children, capacity evaluations.</li>
-    </ul>
-
-    <h2>Cross-Cutting Themes</h2>
-    <p>The field is increasingly <strong>trauma-informed</strong>, <strong>strengths-aware</strong> rather than purely risk-focused, and attentive to the over-representation of neurodevelopmental conditions, learning disability and adverse childhood experiences in offending populations. The recurring tension — between care and control, between helping the individual and protecting the public — is not a problem to be solved but a constant feature of the work to be held thoughtfully.</p>
-  `},
-  {id:5, color:'c-moss', title:'The Assessment Toolkit', tag:'Risk assessment approaches, the tools mapped by domain, RNR, psychometrics, and validity testing.', html:`
-    <h2>Three Approaches to Risk</h2>
-    <ul>
-      <li><strong>Unstructured clinical judgement</strong> — poor reliability. Avoid.</li>
-      <li><strong>Actuarial</strong> — score-based (Static-99R, OGRS). High reliability, limited individual context.</li>
-      <li><strong>Structured Professional Judgement (SPJ)</strong> — empirical factors + clinical formulation (HCR-20 V3). Current best practice.</li>
-    </ul>
-    <div class="callout"><strong>Static vs dynamic.</strong> Static tools use historical facts that don't change — they anchor long-term baseline risk but can't show progress. Dynamic tools capture changeable factors — they're what you re-rate to demonstrate change and manage imminent risk (ACUTE and DASA work over days, STABLE over months).</div>
-
-    <h2>Tools by Domain</h2>
-    <p>The most common newcomer error is treating these as interchangeable. Each is validated for a particular behaviour, population, and time horizon.</p>
-    <div class="table-scroll">
-    <table class="ch-table">
-      <thead><tr><th>Domain / offence</th><th>Core tools</th></tr></thead>
-      <tbody>
-        <tr><td>General violence</td><td>HCR-20 V3 (SPJ); VRAG-R (actuarial)</td></tr>
-        <tr><td>Sexual offending</td><td>Static-99R (static), STABLE-2007 (stable dynamic), ACUTE-2007 (acute), RSVP, Risk Matrix 2000</td></tr>
-        <tr><td>Intimate partner violence</td><td>SARA; B-SAFER (brief)</td></tr>
-        <tr><td>Stalking</td><td>SAM</td></tr>
-        <tr><td>General recidivism</td><td>OGRS; OASys (HMPPS system)</td></tr>
-        <tr><td>Inpatient short-term</td><td>START; DASA (shift-by-shift)</td></tr>
-        <tr><td>Adolescent violence</td><td>SAVRY</td></tr>
-        <tr><td>Adolescent sexual</td><td>ERASOR</td></tr>
-        <tr><td>Psychopathy (informs the above)</td><td>PCL-R; PCL:SV (screening)</td></tr>
-      </tbody>
-    </table>
-    </div>
-
-    <h2>Risk–Need–Responsivity</h2>
-    <p>Arguably the most influential framework in correctional practice (Andrews &amp; Bonta). Three principles:</p>
-    <ul>
-      <li><strong>Risk</strong> — match intervention intensity to risk level.</li>
-      <li><strong>Need</strong> — target criminogenic needs (dynamic risk factors causally linked to offending — the "central eight": antisocial cognition, antisocial associates, substance misuse, and so on).</li>
-      <li><strong>Responsivity</strong> — tailor delivery to the person's learning style, motivation, and ability.</li>
-    </ul>
-
-    <h2>Validity &amp; Effort</h2>
-    <p>Because the stakes create incentives to misrepresent, tools like the TOMM and SIRS — plus embedded validity indicators within other tests — gauge response style. This contextualises self-report rather than "catching" anyone.</p>
-
+  {id:4, color:'c-moss', title:'The Assessment Toolkit', tag:'Risk assessment instruments, psychometrics, formulation frameworks.', html:`
+    <h2>Approaches to Risk Assessment</h2>
+    <ul><li><strong>Unstructured Clinical Judgement</strong> — poor reliability. Avoid.</li><li><strong>Actuarial</strong> — score-based (e.g. Static-99R). High reliability, limited context.</li><li><strong>Structured Professional Judgement (SPJ)</strong> — empirical + clinical (e.g. HCR-20v3). Best practice.</li></ul>
+    <h2>Common Tools</h2>
+    <ul><li><strong>HCR-20v3</strong> — violence risk (20 items)</li><li><strong>RSVP</strong> — sexual violence</li><li><strong>SARA</strong> — intimate partner violence</li><li><strong>Static-99R</strong> — actuarial sexual recidivism</li><li><strong>OASys</strong> — HMPPS risk/need</li><li><strong>PCL-R</strong> — psychopathy (training required)</li></ul>
+    <h2>Formulation Frameworks</h2>
+    <p>The <strong>5Ps</strong> remain standard: Predisposing, Precipitating, Perpetuating, Protective, Presenting. <strong>GLM</strong> and <strong>RNR</strong> frame intervention planning.</p>
     <button class="tool-link-card" onclick="openTool('formulation')"><span class="tlc-icon">🧩</span> Open Formulation Builder <span class="tlc-arrow">→</span></button>
-
-    <div class="callout warn"><strong>Caveat:</strong> Each tool requires the licensed manual and (often) accredited training. This handbook describes them — it does not replace training. Don't score a tool you haven't been trained on.</div>
+    <h2>Important Caveat</h2>
+    <p>Each tool requires the licensed manual and (often) accredited training. This handbook describes them — it does not replace training. Don't score a tool you haven't been trained on.</p>
   `},
-  {id:6, color:'c-rose', title:'Formulation in Practice', tag:'A worked 5Ps formulation from a case vignette, and how RNR and GLM actually combine in a plan.', html:`
-    <h2>Building a Formulation From a Case</h2>
-    <p>A composite vignette — not a real person — to show the process rather than just describe it.</p>
-    <div class="vignette">Mr A, 34, is in a medium secure unit following a serious assault on a stranger in a pub. Long history of violence, mostly when intoxicated. Childhood: physical abuse by his father, periods in care, school exclusion. Diagnosed with emotionally unstable personality traits; history of alcohol and stimulant misuse. He describes feeling "disrespected" before the index offence, has limited employment history, one supportive sister, responds well to a particular nurse but reacts explosively to perceived unfairness.</div>
-    <p>The mistake to avoid is jumping straight to "he's violent because of his childhood." Formulation is disciplined sequencing.</p>
-    <h3>Step 1 — Organise, don't list</h3>
-    <p>Separate static facts (history, convictions) from dynamic factors (current beliefs, mood, substance use, relationships), and distinguish self-report from the file. Mr A minimising his role while the deposition describes a sustained assault is itself formulation material.</p>
-    <h3>Step 2 — Make the 5Ps causal, not descriptive</h3>
-    <ul>
-      <li><strong>Predisposing</strong> — early abuse and care experience disrupting attachment and emotion regulation; violence modelled as a response to threat; a likely internalised belief that the world is hostile and respect must be defended physically.</li>
-      <li><strong>Precipitating</strong> — acute intoxication lowering inhibition; a perceived slight ("disrespect") activating a threat appraisal.</li>
-      <li><strong>Perpetuating</strong> — a cognitive style that reads ambiguity as hostility; substances as both trigger and coping; no pro-social sources of status; short-term reinforcement (violence resolves the felt humiliation).</li>
-      <li><strong>Protective</strong> — his sister; capacity for a working alliance (the nurse); responsiveness to being treated fairly.</li>
-      <li><strong>Presenting</strong> — the index assault and recurrent reactive violence.</li>
-    </ul>
-    <h3>Step 3 — Articulate the offence pathway</h3>
-    <p>A serviceable hypothesis: a developmental history of abuse produced hypersensitivity to humiliation and a belief that respect is enforced through dominance; substances lower the threshold and self-medicate; in a disinhibited state an ambiguous cue is read as a threat to status, triggering a rapidly escalating, reactive response that is briefly reinforced. Note this is <strong>reactive / affective</strong> violence (threat-driven), not <strong>instrumental / predatory</strong> (planned) — a distinction that changes both risk profile and treatment target.</p>
-    <h3>Step 4 — Link the formulation to the tools</h3>
-    <p>The HCR-20 items don't sit beside the formulation — they <em>are</em> the formulation in structured form. Historical items explain the predisposing layer; Clinical items describe the current dynamic picture; Risk Management items point at what release would activate. The formulation answers the SPJ question: <em>under what circumstances does risk rise or fall?</em> Here, risk concentrates in unstructured, alcohol-involved social situations where he perceives disrespect — far more useful than a global "high risk" label.</p>
-    <h3>Step 5 — Translate into a plan</h3>
-    <p>Reduce access to the high-risk pathway (substance work, structured routine), build alternative routes to the same legitimate needs (status, belonging), target the threat-appraisal style directly (CBT, schema work), and use the working alliance as a protective lever.</p>
-
-    <h2>RNR and GLM in Practice</h2>
-    <p>The two organising frameworks for offender intervention. The modern position is that they complement rather than compete.</p>
-    <h3>Risk–Need–Responsivity</h3>
-    <p>A risk-reduction engineering model: identify dynamic risk factors causally tied to offending, concentrate resources on higher-risk individuals, target those needs, deliver in a matched style. Strongest evidence base for reducing reoffending. Weakness: a purely deficit-focused "here are your defects" stance can alienate and struggle with engagement.</p>
-    <h3>The Good Lives Model</h3>
-    <p>Starts elsewhere: people offend while pursuing legitimate human goods — relatedness, agency, mastery, status, inner peace — through harmful or ineffective means. Treatment builds a credible, personally meaningful "good life" plan that secures those goods legitimately, with risk reduction following as a by-product. More motivating and dignified, but on its own less precise about what most needs reducing.</p>
-    <div class="callout"><strong>Integrated in practice:</strong> RNR identifies <em>what must reduce</em>; GLM frames <em>what the person moves toward</em>; the formulation links the two. GLM "approach goals" (status through work and the sister relationship) pair with RNR "avoidance goals" (reduce alcohol use, manage threat appraisals). GLM is the motivational front end; RNR is the targeting and dosing logic.</div>
-    <button class="tool-link-card" onclick="openTool('formulation')"><span class="tlc-icon">🧩</span> Build your own in the Formulation tool <span class="tlc-arrow">→</span></button>
-  `},
-  {id:7, color:'c-teal', title:"Where You'll Work", tag:'Prisons, secure hospitals, courts, and police — culture, roles, and which tools map to which setting.', html:`
+  {id:5, color:'c-rose', title:"Where You'll Work", tag:'Prisons, secure hospitals, courts, and police — culture, roles, expectations.', html:`
     <h2>HMPPS — Prisons & Probation</h2>
     <p>Largest single employer of UK forensic psychologists. Trainee posts (Band 7), Registered (Band 8a/b), programme delivery, parole reports, OPD Pathway, PIPE units.</p>
     <h2>NHS Forensic Mental Health</h2>
@@ -1253,24 +1132,8 @@ const chapters = [
     <p>Smaller but growing: behavioural advisors, investigative interviewing, hostage negotiation support, vulnerability assessment.</p>
     <h2>Cultural Differences</h2>
     <p>Prisons run on routine and security; secure hospitals on MDT clinical decision-making; courts on adversarial scrutiny. Same skills look different across settings.</p>
-
-    <h2>Which Tools, Which Setting</h2>
-    <p>Closer to how the work is actually organised:</p>
-    <div class="table-scroll">
-    <table class="ch-table">
-      <thead><tr><th>Setting</th><th>Typical focus &amp; tools</th></tr></thead>
-      <tbody>
-        <tr><td>Prison (HMPPS)</td><td>Sentence planning, programme allocation, parole — OASys, OGRS, HCR-20, Static-99R, PCL-R</td></tr>
-        <tr><td>Secure hospital</td><td>Admission, progression, discharge, ward safety — HCR-20, START, DASA, RSVP, PCL-R</td></tr>
-        <tr><td>Community / probation</td><td>Risk management, MAPPA, supervision — OASys, OGRS, SARA, dynamic sexual measures</td></tr>
-        <tr><td>Court / medico-legal</td><td>Risk for sentencing, parole, release — HCR-20, Static-99R, PCL-R, capacity/validity measures</td></tr>
-        <tr><td>Youth justice / CAMHS forensic</td><td>Risk &amp; need in under-18s — SAVRY, ERASOR</td></tr>
-      </tbody>
-    </table>
-    </div>
-    <div class="callout">As an Assistant Psychologist you'd rarely lead these assessments at first — but you'll likely score contributory measures, gather and collate the file and collateral they depend on, co-facilitate the groups that flow from RNR/GLM plans, and help draft formulations under supervision. Showing you understand <em>why</em> a tool fits a question — not just reciting acronyms — is what reads as genuine forensic literacy.</div>
   `},
-  {id:8, color:'c-clay', title:'Evidence-Based Interventions', tag:'Accredited programmes, therapeutic approaches, and how to evaluate them.', html:`
+  {id:6, color:'c-clay', title:'Evidence-Based Interventions', tag:'Accredited programmes, therapeutic approaches, and how to evaluate them.', html:`
     <h2>HMPPS Accredited Programmes</h2>
     <ul><li><strong>Kaizen</strong> — high-risk sexual/violent</li><li><strong>Horizon</strong> — medium-risk sexual</li><li><strong>Building Better Relationships</strong> — domestic abuse</li><li><strong>Thinking Skills Programme</strong> — cognitive skills</li><li><strong>Resolve</strong> — medium-risk violence</li><li><strong>New Me Strengths</strong> — adapted for LD</li></ul>
     <h2>Therapeutic Approaches</h2>
@@ -1280,14 +1143,14 @@ const chapters = [
     <h2>Evaluation</h2>
     <p>Pre/post psychometrics, programme treatment reports, longer-term reconviction data. Don't skip the boring measurement work.</p>
   `},
-  {id:9, color:'c-teal', title:'Report Writing', tag:'Court reports, risk assessments, and clinical letters that are defensible.', html:`
+  {id:7, color:'c-teal', title:'Report Writing', tag:'Court reports, risk assessments, and clinical letters that are defensible.', html:`
     <h2>Principles of a Good Report</h2>
     <ul><li><strong>Answer the question.</strong> Re-read the letter of instruction.</li><li><strong>Stay in your competence.</strong> Decline what you cannot answer.</li><li><strong>Show your sources.</strong></li><li><strong>Distinguish fact from opinion.</strong></li><li><strong>Be transparent about limits.</strong></li><li><strong>Plain English.</strong></li></ul>
     <h2>Common Pitfalls</h2>
     <ul><li>Diagnostic labels without operational definitions</li><li>Conflating risk factors with predictions</li><li>Skipping alternative formulations</li><li>Dual-role contamination</li><li>Recommendations beyond evidence</li></ul>
     <button class="tool-link-card" onclick="openTool('reports')"><span class="tlc-icon">📄</span> Open Report Templates <span class="tlc-arrow">→</span></button>
   `},
-  {id:10, color:'c-sand', title:'Ethics, Boundaries & Safety', tag:'Professional conduct, safeguarding, dual roles, lone working, and self-care.', html:`
+  {id:8, color:'c-sand', title:'Ethics, Boundaries & Safety', tag:'Professional conduct, safeguarding, dual roles, lone working, and self-care.', html:`
     <h2>Core Ethical Frameworks</h2>
     <ul><li><strong>HCPC Standards</strong> — the floor</li><li><strong>BPS Code of Ethics</strong> — respect, competence, responsibility, integrity</li><li><strong>BPS Practice Guidelines</strong></li></ul>
     <h2>Confidentiality & Its Limits</h2>
@@ -1300,7 +1163,7 @@ const chapters = [
     <p>Forensic work leaves a residue. Supervision is not optional. Reflective practice is not optional. Wellbeing is not optional.</p>
     <button class="tool-link-card" onclick="openTool('reflection')"><span class="tlc-icon">📓</span> Open Reflection Journal <span class="tlc-arrow">→</span></button>
   `},
-  {id:11, color:'c-moss', title:'Continuing Professional Development', tag:'What counts, how to log it, supervision requirements, and building your portfolio.', html:`
+  {id:9, color:'c-moss', title:'Continuing Professional Development', tag:'What counts, how to log it, supervision requirements, and building your portfolio.', html:`
     <h2>The Five HCPC CPD Standards</h2>
     <ol><li>Maintain a continuous, up-to-date and accurate record</li><li>Mix of learning activities relevant to practice</li><li>Demonstrate contribution to practice quality</li><li>Demonstrate benefit to service users</li><li>Present a written profile on request</li></ol>
     <h2>What Counts</h2>
@@ -1310,7 +1173,7 @@ const chapters = [
     <button class="tool-link-card" onclick="openTool('cpd')"><span class="tlc-icon">📚</span> CPD Logger <span class="tlc-arrow">→</span></button>
     <button class="tool-link-card" onclick="openTool('supervision')"><span class="tlc-icon">💬</span> Supervision Log <span class="tlc-arrow">→</span></button>
   `},
-  {id:12, color:'c-rose', title:'Career Practicalities', tag:'Pay bands, job hunting, NHS vs HMPPS vs independent, interviews.', html:`
+  {id:10, color:'c-rose', title:'Career Practicalities', tag:'Pay bands, job hunting, NHS vs HMPPS vs independent, interviews.', html:`
     <h2>Pay Bands (Approximate, England)</h2>
     <ul><li><strong>Assistant Psychologist</strong> — Band 4–5</li><li><strong>Trainee Forensic (HMPPS)</strong> — Band 7</li><li><strong>Registered Forensic</strong> — Band 8a</li><li><strong>Senior / Consultant</strong> — Band 8b–8c</li><li><strong>Head of Service</strong> — Band 8c–9</li></ul>
     <p>Independent rates vary widely. Cross-check current pay scales annually.</p>
@@ -1321,11 +1184,11 @@ const chapters = [
     <h2>The First Year</h2>
     <p>Take fewer cases than you think. Use supervision generously. Find trusted peers. The work compounds slowly — that's how it should feel.</p>
   `},
-  {id:13, color:'c-mauve', title:'Quick Reference Index', tag:'Searchable index of frameworks, tools, legislation, and acronyms.', html:`
+  {id:11, color:'c-mauve', title:'Quick Reference Index', tag:'Searchable index of frameworks, tools, legislation, and acronyms.', html:`
     <p>The full searchable index includes assessment tools, frameworks, legislation, bodies, settings, and accredited programmes.</p>
     <button class="tool-link-card" onclick="openTool('reference')"><span class="tlc-icon">🔍</span> Open Reference Index <span class="tlc-arrow">→</span></button>
   `},
-  {id:14, color:'c-teal', title:'Starter Templates & Checklists', tag:'Templates for supervision, CPD, placement induction, and risk formulation.', html:`
+  {id:12, color:'c-teal', title:'Starter Templates & Checklists', tag:'Templates for supervision, CPD, placement induction, and risk formulation.', html:`
     <p>Templates are integrated into the live tools — fill them in directly, save drafts, and export.</p>
     <button class="tool-link-card" onclick="openTool('cpd')"><span class="tlc-icon">📚</span> CPD Record <span class="tlc-arrow">→</span></button>
     <button class="tool-link-card" onclick="openTool('supervision')"><span class="tlc-icon">💬</span> Supervision Log <span class="tlc-arrow">→</span></button>
@@ -1334,7 +1197,7 @@ const chapters = [
     <h2>Placement Induction Checklist</h2>
     <ul><li>Governance & reporting structure understood</li><li>Lone-working policy read and signed</li><li>Safeguarding lead identified</li><li>Supervision arrangements agreed in writing</li><li>IT & building access, ID badge</li><li>Mandatory training done (PMVA / fire / data)</li><li>Clinical record system training</li><li>Caseload allocation & review schedule</li><li>Learning objectives drafted</li></ul>
   `},
-  {id:15, color:'c-sand', title:'Growing Into the Role', tag:'Reflective practice, managing vicarious trauma, building resilience.', html:`
+  {id:13, color:'c-sand', title:'Growing Into the Role', tag:'Reflective practice, managing vicarious trauma, building resilience.', html:`
     <h2>Reflective Practice</h2>
     <p>Not optional, not paperwork. Reflection is how clinical reasoning becomes durable. Use Gibbs, Kolb, or Driscoll — and write briefly but consistently.</p>
     <button class="tool-link-card" onclick="openTool('reflection')"><span class="tlc-icon">📓</span> Reflection Journal <span class="tlc-arrow">→</span></button>
@@ -1345,7 +1208,7 @@ const chapters = [
     <h2>Sustaining Yourself</h2>
     <p>This is hard work. Holding harm done and harm received over a career takes care, support, and a life outside the role. Build it deliberately.</p>
   `},
-  {id:16, color:'c-moss', title:'Psychology Cheat Sheets', tag:'At-a-glance reference cards for key theories, models, and frameworks.', html:`
+  {id:14, color:'c-moss', title:'Psychology Cheat Sheets', tag:'At-a-glance reference cards for key theories, models, and frameworks.', html:`
     <h2>5Ps Formulation</h2>
     <ul><li><strong>Presenting</strong> — current concerns</li><li><strong>Predisposing</strong> — vulnerabilities</li><li><strong>Precipitating</strong> — triggers</li><li><strong>Perpetuating</strong> — maintaining factors</li><li><strong>Protective</strong> — strengths</li></ul>
     <h2>RNR Model</h2>
@@ -1358,119 +1221,24 @@ const chapters = [
     <p>Pre-contemplation → Contemplation → Preparation → Action → Maintenance → (Relapse). Match intervention to readiness.</p>
     <h2>HCR-20v3 Domains</h2>
     <ul><li><strong>Historical (10)</strong> — violence history, antisocial behaviour, relationships, employment, substance use, mental disorder, personality, trauma, attitudes, treatment response</li><li><strong>Clinical (5)</strong> — insight, violent ideation, MMD symptoms, instability, treatment response (current)</li><li><strong>Risk Mgmt (5)</strong> — services, living situation, support, compliance, stress/coping</li></ul>
-    <h2>Reactive vs Instrumental Violence</h2>
-    <ul><li><strong>Reactive / affective</strong> — threat-driven, emotional, impulsive. Targets: arousal, threat appraisal.</li><li><strong>Instrumental / predatory</strong> — goal-driven, planned, low arousal. Targets: cognition, incentives, opportunity.</li></ul>
-    <h2>Static vs Dynamic Tools</h2>
-    <ul><li><strong>Static</strong> (Static-99R, OGRS) — fixed history, sets baseline, can't show change.</li><li><strong>Dynamic</strong> (STABLE, ACUTE, START, DASA) — changeable, re-rated to track progress and manage imminent risk.</li></ul>
-    <h2>RNR vs GLM in One Line</h2>
-    <p>RNR tells you <strong>what to reduce</strong>; GLM tells you <strong>what to build toward</strong>. Run them together.</p>
-  `},
-  {id:17, color:'c-mauve', title:'Theorists, Lightly', tag:'Affectionate one-liners — philosophy, psychology and forensic theory, caricatured for memory.', html:`
-    <h2>A Note Before You Smile</h2>
-    <p>These are affectionate caricatures, not summaries — the kind of thing that lodges a name in memory until the proper reading sticks. Use them as hooks, not citations.</p>
-
-    <h2>Philosophy, Explained</h2>
-    <p class="quip-note">Subject: the donut.</p>
-    <div class="quip-list">
-      <div class="quip"><span class="who">Heraclitus</span><span class="what">You can't eat the same donut twice.</span></div>
-      <div class="quip"><span class="who">Plato</span><span class="what">All donuts share in ideal "donut-ness."</span></div>
-      <div class="quip"><span class="who">Aristotle</span><span class="what">A donut contains its donut-ness.</span></div>
-      <div class="quip"><span class="who">Augustine</span><span class="what">Donuts need grace to be fully donut.</span></div>
-      <div class="quip"><span class="who">Descartes</span><span class="what">A donut's hole proves the existence of the donut.</span></div>
-      <div class="quip"><span class="who">Locke</span><span class="what">Donuts taste good to me.</span></div>
-      <div class="quip"><span class="who">Hume</span><span class="what">Donuts exist because I imagine donuts.</span></div>
-      <div class="quip"><span class="who">Kant</span><span class="what">A "donut" = my total experience of donut.</span></div>
-      <div class="quip"><span class="who">Wollstonecraft</span><span class="what">Women deserve donuts, too.</span></div>
-      <div class="quip"><span class="who">Mill</span><span class="what">Donuts are good if they make people happy.</span></div>
-      <div class="quip"><span class="who">Kierkegaard</span><span class="what">I have faith that donuts are delicious.</span></div>
-      <div class="quip"><span class="who">Marx</span><span class="what">Everybody deserves donuts.</span></div>
-      <div class="quip"><span class="who">Nietzsche</span><span class="what">Stop at nothing to get your donut.</span></div>
-      <div class="quip"><span class="who">Saussure</span><span class="what">Beignet / Krapfen / Ciambella / Buñuelo = "donut."</span></div>
-      <div class="quip"><span class="who">Wittgenstein</span><span class="what">Fried pastry, zero, parking lot spin, spare tire…</span></div>
-      <div class="quip"><span class="who">Beauvoir</span><span class="what">Patriarchy is responsible for the shape of the donut.</span></div>
-    </div>
-
-    <h2>Psychology, Explained</h2>
-    <p class="quip-note">The behaviour: someone ate the biscuit.</p>
-    <div class="quip-list">
-      <div class="quip"><span class="who">Wundt</span><span class="what">Let's measure how long it took them to notice the biscuit.</span></div>
-      <div class="quip"><span class="who">James</span><span class="what">Eating the biscuit is whatever eating-the-biscuit does for them.</span></div>
-      <div class="quip"><span class="who">Freud</span><span class="what">They ate it because of their mother.</span></div>
-      <div class="quip"><span class="who">Jung</span><span class="what">Biscuits are an archetype shared by all of humanity.</span></div>
-      <div class="quip"><span class="who">Pavlov</span><span class="what">Ring a bell, watch them salivate, hand over the biscuit.</span></div>
-      <div class="quip"><span class="who">Watson</span><span class="what">Give me a dozen healthy infants and I'll train them to eat any biscuit you like.</span></div>
-      <div class="quip"><span class="who">Skinner</span><span class="what">Reinforce biscuit-eating, get more biscuit-eating.</span></div>
-      <div class="quip"><span class="who">Maslow</span><span class="what">Biscuits are a deficiency need. Self-actualisation comes after.</span></div>
-      <div class="quip"><span class="who">Rogers</span><span class="what">Their relationship with biscuits is valid and should be unconditionally accepted.</span></div>
-      <div class="quip"><span class="who">Piaget</span><span class="what">A two-year-old and a ten-year-old eat the biscuit very differently.</span></div>
-      <div class="quip"><span class="who">Vygotsky</span><span class="what">With the right scaffolding, anyone can learn to eat a biscuit.</span></div>
-      <div class="quip"><span class="who">Harlow</span><span class="what">Take their mother away and they'll cling to the softest biscuit, not the one that feeds them.</span></div>
-      <div class="quip"><span class="who">Bowlby</span><span class="what">Securely attached infants share the biscuit. Avoidant ones hide it.</span></div>
-      <div class="quip"><span class="who">Asch</span><span class="what">Everyone else in the room ate one, so they did too.</span></div>
-      <div class="quip"><span class="who">Milgram</span><span class="what">A man in a lab coat told them to eat the biscuit, so they ate it.</span></div>
-      <div class="quip"><span class="who">Zimbardo</span><span class="what">Assign someone to be the biscuit guard and within six days it's a hostage situation.</span></div>
-      <div class="quip"><span class="who">Festinger</span><span class="what">They didn't want the biscuit but ate it, so now they love biscuits.</span></div>
-      <div class="quip"><span class="who">Beck</span><span class="what">"I must eat every biscuit or I am worthless." We're going to work on that.</span></div>
-      <div class="quip"><span class="who">Kahneman</span><span class="what">System 1 ate the biscuit. System 2 is now writing the apology.</span></div>
-      <div class="quip"><span class="who">Seligman</span><span class="what">They've learned that no matter what they do, biscuits happen.</span></div>
-    </div>
-
-    <h2>Forensic Psychology, Explained</h2>
-    <p class="quip-note">The crime: someone stole the biscuit from the staff room.</p>
-    <div class="quip-list">
-      <div class="quip"><span class="who">Lombroso</span><span class="what">You can tell who took it by the shape of their skull.</span></div>
-      <div class="quip"><span class="who">Freud</span><span class="what">The id wanted it. Mother is somehow involved.</span></div>
-      <div class="quip"><span class="who">Eysenck</span><span class="what">Extraverted neurotics with high P take more biscuits.</span></div>
-      <div class="quip"><span class="who">Bowlby</span><span class="what">Insecure attachment to the biscuit tin in early childhood.</span></div>
-      <div class="quip"><span class="who">Bandura</span><span class="what">They watched someone else take one and copied it.</span></div>
-      <div class="quip"><span class="who">Sutherland</span><span class="what">Biscuit theft is learned from your associates.</span></div>
-      <div class="quip"><span class="who">Merton</span><span class="what">Society demanded biscuits and provided none.</span></div>
-      <div class="quip"><span class="who">Hirschi</span><span class="what">Weak social bonds, weak commitment to the tin.</span></div>
-      <div class="quip"><span class="who">Cleckley</span><span class="what">Charming, articulate, felt absolutely nothing about it.</span></div>
-      <div class="quip"><span class="who">Hare</span><span class="what">Score them 30+ on the PCL-R and charge them.</span></div>
-      <div class="quip"><span class="who">Kohlberg</span><span class="what">Pre-conventional thieves only care about getting caught.</span></div>
-      <div class="quip"><span class="who">Loftus</span><span class="what">The witness will swear it was a bourbon. It was a custard cream.</span></div>
-      <div class="quip"><span class="who">Gudjonsson</span><span class="what">Interview them long enough and they'll confess to biscuits they've never seen.</span></div>
-      <div class="quip"><span class="who">Raine</span><span class="what">Reduced prefrontal grey matter made them do it.</span></div>
-      <div class="quip"><span class="who">Canter</span><span class="what">Map the thefts; the thief lives within walking distance of the tin.</span></div>
-      <div class="quip"><span class="who">Andrews &amp; Bonta</span><span class="what">Match the intervention to the risk, need and responsivity of the biscuit-thief.</span></div>
-      <div class="quip"><span class="who">Ward</span><span class="what">Help them build a good life that doesn't require stealing biscuits.</span></div>
-    </div>
+    <button class="tool-link-card" onclick="openTool('thinkers')"><span class="tlc-icon">🧠</span> Browse the Thinkers library <span class="tlc-arrow">→</span></button>
   `}
 ];
 
 /* ===== Reference data ===== */
 const reference = [
   {cat:'Risk Assessment', name:'HCR-20v3', desc:'Historical, Clinical, Risk Management 20 — SPJ tool for violence risk. 20 items across H (10), C (5), R (5).'},
-  {cat:'Risk Assessment', name:'VRAG-R', desc:'Violence Risk Appraisal Guide–Revised — actuarial violence recidivism.'},
   {cat:'Risk Assessment', name:'RSVP', desc:'Risk for Sexual Violence Protocol — 22 items across 5 domains.'},
-  {cat:'Risk Assessment', name:'Static-99R', desc:'Actuarial sexual recidivism risk for adult males (fixed historical items).'},
-  {cat:'Risk Assessment', name:'STABLE-2007', desc:'Stable dynamic risk factors for sexual offending — months horizon.'},
-  {cat:'Risk Assessment', name:'ACUTE-2007', desc:'Acute dynamic risk factors for sexual offending — days horizon.'},
-  {cat:'Risk Assessment', name:'Risk Matrix 2000', desc:'UK actuarial sexual/violent recidivism risk.'},
   {cat:'Risk Assessment', name:'SARA', desc:'Spousal Assault Risk Assessment — 20 items for IPV risk.'},
-  {cat:'Risk Assessment', name:'B-SAFER', desc:'Brief Spousal Assault Form for the Evaluation of Risk — short SARA variant.'},
-  {cat:'Risk Assessment', name:'SAM', desc:'Stalking Assessment and Management — SPJ for stalking.'},
-  {cat:'Risk Assessment', name:'START', desc:'Short-Term Assessment of Risk and Treatability — inpatient; assesses strengths alongside vulnerabilities.'},
-  {cat:'Risk Assessment', name:'DASA', desc:'Dynamic Appraisal of Situational Aggression — very short-term (shift-by-shift) inpatient aggression.'},
-  {cat:'Risk Assessment', name:'SAVRY', desc:'Structured Assessment of Violence Risk in Youth — adolescent violence.'},
-  {cat:'Risk Assessment', name:'ERASOR', desc:'Estimate of Risk of Adolescent Sexual Offense Recidivism.'},
+  {cat:'Risk Assessment', name:'Static-99R', desc:'Actuarial sexual recidivism risk for adult males.'},
   {cat:'Risk Assessment', name:'OASys', desc:'Offender Assessment System — HMPPS-wide risk and need.'},
-  {cat:'Risk Assessment', name:'OGRS', desc:'Offender Group Reconviction Scale — MoJ actuarial tool (age, sex, offending history).'},
-  {cat:'Personality', name:'PCL-R', desc:'Psychopathy Checklist-Revised (Hare). 20 items, interview + file. Training required.'},
-  {cat:'Personality', name:'PCL:SV', desc:'Psychopathy Checklist: Screening Version.'},
+  {cat:'Personality', name:'PCL-R', desc:'Psychopathy Checklist-Revised (Hare). 20 items. Training required.'},
   {cat:'Personality', name:'IPDE', desc:'International Personality Disorder Examination.'},
   {cat:'Cognitive', name:'WAIS-IV / WAIS-V', desc:'Wechsler Adult Intelligence Scale.'},
-  {cat:'Validity', name:'TOMM', desc:'Test of Memory Malingering — effort/feigning screen.'},
-  {cat:'Validity', name:'SIRS', desc:'Structured Interview of Reported Symptoms — feigned psychopathology.'},
+  {cat:'Cognitive', name:'TOMM', desc:'Test of Memory Malingering — effort/feigning screen.'},
   {cat:'Framework', name:'5Ps Formulation', desc:'Presenting, Predisposing, Precipitating, Perpetuating, Protective.'},
   {cat:'Framework', name:'Good Lives Model', desc:'Strengths-based rehabilitation (Ward). Primary goods, secondary goods, capacities.'},
   {cat:'Framework', name:'RNR Model', desc:'Risk-Need-Responsivity (Andrews & Bonta).'},
-  {cat:'Framework', name:'RNR Central Eight', desc:'Major criminogenic needs: history, antisocial cognition, associates, personality pattern, family/marital, school/work, leisure, substance misuse.'},
-  {cat:'Framework', name:'Finkelhor Four Preconditions', desc:'Route to a sexual offence: motivation, internal inhibitions, external inhibitions, victim resistance.'},
-  {cat:'Framework', name:'Ward & Siegert Pathways', desc:'Pathways model mapping distinct routes to sexual offending.'},
-  {cat:'Framework', name:'Relapse Prevention', desc:'Offence-chain approach — breaks an offence into an interruptible decision sequence.'},
-  {cat:'Framework', name:'PEACE Model', desc:'UK ethical investigative interviewing — Planning, Engage, Account, Closure, Evaluate.'},
   {cat:'Framework', name:'Gibbs Cycle', desc:'Description → Feelings → Evaluation → Analysis → Conclusion → Action Plan.'},
   {cat:'Legislation', name:'MHA 1983 (2007)', desc:'Primary legislation for compulsory admission. Key sections: 2, 3, 37, 41, 47/49, 117, 136.'},
   {cat:'Legislation', name:'MCA 2005', desc:'Mental Capacity Act. Two-stage test: diagnostic + functional.'},
@@ -1487,7 +1255,6 @@ const reference = [
   {cat:'Acronym', name:'MAPPA', desc:'Multi-Agency Public Protection Arrangements.'},
   {cat:'Acronym', name:'SPJ', desc:'Structured Professional Judgement.'},
   {cat:'Acronym', name:'MDT', desc:'Multi-Disciplinary Team.'},
-  {cat:'Acronym', name:'Reactive vs Instrumental', desc:'Affective/threat-driven violence vs goal-driven/planned violence — changes risk profile and treatment target.'},
   {cat:'Settings', name:'High/Med/Low Secure', desc:'NHS forensic MH tiers. High: Broadmoor, Ashworth, Rampton.'},
   {cat:'Settings', name:'Cat A/B/C/D', desc:'Adult male prison categorisation. A=highest, D=open.'},
   {cat:'Settings', name:'PIPE', desc:'Psychologically Informed Planned Environment.'},
@@ -1496,6 +1263,530 @@ const reference = [
   {cat:'Programmes', name:'Horizon', desc:'HMPPS — medium-risk sexual offending.'},
   {cat:'Programmes', name:'BBR', desc:'Building Better Relationships — community DV programme.'},
   {cat:'Programmes', name:'TSP', desc:'Thinking Skills Programme — general cognitive skills.'}
+];
+
+/* ===== Thinkers data (injected) ===== */
+const figures = [
+{
+"id": "machiavelli",
+"discipline": "Philosophy",
+"name": "Niccolò Machiavelli",
+"dates": "1469–1527",
+"role": "Florentine diplomat & founder of modern political science",
+"nutshell": "Politics runs on different rules than private morality — and pretending otherwise gets people killed.",
+"featured": true,
+"profile": "<p>Niccolò Machiavelli was a Florentine diplomat, political theorist and writer whose name became a byword for cunning — often unfairly so. Here is what matters.</p>\n\n<h3>Life and context</h3>\n<p>He worked as a senior official in the Republic of Florence for fourteen years, handling diplomacy and military affairs. When the Medici family returned to power in 1512 he was dismissed, accused of conspiracy, imprisoned and tortured. He spent his later years writing in rural exile, hoping — mostly in vain — to win back a political post. This failure matters: his most famous book was partly a job application to the Medici.</p>\n\n<h3>The Prince (1513)</h3>\n<p>His notorious short treatise on how rulers gain and hold power. The key ideas:</p>\n<ul>\n  <li><strong>Realism over idealism.</strong> He claimed to describe how people and politics <em>actually</em> behave, not how they should. Earlier \"mirror for princes\" books told rulers to be virtuous; he asked what actually works.</li>\n  <li><strong>Virtù vs. fortuna.</strong> \"Virtù\" doesn't mean virtue — it means skill, boldness, adaptability, the capacity to shape events. \"Fortuna\" is luck or circumstance. A great leader uses virtù to master fortuna.</li>\n  <li><strong>Ends and means.</strong> A ruler must be willing to act immorally when necessary — to break promises, deceive, use cruelty efficiently — because a state's survival depends on it. He never quite says \"the ends justify the means\" (that's a paraphrase), but it captures the spirit.</li>\n  <li><strong>Feared vs. loved.</strong> If you can't be both, being feared is safer — provided you avoid being hated.</li>\n  <li><strong>Cruelty \"well used.\"</strong> Harsh acts should be swift and decisive, not drawn out.</li>\n</ul>\n\n<h3>The Discourses on Livy</h3>\n<p>Often overlooked, but arguably his deeper work. Here he praises republics, not princes — admiring Rome, civic participation, the rule of law, and even the productive value of social conflict between classes. This is why scholars debate whether he was a cynical advisor to tyrants or a committed republican. The likeliest reading: he preferred republics but wrote The Prince for the world as he found it.</p>\n\n<h3>\"Machiavellian\" vs. Machiavelli</h3>\n<p>The adjective means scheming and unscrupulous. But this caricature flattens him. He wasn't celebrating evil; he was insisting that politics operates by different rules than private morality, and that pretending otherwise gets people killed. Whether that is clear-eyed honesty or dangerous amorality is the enduring argument.</p>\n\n<h3>Why he still matters</h3>\n<p>He is often called the founder of modern political science for separating politics from theology and ethics and analysing power empirically. He also wrote history, poetry and a successful bawdy comedy (Mandragola), so the grim reputation undersells a sharp, witty mind.</p>\n\n<div class=\"callout\">In forensic terms, \"Machiavellianism\" survives as one leg of the <strong>Dark Triad</strong> (with narcissism and psychopathy) — a manipulative, strategic interpersonal style measured by scales like the MACH-IV.</div>"
+},
+{
+"id": "heraclitus",
+"discipline": "Philosophy",
+"name": "Heraclitus",
+"dates": "c. 535–475 BCE",
+"role": "Pre-Socratic philosopher of flux",
+"nutshell": "Everything flows; the only constant is change.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An aristocratic, famously obscure thinker from Ephesus, nicknamed \"the weeping philosopher.\" He wrote in riddling aphorisms and held most people in contempt for sleepwalking through life.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Flux.</strong> \"You cannot step into the same river twice\" — reality is constant change and becoming, not static being.</li>\n  <li><strong>Unity of opposites.</strong> Tension between opposites (day/night, war/peace) is what holds the world together; conflict is generative, not merely destructive.</li>\n  <li><strong>Logos.</strong> A hidden rational order or principle underlies the apparent chaos, even if most people fail to grasp it.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He set the agenda for Western metaphysics — Plato's stable Forms were partly a reaction against him — and his process view echoes through Hegel, Nietzsche and modern systems thinking.</p>"
+},
+{
+"id": "plato",
+"discipline": "Philosophy",
+"name": "Plato",
+"dates": "c. 428–348 BCE",
+"role": "Athenian founder of the Academy",
+"nutshell": "The world we see is just shadows; reality is the perfect Forms behind it.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>Student of Socrates and teacher of Aristotle, Plato founded the Academy in Athens and wrote in dialogues, usually with Socrates as the questioner. Almost all later Western philosophy has been called \"footnotes to Plato.\"</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Theory of Forms.</strong> Beyond changing physical things lie perfect, eternal Forms (Beauty, Justice, the Good); objects are imperfect copies.</li>\n  <li><strong>The Cave.</strong> Most people mistake shadows for reality; philosophy is the painful turn toward the light of true knowledge.</li>\n  <li><strong>The tripartite soul.</strong> Reason, spirit and appetite — justice is their proper balance, mirrored in the just city of the Republic.</li>\n  <li><strong>Philosopher-kings.</strong> Society should be ruled by those who know the Good, not by the persuasive or the popular.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He founded systematic epistemology, political philosophy and the soul-as-structure idea that prefigures later psychology of personality and moral motivation.</p>"
+},
+{
+"id": "aristotle",
+"discipline": "Philosophy",
+"name": "Aristotle",
+"dates": "384–322 BCE",
+"role": "Polymath, founder of formal logic",
+"nutshell": "Virtue is a habit, found in the mean between extremes.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>Plato's most famous student and tutor to Alexander the Great, Aristotle broke with his teacher's otherworldly Forms in favour of studying the actual world. He wrote on logic, biology, ethics, politics, rhetoric and more.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Empiricism.</strong> Knowledge begins in observation of particular things, not contemplation of abstract Forms.</li>\n  <li><strong>The four causes.</strong> To explain anything, ask after its material, formal, efficient and final cause (its purpose).</li>\n  <li><strong>Virtue ethics & the golden mean.</strong> Good character is a settled disposition lying between excess and deficiency (courage between cowardice and recklessness).</li>\n  <li><strong>Eudaimonia.</strong> The goal of life is flourishing — living well through reason and virtue — not mere pleasure.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He invented formal logic, shaped science for two millennia, and his virtue ethics underpins modern character-based approaches to morality and rehabilitation.</p>"
+},
+{
+"id": "augustine",
+"discipline": "Philosophy",
+"name": "St Augustine of Hippo",
+"dates": "354–430",
+"role": "Christian theologian & philosopher",
+"nutshell": "We are restless until we rest in God — and we're broken from the start.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A North African bishop whose intellectual autobiography, the Confessions, is one of the first works of psychological self-examination. He fused Christianity with Platonist philosophy and shaped Western theology for a thousand years.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Original sin.</strong> Human nature is fundamentally flawed and self-divided; the will is bound, not freely good.</li>\n  <li><strong>Free will and grace.</strong> Evil is not a thing but a privation — a turning away from the good — and only grace can heal the disordered will.</li>\n  <li><strong>Inner life.</strong> Truth is found by turning inward and upward; introspection becomes a route to God.</li>\n  <li><strong>Just war.</strong> An early framework for when violence by a state can be morally legitimate.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His analysis of guilt, temptation and a divided self prefigures depth psychology, and his just-war theory still informs legal and ethical debate.</p>"
+},
+{
+"id": "descartes",
+"discipline": "Philosophy",
+"name": "René Descartes",
+"dates": "1596–1650",
+"role": "French rationalist, father of modern philosophy",
+"nutshell": "I think, therefore I am — the one thing doubt can't dissolve.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A French mathematician and philosopher who tried to rebuild knowledge on certain foundations after radical doubt. He also founded analytic geometry.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Methodic doubt.</strong> Doubt everything that can possibly be doubted to find what's indubitable.</li>\n  <li><strong>Cogito.</strong> \"I think, therefore I am\" — the act of doubting proves a thinking self exists.</li>\n  <li><strong>Mind–body dualism.</strong> Mind (thinking substance) and body (extended substance) are fundamentally distinct — the \"Cartesian\" split.</li>\n  <li><strong>Rationalism & foundationalism.</strong> Reason, not the senses, is the surest source of knowledge, built up from self-evident first principles.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He set the agenda for modern epistemology and the still-unresolved mind–body problem at the heart of consciousness research and the philosophy of psychology.</p>"
+},
+{
+"id": "locke",
+"discipline": "Philosophy",
+"name": "John Locke",
+"dates": "1632–1704",
+"role": "English empiricist & political theorist",
+"nutshell": "The mind starts as a blank slate; government rests on consent.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An English physician and philosopher, a founder of empiricism and of liberal political thought whose ideas shaped the American and French revolutions.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Tabula rasa.</strong> The mind at birth is a blank slate; all knowledge comes from experience (sensation and reflection), not innate ideas.</li>\n  <li><strong>Empiricism.</strong> Knowledge is built from simple ideas given in experience and combined by the mind.</li>\n  <li><strong>Natural rights.</strong> Life, liberty and property are pre-political rights government exists to protect.</li>\n  <li><strong>Social contract & consent.</strong> Legitimate authority derives from the consent of the governed, who may revolt if it fails them.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>The blank-slate view is foundational to debates on nature vs. nurture, while his rights-and-consent framework underpins modern liberal democracy and law.</p>"
+},
+{
+"id": "hume",
+"discipline": "Philosophy",
+"name": "David Hume",
+"dates": "1711–1776",
+"role": "Scottish empiricist & sceptic",
+"nutshell": "You can't derive an 'ought' from an 'is' — and reason is the slave of the passions.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>The leading figure of the Scottish Enlightenment, Hume pushed empiricism to its sceptical limits with disarming clarity and good humour.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Problem of induction.</strong> We can't rationally justify the assumption that the future will resemble the past — only habit makes us expect it.</li>\n  <li><strong>Cause and effect.</strong> We never observe causation, only constant conjunction; causal \"necessity\" is a habit of mind.</li>\n  <li><strong>Is–ought gap.</strong> No set of factual statements logically entails a moral conclusion.</li>\n  <li><strong>Sentiment in morality.</strong> \"Reason is the slave of the passions\" — moral judgements rest on feeling, not pure logic. The self is just a bundle of perceptions.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His scepticism woke Kant \"from his dogmatic slumber,\" and his emphasis on emotion in moral judgement anticipates modern moral psychology.</p>"
+},
+{
+"id": "kant",
+"discipline": "Philosophy",
+"name": "Immanuel Kant",
+"dates": "1724–1804",
+"role": "German idealist, author of the Critiques",
+"nutshell": "Act only on rules you could will everyone to follow.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A famously methodical Prussian professor whose \"Critical\" philosophy tried to reconcile rationalism and empiricism and put both knowledge and morality on secure footing.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The Copernican turn.</strong> The mind actively structures experience through built-in categories (space, time, causality); we know phenomena (things as they appear), never noumena (things in themselves).</li>\n  <li><strong>The categorical imperative.</strong> Act only on a maxim you could will to be a universal law; treat people always as ends, never merely as means.</li>\n  <li><strong>Deontology.</strong> Morality is about duty and the rightness of the act, not its consequences.</li>\n  <li><strong>Autonomy & dignity.</strong> Rational agents legislate the moral law for themselves, which grounds human dignity.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He frames the great alternative to utilitarian thinking — duty and rights versus consequences — a tension that runs straight through legal punishment and bioethics.</p>"
+},
+{
+"id": "wollstonecraft",
+"discipline": "Philosophy",
+"name": "Mary Wollstonecraft",
+"dates": "1759–1797",
+"role": "English Enlightenment feminist",
+"nutshell": "Women only seem irrational because they've been denied an education.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An English writer and radical, Wollstonecraft argued for women's rationality and rights in the age of revolution. (She was also the mother of Mary Shelley.)</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>A Vindication of the Rights of Woman (1792).</strong> Women appear inferior only because they are deprived of education, not by nature.</li>\n  <li><strong>Reason and virtue.</strong> Both sexes share the same rational capacity; virtue cannot differ by gender.</li>\n  <li><strong>Education.</strong> Genuine equality requires educating women as rational, independent beings rather than ornamental dependants.</li>\n</ul>\n<h3>Why she matters</h3>\n<p>She is a founding figure of liberal feminism, extending Enlightenment ideas of reason and rights to women and shaping debates on gender that continue today.</p>"
+},
+{
+"id": "mill",
+"discipline": "Philosophy",
+"name": "John Stuart Mill",
+"dates": "1806–1873",
+"role": "English utilitarian & liberal",
+"nutshell": "Maximise happiness — but your freedom ends where you harm others.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A child prodigy raised on strict utilitarian principles, Mill humanised and refined the doctrine he inherited from Bentham, and became Victorian Britain's great theorist of liberty.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Utilitarianism.</strong> The right action maximises happiness — but Mill insists on quality, not just quantity (\"higher\" and \"lower\" pleasures).</li>\n  <li><strong>The harm principle.</strong> The only legitimate ground for limiting an adult's liberty is preventing harm to others.</li>\n  <li><strong>On Liberty.</strong> Free thought, speech and individuality are essential to human progress and protection against the \"tyranny of the majority.\"</li>\n  <li><strong>Early feminism.</strong> The Subjection of Women argued for legal and political equality.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>The harm principle is a cornerstone of liberal law and debates about criminalisation, paternalism and personal autonomy.</p>"
+},
+{
+"id": "kierkegaard",
+"discipline": "Philosophy",
+"name": "Søren Kierkegaard",
+"dates": "1813–1855",
+"role": "Danish father of existentialism",
+"nutshell": "Truth is subjective; faith is a leap you make in fear and trembling.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A melancholic Danish writer who attacked the abstract systems of his day (especially Hegel) and the complacency of state Christianity, often writing under elaborate pseudonyms.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The individual.</strong> Philosophy must start from the existing, choosing individual, not abstract systems.</li>\n  <li><strong>Subjectivity.</strong> \"Truth is subjectivity\" — what matters is how passionately and authentically one lives a commitment.</li>\n  <li><strong>Stages of life.</strong> The aesthetic, the ethical and the religious are different ways of existing.</li>\n  <li><strong>Anxiety and the leap.</strong> Freedom brings dread (\"the dizziness of freedom\"); genuine faith is a leap beyond reason.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He founded existentialism and gave psychology its vocabulary of anxiety, despair and authenticity, influencing thinkers from Heidegger to existential therapists.</p>"
+},
+{
+"id": "marx",
+"discipline": "Philosophy",
+"name": "Karl Marx",
+"dates": "1818–1883",
+"role": "German philosopher of history & economy",
+"nutshell": "History is driven by class struggle, and capitalism alienates us from our own work.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A German philosopher, economist and revolutionary whose critique of capitalism became one of the most consequential bodies of thought in modern history.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Historical materialism.</strong> Material and economic conditions — not ideas — drive historical change.</li>\n  <li><strong>Class struggle.</strong> History is the conflict between those who own the means of production and those who must sell their labour.</li>\n  <li><strong>Alienation.</strong> Under capitalism workers are estranged from their labour, its products, others and themselves.</li>\n  <li><strong>Ideology.</strong> Dominant ideas tend to serve the interests of the ruling class while appearing natural or neutral.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His structural view of power and inequality underpins critical criminology — the idea that crime and its policing reflect social and economic structures, not just individual choices.</p>"
+},
+{
+"id": "nietzsche",
+"discipline": "Philosophy",
+"name": "Friedrich Nietzsche",
+"dates": "1844–1900",
+"role": "German philosopher of value & the will",
+"nutshell": "God is dead — now create your own values instead of inheriting them.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A German philologist turned philosopher who wrote in aphorisms and diagnosed the coming crisis of meaning in a secular age. His work was later distorted by his sister's editing and Nazi appropriation.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>\"God is dead.\"</strong> The collapse of religious authority leaves a vacuum of meaning that risks nihilism.</li>\n  <li><strong>Master and slave morality.</strong> Conventional morality, he argued, grew from resentment (\"ressentiment\") and inverts the values of the strong.</li>\n  <li><strong>Will to power.</strong> Life is fundamentally a striving to grow, master and create.</li>\n  <li><strong>Übermensch & eternal recurrence.</strong> The challenge is to create one's own values and affirm life so fully one would will it to repeat forever. Perspectivism: there are no facts, only interpretations.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He shaped existentialism, psychoanalysis and postmodern thought, and his account of resentment and self-deception still informs moral psychology.</p>"
+},
+{
+"id": "saussure",
+"discipline": "Philosophy",
+"name": "Ferdinand de Saussure",
+"dates": "1857–1913",
+"role": "Swiss founder of structural linguistics",
+"nutshell": "Words mean what they mean only by differing from other words.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Swiss linguist whose lectures, published posthumously by his students as the Course in General Linguistics, founded modern linguistics and structuralism.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The sign.</strong> A linguistic sign joins a <em>signifier</em> (sound/word) and a <em>signified</em> (concept); the link is arbitrary.</li>\n  <li><strong>Meaning by difference.</strong> Signs have meaning only through their differences from other signs within a system, not by pointing to things.</li>\n  <li><strong>Langue vs. parole.</strong> The shared system of language (langue) versus individual acts of speech (parole).</li>\n  <li><strong>Synchrony.</strong> Study language as a system at a moment in time, not just its history.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>Structuralism reshaped anthropology, literary theory and psychology (via Lacan), establishing the idea that meaning is relational and systemic.</p>"
+},
+{
+"id": "wittgenstein",
+"discipline": "Philosophy",
+"name": "Ludwig Wittgenstein",
+"dates": "1889–1951",
+"role": "Austrian-British philosopher of language",
+"nutshell": "The meaning of a word is its use — and most philosophy is confusion about language.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Viennese millionaire who gave away his fortune, fought in WWI, designed a house and taught primary school — and produced two philosophies that each reshaped the field, the second repudiating the first.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Early (Tractatus).</strong> Language pictures facts; the limits of language are the limits of the world; \"whereof one cannot speak, thereof one must be silent.\"</li>\n  <li><strong>Later (Philosophical Investigations).</strong> Meaning is not a hidden essence but use — words function within \"language games\" and \"forms of life.\"</li>\n  <li><strong>Philosophy as therapy.</strong> Many philosophical problems are confusions produced by misusing language, to be dissolved rather than solved.</li>\n  <li><strong>Private language argument.</strong> A purely private language is impossible; meaning is inherently social.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He transformed the philosophy of language and mind, and his \"meaning as use\" influences how we think about concepts, rules and even psychiatric categories.</p>"
+},
+{
+"id": "beauvoir",
+"discipline": "Philosophy",
+"name": "Simone de Beauvoir",
+"dates": "1908–1986",
+"role": "French existentialist & feminist",
+"nutshell": "One is not born, but rather becomes, a woman.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A French philosopher, novelist and central figure of existentialism, Beauvoir applied its ideas of freedom and responsibility to ethics and, decisively, to the situation of women.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The Second Sex (1949).</strong> \"One is not born, but rather becomes, a woman\" — gender is a social construction, not a fixed essence.</li>\n  <li><strong>Woman as \"the Other.\"</strong> Society defines man as the norm and woman as deviation, denying her full subjectivity.</li>\n  <li><strong>Ethics of ambiguity.</strong> We are radically free yet situated; authentic existence means owning that freedom and others'.</li>\n</ul>\n<h3>Why she matters</h3>\n<p>She laid the theoretical groundwork for second-wave feminism and the sex/gender distinction that runs through contemporary social science and law.</p>"
+},
+{
+"id": "wundt",
+"discipline": "Psychology",
+"name": "Wilhelm Wundt",
+"dates": "1832–1920",
+"role": "Founder of experimental psychology",
+"nutshell": "Opened the first psychology lab and made the mind a thing you could measure.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A German physiologist who, in 1879 in Leipzig, opened the first laboratory dedicated to psychological research — the conventional birth-date of psychology as an independent science.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Experimental introspection.</strong> Trained observers reported their immediate conscious experience under controlled conditions.</li>\n  <li><strong>Structuralism (via his student Titchener).</strong> Break conscious experience into its basic elements — sensations, feelings, images.</li>\n  <li><strong>Voluntarism.</strong> The mind actively organises elements through attention and will, rather than passively receiving them.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He separated psychology from philosophy and physiology, trained a generation of early psychologists, and established the experiment as the discipline's core method.</p>"
+},
+{
+"id": "james",
+"discipline": "Psychology",
+"name": "William James",
+"dates": "1842–1910",
+"role": "Father of American psychology",
+"nutshell": "Don't dissect consciousness into parts — ask what it's for.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American philosopher-psychologist whose Principles of Psychology (1890) defined the field for English-speaking readers. Brother of novelist Henry James.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Functionalism.</strong> Ask what mental processes <em>do</em> for the organism — their adaptive function — rather than just their structure.</li>\n  <li><strong>Stream of consciousness.</strong> Experience is a continuous, flowing whole, not a string of discrete elements.</li>\n  <li><strong>Pragmatism.</strong> The truth of an idea lies in its practical consequences.</li>\n  <li><strong>James–Lange theory.</strong> Emotion follows bodily response (\"we are afraid because we tremble\").</li>\n</ul>\n<h3>Why he matters</h3>\n<p>Functionalism's focus on purpose paved the way for applied, evolutionary and behavioural psychology, and his writing on habit and the self still reads freshly.</p>"
+},
+{
+"id": "freud",
+"discipline": "Psychology",
+"name": "Sigmund Freud",
+"dates": "1856–1939",
+"role": "Founder of psychoanalysis",
+"nutshell": "Most of the mind is underwater, and it's mostly about what you're repressing.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Viennese neurologist who founded psychoanalysis, proposing that hidden, mostly sexual and aggressive forces drive behaviour. Hugely influential and hugely contested.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The unconscious.</strong> Much of mental life is inaccessible to awareness yet shapes thought, feeling and action.</li>\n  <li><strong>Id, ego, superego.</strong> Drives, the reality-testing self, and the internalised moral authority in constant negotiation.</li>\n  <li><strong>Defence mechanisms.</strong> Repression, denial, projection and the rest protect the ego from anxiety.</li>\n  <li><strong>Psychosexual stages & early experience.</strong> Childhood conflicts leave lasting marks on personality.</li>\n</ul>\n<h3>Forensic & clinical relevance</h3>\n<p>His concepts of unconscious conflict and defence persist in psychodynamic formulation, though his theories are criticised as unfalsifiable and poorly evidenced.</p>"
+},
+{
+"id": "jung",
+"discipline": "Psychology",
+"name": "Carl Jung",
+"dates": "1875–1961",
+"role": "Founder of analytical psychology",
+"nutshell": "Beneath your personal unconscious lies a shared reservoir of human symbols.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Swiss psychiatrist, once Freud's heir apparent, who broke away to found his own school after rejecting Freud's emphasis on sexuality.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Collective unconscious.</strong> A deep layer of mind shared across humanity, populated by inherited <strong>archetypes</strong> (the Shadow, the Mother, the Self).</li>\n  <li><strong>Individuation.</strong> The lifelong process of integrating the parts of the psyche into a whole self.</li>\n  <li><strong>Psychological types.</strong> Introversion/extraversion and the functions that later inspired the Myers–Briggs typology.</li>\n  <li><strong>The Shadow.</strong> The disowned, darker side of the self that must be acknowledged.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His ideas shaped psychotherapy, personality testing and the cultural study of myth and symbol, even where empirical support is thin.</p>"
+},
+{
+"id": "pavlov",
+"discipline": "Psychology",
+"name": "Ivan Pavlov",
+"dates": "1849–1936",
+"role": "Pioneer of classical conditioning",
+"nutshell": "Ring a bell with dinner enough times and the bell alone makes you drool.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Russian physiologist who won a Nobel Prize for work on digestion, then stumbled onto the learning phenomenon that made him famous.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Classical conditioning.</strong> A neutral stimulus (a bell), paired repeatedly with one that naturally triggers a response (food → salivation), comes to trigger that response alone.</li>\n  <li><strong>Conditioned vs. unconditioned.</strong> The vocabulary — UCS, UCR, CS, CR — that still structures learning theory.</li>\n  <li><strong>Extinction and generalisation.</strong> Learned associations fade without reinforcement and spread to similar stimuli.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>Classical conditioning underlies behavioural accounts of phobias, addiction cues and aversion therapy, and helped make psychology rigorously experimental.</p>"
+},
+{
+"id": "watson",
+"discipline": "Psychology",
+"name": "John B. Watson",
+"dates": "1878–1958",
+"role": "Founder of behaviourism",
+"nutshell": "Forget the mind — give me a dozen infants and I'll shape any of them.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychologist who launched behaviourism, insisting psychology study only observable behaviour and abandon introspection.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Behaviourism.</strong> Psychology is the science of behaviour; mental states are unobservable and irrelevant to scientific explanation.</li>\n  <li><strong>Environmental determinism.</strong> His famous boast that he could train any infant into any profession given control of their environment.</li>\n  <li><strong>Little Albert (1920).</strong> Conditioned fear of a white rat in an infant, showing emotions could be learned — an experiment now infamous on ethical grounds.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He set the agenda for decades of learning research and applied behaviour analysis, while his methods became a cautionary tale in research ethics.</p>"
+},
+{
+"id": "skinner",
+"discipline": "Psychology",
+"name": "B. F. Skinner",
+"dates": "1904–1990",
+"role": "Architect of radical behaviourism",
+"nutshell": "Behaviour is shaped by its consequences — reward it and you get more of it.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>The most influential behaviourist, Skinner studied how consequences shape voluntary behaviour using his \"operant chamber\" (the Skinner box).</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Operant conditioning.</strong> Behaviour followed by reinforcement is strengthened; behaviour followed by punishment is weakened.</li>\n  <li><strong>Schedules of reinforcement.</strong> Intermittent, variable reinforcement produces the most persistent behaviour (the logic of gambling).</li>\n  <li><strong>Shaping.</strong> Complex behaviour is built by reinforcing successive approximations.</li>\n  <li><strong>Radical behaviourism.</strong> Even private events are behaviour governed by environmental contingencies, not free will.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Operant principles underpin token economies, offender behaviour programmes and contingency-based management in custodial settings.</p>"
+},
+{
+"id": "maslow",
+"discipline": "Psychology",
+"name": "Abraham Maslow",
+"dates": "1908–1970",
+"role": "Founder of humanistic psychology",
+"nutshell": "You can't chase self-fulfilment on an empty stomach.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychologist who reacted against both behaviourism and psychoanalysis to study healthy growth and human potential.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Hierarchy of needs.</strong> Physiological, safety, belonging, esteem and self-actualisation — lower needs generally take priority before higher ones.</li>\n  <li><strong>Self-actualisation.</strong> The drive to fulfil one's unique potential, the apex of the hierarchy.</li>\n  <li><strong>Peak experiences.</strong> Moments of intense joy, meaning and transcendence in healthy people.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>Humanistic psychology shaped counselling, education and management, and the needs framework echoes in strengths-based rehabilitation models like the Good Lives Model.</p>"
+},
+{
+"id": "rogers",
+"discipline": "Psychology",
+"name": "Carl Rogers",
+"dates": "1902–1987",
+"role": "Founder of person-centred therapy",
+"nutshell": "People heal themselves when they feel genuinely accepted.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychologist and the leading humanistic therapist, Rogers placed the client's own experience and capacity for growth at the centre of therapy.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The actualising tendency.</strong> People have an innate drive toward growth and fulfilment.</li>\n  <li><strong>Core conditions.</strong> Unconditional positive regard, empathy and congruence (genuineness) are necessary and sufficient for therapeutic change.</li>\n  <li><strong>Self-concept.</strong> Distress arises from a gap between the actual self and the ideal self.</li>\n  <li><strong>Client-centred stance.</strong> The therapist is a facilitator, not an expert imposing interpretations.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His core conditions underpin the therapeutic alliance — one of the strongest predictors of outcome — and shape motivational and engagement work with offenders.</p>"
+},
+{
+"id": "piaget",
+"discipline": "Psychology",
+"name": "Jean Piaget",
+"dates": "1896–1980",
+"role": "Pioneer of cognitive development",
+"nutshell": "Children aren't dumb adults — they think in qualitatively different stages.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Swiss psychologist who, by closely observing children (including his own), built the first major theory of how thinking develops.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Stages.</strong> Sensorimotor, preoperational, concrete operational and formal operational — each a qualitatively different way of reasoning.</li>\n  <li><strong>Schemas.</strong> Mental frameworks that children build and revise.</li>\n  <li><strong>Assimilation & accommodation.</strong> New experience is fitted into existing schemas, or the schemas are changed to fit it.</li>\n  <li><strong>Constructivism.</strong> Children actively construct knowledge through interaction with the world.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His work transformed education and underpins developmental considerations in assessing children's understanding, capacity and culpability.</p>"
+},
+{
+"id": "vygotsky",
+"discipline": "Psychology",
+"name": "Lev Vygotsky",
+"dates": "1896–1934",
+"role": "Founder of sociocultural psychology",
+"nutshell": "We learn through other people before we can do it alone.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Soviet psychologist whose career was cut short by tuberculosis at 37, but whose work — long suppressed — became hugely influential decades later.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Sociocultural theory.</strong> Higher mental functions develop through social interaction and culture, not just individual maturation.</li>\n  <li><strong>Zone of proximal development.</strong> The gap between what a learner can do alone and what they can do with help.</li>\n  <li><strong>Scaffolding.</strong> Skilled others support learning until the learner can manage independently.</li>\n  <li><strong>Language and thought.</strong> Inner speech internalises social dialogue to guide cognition.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>He offers the social counterpart to Piaget, shaping education, developmental theory and our understanding of how environment scaffolds (or fails to scaffold) development.</p>"
+},
+{
+"id": "harlow",
+"discipline": "Psychology",
+"name": "Harry Harlow",
+"dates": "1905–1981",
+"role": "Researcher on attachment & contact comfort",
+"nutshell": "Baby monkeys chose a cuddly cloth mother over a wire one with milk.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychologist whose controversial experiments with infant rhesus monkeys reshaped thinking about love and attachment.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Contact comfort.</strong> Infant monkeys preferred a soft cloth \"mother\" to a wire one that provided food — overturning the \"cupboard love\" theory that attachment is just about feeding.</li>\n  <li><strong>Secure base.</strong> The comforting figure provided a base from which to explore.</li>\n  <li><strong>Effects of deprivation.</strong> Social isolation produced severe, lasting emotional and social damage.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His findings gave empirical weight to attachment theory and to the importance of early relationships — though the studies are now regarded as ethically troubling.</p>"
+},
+{
+"id": "bowlby",
+"discipline": "Psychology",
+"name": "John Bowlby",
+"dates": "1907–1990",
+"role": "Founder of attachment theory",
+"nutshell": "Early bonds become the template for every relationship that follows.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A British psychiatrist and psychoanalyst who combined ethology, evolution and clinical observation to explain the child's bond with caregivers.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Attachment.</strong> Infants are biologically predisposed to form a bond with a primary caregiver for protection and survival.</li>\n  <li><strong>Internal working models.</strong> Early relationships create mental templates for later relationships and self-worth.</li>\n  <li><strong>Maternal deprivation.</strong> Prolonged disruption of the early bond can have serious developmental consequences.</li>\n  <li><strong>Secure base.</strong> A reliable caregiver enables confident exploration. (Extended by Ainsworth's attachment styles.)</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Disrupted attachment and early adversity feature heavily in formulations of offending, personality difficulty and risk.</p>"
+},
+{
+"id": "asch",
+"discipline": "Psychology",
+"name": "Solomon Asch",
+"dates": "1907–1996",
+"role": "Researcher on conformity",
+"nutshell": "People will call a short line long if enough strangers do it first.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Polish-American social psychologist whose elegantly simple experiments revealed the power of group pressure.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Conformity experiments.</strong> Participants gave obviously wrong answers about line lengths to match a unanimous majority of confederates.</li>\n  <li><strong>Normative influence.</strong> People conform to be accepted and avoid standing out, even against clear evidence.</li>\n  <li><strong>The power of an ally.</strong> A single dissenter dramatically reduced conformity.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>Asch's work established how readily group pressure overrides individual judgement — relevant to jury dynamics, gang behaviour and false confessions.</p>"
+},
+{
+"id": "milgram",
+"discipline": "Psychology",
+"name": "Stanley Milgram",
+"dates": "1933–1984",
+"role": "Researcher on obedience to authority",
+"nutshell": "Ordinary people will deliver lethal shocks if a man in a coat tells them to.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American social psychologist who, in the shadow of the Holocaust, set out to test how far ordinary people would obey authority.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Obedience experiments.</strong> A majority of participants administered what they believed were dangerous electric shocks to a stranger when instructed by an authority figure.</li>\n  <li><strong>Agentic state.</strong> People shift responsibility to the authority and see themselves as mere instruments.</li>\n  <li><strong>Situational factors.</strong> Proximity, legitimacy of authority and others' defiance all changed obedience rates.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>The studies illuminated how atrocities become possible and remain central — and ethically contested — in understanding crimes of obedience.</p>"
+},
+{
+"id": "zimbardo",
+"discipline": "Psychology",
+"name": "Philip Zimbardo",
+"dates": "1933–2024",
+"role": "Director of the Stanford Prison Experiment",
+"nutshell": "Put good people in a bad system and the system usually wins.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American social psychologist best known for the 1971 Stanford Prison Experiment, in which students assigned to \"guard\" and \"prisoner\" roles behaved with disturbing cruelty and distress.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Situationism.</strong> Behaviour is driven heavily by situation and role, not just disposition.</li>\n  <li><strong>The Lucifer effect.</strong> Ordinary people can commit evil acts under situational and systemic pressures.</li>\n  <li><strong>Deindividuation.</strong> Anonymity and role-immersion loosen normal moral restraint.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>Despite serious methodological and ethical criticism (and debate about how the results were produced), the work remains a touchstone in debates about institutional abuse and prison culture.</p>"
+},
+{
+"id": "festinger",
+"discipline": "Psychology",
+"name": "Leon Festinger",
+"dates": "1919–1989",
+"role": "Originator of cognitive dissonance theory",
+"nutshell": "Holding two clashing beliefs is so uncomfortable we'll rewrite one.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American social psychologist who explained how people manage the discomfort of inconsistency between beliefs and actions.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Cognitive dissonance.</strong> Conflicting cognitions create tension we are motivated to reduce — often by changing a belief rather than the behaviour.</li>\n  <li><strong>Effort justification.</strong> We value more highly the things we suffered to get.</li>\n  <li><strong>Social comparison.</strong> We evaluate ourselves by comparison with others.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Dissonance helps explain offence-supporting attitudes, minimisation and the cognitive distortions targeted in offending-behaviour work.</p>"
+},
+{
+"id": "beck",
+"discipline": "Psychology",
+"name": "Aaron Beck",
+"dates": "1921–2021",
+"role": "Founder of cognitive therapy (CBT)",
+"nutshell": "It's not events that distress us, but the thoughts we have about them.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychiatrist who, finding psychoanalysis wanting, developed cognitive therapy — now, as CBT, the most widely evidenced psychological treatment.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Cognitive model.</strong> Emotions and behaviour are driven by how we interpret events, not the events themselves.</li>\n  <li><strong>Automatic thoughts & cognitive distortions.</strong> Habitual, often biased thoughts (catastrophising, black-and-white thinking) maintain distress.</li>\n  <li><strong>Schemas.</strong> Deep core beliefs about self, world and future (the \"cognitive triad\" in depression).</li>\n  <li><strong>Collaborative empiricism.</strong> Therapist and client test thoughts against evidence.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>CBT is the backbone of accredited offending-behaviour programmes, targeting the thinking patterns that support violence and offending.</p>"
+},
+{
+"id": "kahneman",
+"discipline": "Psychology",
+"name": "Daniel Kahneman",
+"dates": "1934–2024",
+"role": "Pioneer of judgement & decision-making",
+"nutshell": "Your fast, intuitive brain is confident, quick — and often wrong.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An Israeli-American psychologist who, with Amos Tversky, founded the study of cognitive biases and won the Nobel Prize in Economics for it.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Two systems.</strong> System 1 (fast, automatic, intuitive) and System 2 (slow, effortful, deliberate).</li>\n  <li><strong>Heuristics and biases.</strong> Mental shortcuts (availability, anchoring, representativeness) produce predictable errors.</li>\n  <li><strong>Prospect theory.</strong> We weigh losses more heavily than equivalent gains and judge outcomes against reference points.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>His work exposes the biases that can distort professional judgement — in risk assessment, clinical decisions and the evaluation of evidence — and the case for structured, actuarial methods.</p>"
+},
+{
+"id": "seligman",
+"discipline": "Psychology",
+"name": "Martin Seligman",
+"dates": "b. 1942",
+"role": "Founder of positive psychology",
+"nutshell": "Helplessness can be learned — and so can optimism.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychologist who moved from studying helplessness and depression to founding positive psychology — the science of wellbeing and flourishing.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Learned helplessness.</strong> Repeated uncontrollable adversity produces passivity and a depression-like state — later reframed as learned helplessness being the default, with control being learned.</li>\n  <li><strong>Explanatory style.</strong> How we explain events (permanent vs. temporary, global vs. specific) shapes resilience.</li>\n  <li><strong>Positive psychology & PERMA.</strong> Wellbeing rests on Positive emotion, Engagement, Relationships, Meaning and Accomplishment.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His shift toward strengths and wellbeing parallels strengths-based, desistance-focused approaches in rehabilitation.</p>"
+},
+{
+"id": "lombroso",
+"discipline": "Forensic",
+"name": "Cesare Lombroso",
+"dates": "1835–1909",
+"role": "Founder of criminal anthropology",
+"nutshell": "Thought you could spot a criminal by the shape of their skull. (He couldn't.)",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An Italian physician and the founding figure of \"positivist\" criminology, Lombroso tried to put the study of crime on a scientific, biological footing.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The \"born criminal.\"</strong> Some people are biologically predisposed to crime from birth.</li>\n  <li><strong>Atavism.</strong> Criminals are evolutionary throwbacks, identifiable by physical \"stigmata\" (sloping forehead, large jaw, asymmetry).</li>\n  <li><strong>Positivism.</strong> Crime should be studied empirically by measuring offenders, shifting focus from the act to the actor.</li>\n</ul>\n<h3>Why he matters</h3>\n<p>His specific claims were discredited as pseudoscience and his legacy is ethically troubling, but he founded the empirical, offender-focused study of crime and the enduring nature-vs-nurture debate within it.</p>"
+},
+{
+"id": "eysenck",
+"discipline": "Forensic",
+"name": "Hans Eysenck",
+"dates": "1916–1997",
+"role": "Theorist of the criminal personality",
+"nutshell": "Criminality is wired into temperament — some nervous systems just condition poorly.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A German-British psychologist, one of the most cited and most controversial, who built a biologically grounded theory of personality and applied it to crime.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The PEN model.</strong> Three dimensions — Psychoticism, Extraversion, Neuroticism — with a biological basis.</li>\n  <li><strong>Theory of criminality.</strong> Offenders tend to score high on all three; extraverts condition poorly, so they learn society's rules less effectively.</li>\n  <li><strong>Conditioning and conscience.</strong> Conscience is a set of conditioned responses; poor conditionability undermines it.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>One of the first testable biosocial theories of offending; later work on his data integrity is contested, but the personality–crime link remains a live research area.</p>"
+},
+{
+"id": "bandura",
+"discipline": "Forensic",
+"name": "Albert Bandura",
+"dates": "1925–2021",
+"role": "Founder of social learning theory",
+"nutshell": "Children copy what they watch — especially aggression that gets rewarded.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Canadian-American psychologist who bridged behaviourism and cognition, showing that we learn by observing others, not only through direct reinforcement.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Observational learning.</strong> The Bobo doll studies showed children imitated adults' aggression, especially when it was rewarded.</li>\n  <li><strong>Social learning theory.</strong> Behaviour is learned through modelling, vicarious reinforcement and attention/retention/reproduction/motivation.</li>\n  <li><strong>Self-efficacy.</strong> Belief in one's ability to succeed shapes effort and persistence.</li>\n  <li><strong>Reciprocal determinism.</strong> Person, behaviour and environment continuously influence each other.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Social learning underpins explanations of how violence and offending are modelled within families, peers and media, and informs intervention design.</p>"
+},
+{
+"id": "sutherland",
+"discipline": "Forensic",
+"name": "Edwin Sutherland",
+"dates": "1883–1950",
+"role": "Author of differential association theory",
+"nutshell": "Crime is learned the same way anything else is — from the company you keep.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American sociologist, arguably the most influential criminologist of the 20th century, who argued crime is learned, not inherited or pathological.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Differential association.</strong> Criminal behaviour is learned through interaction in intimate groups, including techniques and the attitudes that justify offending.</li>\n  <li><strong>Excess of definitions.</strong> A person offends when they encounter more attitudes favourable to law-breaking than unfavourable.</li>\n  <li><strong>White-collar crime.</strong> He coined the term, insisting crime is not confined to the poor.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>His learning-and-association model directly informs the \"antisocial associates\" and \"antisocial attitudes\" among the central risk factors in modern assessment.</p>"
+},
+{
+"id": "merton",
+"discipline": "Forensic",
+"name": "Robert K. Merton",
+"dates": "1910–2003",
+"role": "Author of strain theory",
+"nutshell": "When society dangles goals it won't let everyone reach, some take shortcuts.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A towering American sociologist who explained crime as a product of social structure rather than individual pathology.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Strain/anomie.</strong> Crime arises when there is a gap between culturally prescribed goals (e.g. wealth) and the legitimate means to reach them.</li>\n  <li><strong>Modes of adaptation.</strong> Conformity, innovation (crime), ritualism, retreatism and rebellion are the ways people respond to that strain.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Strain theory keeps the social and economic context of offending in view, complementing individual-level risk and need assessment with structural explanation.</p>"
+},
+{
+"id": "hirschi",
+"discipline": "Forensic",
+"name": "Travis Hirschi",
+"dates": "1935–2017",
+"role": "Author of social control & self-control theory",
+"nutshell": "Don't ask why people offend — ask why most of us don't.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American criminologist who reframed the central question of his field: not what drives crime, but what restrains it.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Social bond theory.</strong> Crime is restrained by four bonds — attachment, commitment, involvement and belief; weak bonds free people to offend.</li>\n  <li><strong>Self-control theory (with Gottfredson).</strong> Low self-control, established early in childhood, is the key general cause of crime.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Bonds and self-control map onto protective factors and the impulsivity/self-regulation targets that feature in offender assessment and intervention.</p>"
+},
+{
+"id": "cleckley",
+"discipline": "Forensic",
+"name": "Hervey Cleckley",
+"dates": "1903–1984",
+"role": "Author of The Mask of Sanity",
+"nutshell": "Described the charming, conscience-free personality hiding behind a normal face.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychiatrist whose 1941 book The Mask of Sanity gave the first detailed clinical portrait of psychopathy and shaped every account since.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The \"mask.\"</strong> The psychopath presents a convincing appearance of normality and sanity that conceals a profound disturbance.</li>\n  <li><strong>Clinical profile.</strong> Superficial charm, lack of remorse or shame, unreliability, poor judgement, failure to learn from experience and shallow emotion.</li>\n  <li><strong>Semantic dementia.</strong> The psychopath knows the words of emotion and morality but not their meaning.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Cleckley's criteria are the direct ancestor of Hare's PCL-R and of the modern construct of psychopathy used in risk assessment.</p>"
+},
+{
+"id": "hare",
+"discipline": "Forensic",
+"name": "Robert Hare",
+"dates": "b. 1934",
+"role": "Developer of the PCL-R",
+"nutshell": "Turned psychopathy from a clinical impression into a 20-item score.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A Canadian psychologist who operationalised Cleckley's clinical concept into the most widely used measure of psychopathy in forensic practice.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>The PCL-R.</strong> A 20-item, expertly rated checklist scoring interpersonal, affective, lifestyle and antisocial features.</li>\n  <li><strong>Factor structure.</strong> Distinguishes interpersonal/affective traits (Factor 1) from impulsive/antisocial lifestyle (Factor 2).</li>\n  <li><strong>Psychopathy vs. APD.</strong> Psychopathy is narrower and more affect-focused than antisocial personality disorder.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>The PCL-R is central to violence and sexual-offending risk assessment, though it requires accredited training and raises serious questions about labelling and prejudicial use in court.</p>\n<div class=\"callout warn\">⚠️ The PCL-R is a licensed instrument requiring formal training. This profile is background, not a substitute for qualification.</div>"
+},
+{
+"id": "kohlberg",
+"discipline": "Forensic",
+"name": "Lawrence Kohlberg",
+"dates": "1927–1987",
+"role": "Theorist of moral development",
+"nutshell": "Moral reasoning grows in stages — and some offenders get stuck early.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American psychologist who, building on Piaget, mapped how moral reasoning develops across the lifespan using responses to moral dilemmas.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Three levels, six stages.</strong> Preconventional (punishment/reward), conventional (social approval/law-and-order) and postconventional (social contract/universal principles).</li>\n  <li><strong>Reasoning, not content.</strong> What matters is <em>how</em> someone justifies a decision, not which decision they reach.</li>\n  <li><strong>Developmental arrest.</strong> Some people plateau at earlier, more self-interested stages.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Lower-stage, egocentric moral reasoning is associated with offending and is a target of cognitive and moral-reasoning programmes (e.g. EQUIP, \"Reasoning & Rehabilitation\").</p>"
+},
+{
+"id": "loftus",
+"discipline": "Forensic",
+"name": "Elizabeth Loftus",
+"dates": "b. 1944",
+"role": "Pioneer of eyewitness & false-memory research",
+"nutshell": "Memory isn't a recording — it can be rewritten by a single leading question.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An American cognitive psychologist who transformed how the law understands memory, and one of the most influential — and at times controversial — figures in forensic psychology.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Misinformation effect.</strong> Post-event information (including the wording of questions) can distort eyewitness memory.</li>\n  <li><strong>False memories.</strong> Entirely false memories of events can be implanted (\"lost in the mall\").</li>\n  <li><strong>Reconstructive memory.</strong> Remembering is an act of reconstruction, not faithful playback.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>Her work reshaped eyewitness testimony, interviewing standards and the recovered-memory debate, and underpins caution about confident but mistaken witnesses.</p>"
+},
+{
+"id": "gudjonsson",
+"discipline": "Forensic",
+"name": "Gísli Guðjónsson",
+"dates": "b. 1947",
+"role": "Authority on false confessions & suggestibility",
+"nutshell": "Showed that the right pressure can make innocent people confess.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>An Icelandic-British forensic psychologist (and former detective) whose work on interrogation and confession reshaped police practice and helped overturn major miscarriages of justice.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Interrogative suggestibility.</strong> The tendency to yield to leading questions and shift answers under pressure, measured by the Gudjonsson Suggestibility Scales (GSS).</li>\n  <li><strong>Types of false confession.</strong> Voluntary, coerced-compliant and coerced-internalised.</li>\n  <li><strong>Vulnerability.</strong> Suggestibility, compliance and acquiescence make some suspects especially vulnerable in interview.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>His expert evidence contributed to quashing wrongful convictions (e.g. the Birmingham Six and Guildford Four), and his scales are used in assessing confession reliability and fitness for interview.</p>"
+},
+{
+"id": "raine",
+"discipline": "Forensic",
+"name": "Adrian Raine",
+"dates": "b. 1954",
+"role": "Pioneer of neurocriminology",
+"nutshell": "Used brain scans to argue that violence has a biology we ignore at our peril.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A British neuroscientist and psychologist who pioneered the brain-imaging study of violent offenders, reviving biological criminology on a rigorous footing.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Neurocriminology.</strong> Brain structure and function (especially reduced prefrontal activity and amygdala abnormalities) are associated with violence and psychopathy.</li>\n  <li><strong>Biosocial model.</strong> Biology interacts with social adversity (the \"social push\" hypothesis); neither alone is destiny.</li>\n  <li><strong>Early risk factors.</strong> Birth complications, poor nutrition and early health adversity raise later risk.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>His work raises profound questions for responsibility, sentencing and prevention — and sharp ethical debate about determinism and free will in the courtroom.</p>"
+},
+{
+"id": "canter",
+"discipline": "Forensic",
+"name": "David Canter",
+"dates": "b. 1944",
+"role": "Founder of investigative psychology",
+"nutshell": "Put offender profiling on a scientific footing instead of detective intuition.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A British psychologist who founded investigative psychology, moving offender profiling from intuition and fiction toward empirical research.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Investigative psychology.</strong> Apply systematic psychological research to investigation, linking crime-scene behaviour to offender characteristics.</li>\n  <li><strong>The \"five-factor\" model & consistency.</strong> Offenders show consistencies between how they offend and how they live.</li>\n  <li><strong>Geographical profiling.</strong> Spatial patterns of offending help locate an offender's likely base.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>His empirical approach is the credible, evidence-based counterweight to the dramatized \"criminal profiling\" of popular culture, and shapes UK behavioural investigative advice.</p>"
+},
+{
+"id": "andrews-bonta",
+"discipline": "Forensic",
+"name": "Andrews & Bonta",
+"dates": "fl. 1990–present",
+"role": "Authors of the Risk–Need–Responsivity model",
+"nutshell": "Match the dose of treatment to risk, target what actually drives crime.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>Canadian psychologists Don Andrews and James Bonta developed the dominant framework for effective correctional rehabilitation, set out in The Psychology of Criminal Conduct.</p>\n<h3>Key principles (RNR)</h3>\n<ul>\n  <li><strong>Risk.</strong> Match the intensity of intervention to the offender's risk level — focus resources on higher-risk cases.</li>\n  <li><strong>Need.</strong> Target <em>criminogenic</em> needs — the dynamic risk factors that actually drive offending.</li>\n  <li><strong>Responsivity.</strong> Deliver intervention in a style and mode the person can engage with (general and specific responsivity).</li>\n</ul>\n<h3>The Central Eight</h3>\n<p>The key risk/need factors: history of antisocial behaviour, antisocial personality pattern, antisocial cognition, antisocial associates, plus family/marital, school/work, leisure/recreation and substance misuse.</p>\n<h3>Forensic relevance</h3>\n<p>RNR is the evidence base behind accredited offending-behaviour programmes and structured risk-need tools used across HMPPS and probation.</p>"
+},
+{
+"id": "ward",
+"discipline": "Forensic",
+"name": "Tony Ward",
+"dates": "b. 1959",
+"role": "Author of the Good Lives Model",
+"nutshell": "Don't just manage risk — help people build a life worth not offending for.",
+"featured": false,
+"profile": "<h3>Context</h3>\n<p>A New Zealand clinical psychologist who developed the Good Lives Model (GLM) as a strengths-based complement and critique to the risk-focused RNR approach.</p>\n<h3>Key ideas</h3>\n<ul>\n  <li><strong>Primary goods.</strong> Everyone seeks human goods — relationships, autonomy, mastery, purpose; offending is a maladaptive route to them.</li>\n  <li><strong>Strengths-based rehabilitation.</strong> Build the internal and external capacities for a fulfilling, prosocial life, not just suppress risk.</li>\n  <li><strong>Approach vs. avoidance goals.</strong> Working <em>toward</em> a valued life motivates better than only avoiding harm.</li>\n</ul>\n<h3>Forensic relevance</h3>\n<p>The GLM informs desistance-oriented practice and is often integrated with RNR to improve engagement, motivation and meaning in rehabilitation.</p>"
+}
 ];
 
 /* ===== Storage ===== */
@@ -1557,7 +1848,6 @@ function goBack() {
   const prev = viewStack[viewStack.length - 1];
   showView(prev);
   if (viewStack.length === 1) {
-    // Back to a tab root
     const titles = { 'v-today':'Today', 'v-learn':'Handbook', 'v-tools':'Tools', 'v-journey':'Qualification Journey', 'v-me':'Me' };
     setTopbar(titles[prev] || 'Anchor', false);
   }
@@ -1574,7 +1864,7 @@ function openChapter(num) {
   const nextCh = chapters.find(c => c.id === num + 1);
   $('chapter-content').innerHTML = `
     <div class="hero">
-      <div class="eyebrow">Chapter ${ch.id} of ${chapters.length}</div>
+      <div class="eyebrow">Chapter ${ch.id} of 14</div>
       <h1>${escapeHtml(ch.title)}</h1>
       <p class="sub">${escapeHtml(ch.tag)}</p>
     </div>
@@ -1591,7 +1881,6 @@ function openChapter(num) {
 }
 
 function renderLearnList() {
-  const cc = $('ch-count'); if (cc) cc.textContent = chapters.length + ' chapters';
   $('ch-list').innerHTML = chapters.map(c => `
     <div class="ch-card ${c.color}" onclick="openChapter(${c.id})">
       <div class="ch-num-badge">${c.id}</div>
@@ -1617,7 +1906,6 @@ function renderToday() {
   const greeting = hour < 5 ? 'Still up?' : hour < 12 ? 'Good morning.' : hour < 18 ? 'Good afternoon.' : 'Good evening.';
   $('today-greeting').textContent = greeting;
 
-  // Month stats
   const cpd = store.get('cpd', []);
   const monthAgo = new Date(); monthAgo.setMonth(monthAgo.getMonth() - 1);
   const recentCpd = cpd.filter(e => new Date(e.date) >= monthAgo);
@@ -1632,7 +1920,6 @@ function renderToday() {
   `;
   $('month-count').textContent = `${recentCpd.length + sup.length + refl.length} entries`;
 
-  // Recent activity
   const all = [
     ...cpd.map(e => ({type:'CPD', icon:'📚', title:e.title, date:e.date, ts: new Date(e.date).getTime() + (e.id % 86400000)})),
     ...store.get('supervision', []).map(e => ({type:'Supervision', icon:'💬', title:`${e.type} with ${e.supervisor}`, date:e.date, ts:new Date(e.date).getTime() + (e.id % 86400000)})),
@@ -1652,7 +1939,6 @@ function renderToday() {
         </div>
       </div>`).join('');
 
-  // Tool tile counts
   updateToolCounts();
 }
 
@@ -1728,7 +2014,7 @@ function openSheet(kind, ctx) {
       <h3>Search</h3>
       <div class="ref-search-wrap">
         <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="g-search" type="text" placeholder="Search chapters, frameworks, tools..." autofocus>
+        <input id="g-search" type="text" placeholder="Search chapters, frameworks, thinkers..." autofocus>
       </div>
       <div class="search-results" id="g-search-results"></div>
     `;
@@ -1739,7 +2025,7 @@ function openSheet(kind, ctx) {
     c.innerHTML = `
       <h3>About Anchor</h3>
       <p style="font-size:14px;line-height:1.6;color:var(--ink-soft);margin-bottom:12px;">
-        A pocket companion for UK forensic psychology practitioners. The handbook covers the qualification journey through to growing into the role. The tools — CPD logger, supervision log, formulation builder, reflection journal, report templates, reference index — are designed for daily use.
+        A pocket companion for UK forensic psychology practitioners. The handbook covers the qualification journey through to growing into the role. The tools — CPD logger, supervision log, formulation builder, reflection journal, report templates, reference index, and the Thinkers library — are designed for daily use.
       </p>
       <p style="font-size:14px;line-height:1.6;color:var(--ink-soft);margin-bottom:16px;">
         All data is stored locally on this device. Nothing is sent to any server.
@@ -1795,9 +2081,10 @@ function runGlobalSearch() {
   const ql = q.toLowerCase();
   const idx = [
     ...chapters.map(c => ({type:'Chapter', title:`Chapter ${c.id} — ${c.title}`, snippet:c.tag, action:`openChapter(${c.id}); closeSheet();`})),
-    ...reference.map(r => ({type:r.cat, title:r.name, snippet:r.desc, action:`openTool('reference'); closeSheet();`}))
+    ...reference.map(r => ({type:r.cat, title:r.name, snippet:r.desc, action:`openTool('reference'); closeSheet();`})),
+    ...((typeof figures !== 'undefined' ? figures : []).map(f => ({type:'Thinker · ' + f.discipline, title:f.name, snippet:f.role + ' — ' + f.nutshell, action:`openFigure('${f.id}'); closeSheet();`})))
   ];
-  const results = idx.filter(i => i.title.toLowerCase().includes(ql) || i.snippet.toLowerCase().includes(ql)).slice(0, 12);
+  const results = idx.filter(i => i.title.toLowerCase().includes(ql) || i.snippet.toLowerCase().includes(ql)).slice(0, 14);
   if (results.length === 0) { resultsEl.innerHTML = '<div class="empty">No matches.</div>'; return; }
   const hl = t => {
     const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
@@ -1814,7 +2101,7 @@ function runGlobalSearch() {
 /* ===== TOOLS ===== */
 function openTool(toolKey) {
   const c = $('tool-content');
-  const titles = { cpd:'CPD Logger', supervision:'Supervision Log', formulation:'Formulation Builder', reflection:'Reflection Journal', reports:'Report Templates', reference:'Reference Index' };
+  const titles = { cpd:'CPD Logger', supervision:'Supervision Log', formulation:'Formulation Builder', reflection:'Reflection Journal', reports:'Report Templates', reference:'Reference Index', thinkers:'Thinkers' };
   setTopbar(titles[toolKey], true);
   if (viewStack[viewStack.length - 1] !== 'v-tool') viewStack.push('v-tool');
 
@@ -2024,6 +2311,10 @@ function openTool(toolKey) {
     renderRefFilters(); renderRefIndex();
   }
 
+  else if (toolKey === 'thinkers') {
+    renderThinkers();
+  }
+
   showView('v-tool');
 }
 
@@ -2067,6 +2358,7 @@ function renderCPDList() {
         ${e.outcomes ? `<div class="entry-body">${escapeHtml(e.outcomes)}</div>` : ''}
       </div>`).join('');
 }
+
 /* ===== Supervision ===== */
 function addSupervision() {
   const e = {
@@ -2338,6 +2630,131 @@ function renderRefIndex() {
       </div>`).join('');
 }
 
+/* ===== THINKERS (injected) ===== */
+/* ===== THINKERS ===== */
+let activeThinkerFilter = 'All';
+const THINKER_DISCIPLINES = ['All', 'Philosophy', 'Psychology', 'Forensic'];
+
+function renderThinkers() {
+  const c = $('tool-content'); if (!c) return;
+  c.innerHTML = `
+    <div class="hero">
+      <div class="eyebrow">Tool</div>
+      <h1>🏛️ Thinkers</h1>
+      <p class="sub">The philosophers &amp; psychologists behind the practice.</p>
+    </div>
+    <div class="callout">A reference library of the thinkers whose ideas shape forensic psychology — from Machiavelli to the architects of modern risk assessment. Tap any name to read more.</div>
+    <div class="ref-search-wrap">
+      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="thk-q" type="text" placeholder="Search thinkers, ideas, roles..." oninput="renderThinkerList()">
+    </div>
+    <div class="ref-filters" id="thk-filters"></div>
+    <div id="thk-featured"></div>
+    <div id="thk-grid"></div>
+  `;
+  renderThinkerFilters();
+  renderThinkerFeatured();
+  renderThinkerList();
+}
+
+function renderThinkerFilters() {
+  const el = $('thk-filters'); if (!el) return;
+  el.innerHTML = THINKER_DISCIPLINES.map(d =>
+    `<div class="ref-filter ${d===activeThinkerFilter?'active':''}" onclick="setThinkerFilter('${d}')">${d}</div>`
+  ).join('');
+}
+
+function setThinkerFilter(d) {
+  activeThinkerFilter = d;
+  renderThinkerFilters();
+  renderThinkerFeatured();
+  renderThinkerList();
+}
+
+function renderThinkerFeatured() {
+  const el = $('thk-featured'); if (!el) return;
+  const q = ($('thk-q')?.value || '').trim();
+  const f = figures.find(x => x.featured);
+  // Only spotlight when browsing everything with no active search
+  if (!f || q || activeThinkerFilter !== 'All') { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <div class="thk-featured" onclick="openFigure('${f.id}')">
+      <div class="thk-fe-eyebrow">★ Featured Thinker</div>
+      <h3>${escapeHtml(f.name)}</h3>
+      <div class="thk-fe-role">${escapeHtml(f.dates)} · ${escapeHtml(f.role)}</div>
+      <div class="thk-fe-nut">${escapeHtml(f.nutshell)}</div>
+      <div class="thk-fe-cta">Read the full profile →</div>
+    </div>
+  `;
+}
+
+function renderThinkerList() {
+  const c = $('thk-grid'); if (!c) return;
+  renderThinkerFeatured();
+  const q = ($('thk-q')?.value || '').toLowerCase().trim();
+  const featured = figures.find(x => x.featured);
+  const spotlight = (!q && activeThinkerFilter === 'All');
+
+  let list = figures.filter(f => {
+    if (spotlight && f.featured) return false; // shown in featured card
+    if (activeThinkerFilter !== 'All' && f.discipline !== activeThinkerFilter) return false;
+    if (!q) return true;
+    return (f.name + ' ' + f.role + ' ' + f.nutshell + ' ' + f.discipline + ' ' + f.profile)
+      .toLowerCase().includes(q);
+  });
+
+  if (list.length === 0) {
+    c.innerHTML = `<div class="empty"><span class="ic">🏛️</span>No thinkers match that search.</div>`;
+    return;
+  }
+
+  // Group by discipline (in canonical order) for readability
+  const order = ['Philosophy', 'Psychology', 'Forensic'];
+  list.sort((a, b) => {
+    const d = order.indexOf(a.discipline) - order.indexOf(b.discipline);
+    if (d !== 0) return d;
+    return a.name.localeCompare(b.name);
+  });
+
+  let html = '';
+  let lastDisc = null;
+  list.forEach(f => {
+    if (f.discipline !== lastDisc) {
+      html += `<div class="thk-group-label">${escapeHtml(f.discipline)}</div>`;
+      lastDisc = f.discipline;
+    }
+    html += `
+      <div class="thk-card" onclick="openFigure('${f.id}')">
+        <div class="thk-body">
+          <div class="thk-disc">${escapeHtml(f.discipline)}</div>
+          <h4>${escapeHtml(f.name)}</h4>
+          <div class="thk-dates">${escapeHtml(f.dates)}</div>
+          <div class="thk-role">${escapeHtml(f.role)}</div>
+        </div>
+        <svg class="thk-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function openFigure(id) {
+  const f = figures.find(x => x.id === id);
+  if (!f) return;
+  $('figure-content').innerHTML = `
+    <div class="hero">
+      <div class="eyebrow">${escapeHtml(f.discipline)} · ${escapeHtml(f.dates)}</div>
+      <h1>${escapeHtml(f.name)}</h1>
+      <p class="sub">${escapeHtml(f.role)}</p>
+    </div>
+    <div class="callout"><strong>In a nutshell:</strong> ${escapeHtml(f.nutshell)}</div>
+    ${f.profile}
+    <button class="tool-link-card ch-back" onclick="openTool('thinkers')"><span class="tlc-icon">🏛️</span> Browse all thinkers <span class="tlc-arrow">→</span></button>
+  `;
+  setTopbar(f.name, true);
+  if (viewStack[viewStack.length - 1] !== 'v-figure') viewStack.push('v-figure');
+  showView('v-figure');
+}
+
 /* ===== Export / Clear ===== */
 function exportAll() {
   const data = {
@@ -2378,7 +2795,6 @@ renderMeStats();
 updateContinueCard();
 updateToolCounts();
 
-// Refresh Today and Me whenever those tabs are opened
 const origGoTab = goTab;
 window.goTab = function(t) {
   origGoTab(t);
